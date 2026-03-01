@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bjdh63hcwc37g"]
+[gd_scene load_steps=7 format=3 uid="uid://bjdh63hcwc37g"]
 
 [ext_resource type="PackedScene" uid="uid://crugke31s5nm1" path="res://Scenes/Player/player.tscn" id="1_t1gg8"]
+[ext_resource type="PackedScene" uid="uid://bhmsvrrrqea4" path="res://Scenes/Toys/toy_ball.tscn" id="2_yp2ti"]
+[ext_resource type="PackedScene" uid="uid://by67yobn3i3b6" path="res://Scenes/Box/box.tscn" id="3_3rhlx"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_t1gg8"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -34,3 +36,47 @@ environment = SubResource("Environment_3rhlx")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
 shadow_enabled = true
+
+[node name="Toy Locations" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.91, 1.5, 2.319)
+
+[node name="location1" type="Marker3D" parent="Toy Locations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9990396, 0, -8.036173)
+
+[node name="location2" type="Marker3D" parent="Toy Locations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9990396, 0, -6.056164)
+
+[node name="location3" type="Marker3D" parent="Toy Locations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9990396, 0, -4.234129)
+
+[node name="Toys" type="Node3D" parent="."]
+
+[node name="Toy_Ball" parent="Toys" instance=ExtResource("2_yp2ti")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5105324, 1.6588812, -3.8003888)
+destination = "mumbai"
+
+[node name="Toy_Ball2" parent="Toys" instance=ExtResource("2_yp2ti")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5105324, 1.6588812, -5.796077)
+destination = "chennai"
+
+[node name="Toy_Ball3" parent="Toys" instance=ExtResource("2_yp2ti")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8739371, 1.6588812, -5.796077)
+destination = "chennai"
+
+[node name="Toy_Ball4" parent="Toys" instance=ExtResource("2_yp2ti")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8739371, 1.6588812, -7.202927)
+destination = "delhi"
+
+[node name="Boxes" type="Node3D" parent="."]
+
+[node name="Box" parent="Boxes" instance=ExtResource("3_3rhlx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.769795, 0.9500001, 0)
+destination = "mumbai"
+
+[node name="Box2" parent="Boxes" instance=ExtResource("3_3rhlx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.769795, 0.9500001, -1.9391217)
+destination = "delhi"
+
+[node name="Box3" parent="Boxes" instance=ExtResource("3_3rhlx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.769795, 0.9500001, -3.6257105)
+destination = "chennai"

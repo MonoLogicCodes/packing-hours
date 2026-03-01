@@ -2,14 +2,16 @@ extends CharacterBody3D
 
 @onready var ray_cast = $Head/Camera3D/RayCast3D
 @onready var camera = $Head/Camera3D
+@onready var hand = $Hand
 
 const SENSITIVITY: float = 0.004
 const SPRINT_SPEED: float = 8.0
 const WALK_SPEED: float = 5.0
-
-var gravity:float = -16
 var speed:float = WALK_SPEED;
+var gravity:float = -16
 var mouse_captured:bool = true
+
+var picked_toy:Object = null
 
 func _ready() -> void:
 	mouse_capture(true)
@@ -60,8 +62,19 @@ func mouse_capture(val: bool):
 
 func check_raycast_collider(event: String) -> void:
 	if ray_cast.is_colliding():
-		#var obj = ray_cast.get_collider() as Object
-		if event == "right_click":	
-			pass
+		var obj = ray_cast.get_collider() as Object
+		
+		if event == "right_click":
+			
+			if obj.has_method("pick_up_toy") and not picked_toy:
+				picked_toy = obj.pick_up_toy()#if active toy,return it
+				if picked_toy:
+					picked_toy.reparent(hand)
+					picked_toy.global_position = hand.global_position
+				
+			if obj.has_method("deposit_toy"):#Box
+				if picked_toy:
+					picked_toy = obj.deposit_toy(picked_toy)
+				
 		
 		

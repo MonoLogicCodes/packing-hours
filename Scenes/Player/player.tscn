@@ -40,6 +40,9 @@ target_position = Vector3(0, 0, -4)
 collision_mask = 6
 collide_with_areas = true
 
+[node name="Hand" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.779, 1.154, -0.71774656)
+
 [node name="TextureRect" type="TextureRect" parent="."]
 anchors_preset = 8
 anchor_left = 0.5

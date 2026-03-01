@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://by67yobn3i3b6"]
+
+[ext_resource type="Script" uid="uid://bx5sql7enn2gh" path="res://Scripts/Box.gd" id="1_2frdm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8rww4"]
+albedo_color = Color(0.60547477, 0.3131232, 0.16425595, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hex5h"]
+size = Vector3(0.9, 0.9, 0.9)
+
+[node name="Box" type="Area3D"]
+collision_layer = 4
+collision_mask = 256
+script = ExtResource("1_2frdm")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+material_override = SubResource("StandardMaterial3D_8rww4")
+size = Vector3(0.9, 0.9, 0.9)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+cast_shadow = 0
+operation = 2
+size = Vector3(0.8, 0.8, 0.8)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_hex5h")
