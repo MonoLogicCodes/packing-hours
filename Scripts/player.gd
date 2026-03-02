@@ -14,6 +14,7 @@ var mouse_captured:bool = true
 var picked_toy:Object = null
 
 func _ready() -> void:
+	Global.player = self
 	mouse_capture(true)
 
 func _unhandled_input(event: InputEvent) -> void:

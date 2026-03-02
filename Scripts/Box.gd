@@ -1,6 +1,8 @@
 extends Node
 
-@export var destination:String
+@export var model:String
+@export var destination:Global.destinations
+@export var anomaly:Global.anomaly_types=Global.anomaly_types.NONE
 var packed = false
 
 func deposit_toy(object:Object):
@@ -12,6 +14,16 @@ func deposit_toy(object:Object):
 		object.deactivate()
 		packed=true
 		
+		if Global.game_manager.toys_left_to_place>0:
+			Global.game_manager.toys_left_to_place-=1
+		Global.game_manager.check_if_all_placed()
+		
 		return null#now picked_toy will be null
 	else:#wrong destination(reject back toy)
 		return object
+	
+func set_data(data):
+	model=data[0]
+	destination=data[2]
+	anomaly=data[3]
+	#print(self.name, " to ",Global.destinations.keys()[destination], " has ", Global.anomaly_types.keys()[anomaly])

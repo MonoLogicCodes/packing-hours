@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://bjdh63hcwc37g"]
+[gd_scene load_steps=6 format=3 uid="uid://bjdh63hcwc37g"]
 
 [ext_resource type="PackedScene" uid="uid://crugke31s5nm1" path="res://Scenes/Player/player.tscn" id="1_t1gg8"]
-[ext_resource type="PackedScene" uid="uid://bhmsvrrrqea4" path="res://Scenes/Toys/toy_ball.tscn" id="2_yp2ti"]
-[ext_resource type="PackedScene" uid="uid://by67yobn3i3b6" path="res://Scenes/Box/box.tscn" id="3_3rhlx"]
+[ext_resource type="Script" uid="uid://3t5x5jovy7gs" path="res://Scripts/world.gd" id="1_vadfg"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_t1gg8"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -18,6 +17,7 @@ tonemap_mode = 2
 glow_enabled = true
 
 [node name="World" type="Node3D"]
+script = ExtResource("1_vadfg")
 
 [node name="Player" parent="." instance=ExtResource("1_t1gg8")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1600652, 0)
@@ -37,46 +37,47 @@ environment = SubResource("Environment_3rhlx")
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Toy Locations" type="Node3D" parent="."]
+[node name="Toy_locations" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.91, 1.5, 2.319)
 
-[node name="location1" type="Marker3D" parent="Toy Locations"]
+[node name="location1" type="Marker3D" parent="Toy_locations"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9990396, 0, -8.036173)
 
-[node name="location2" type="Marker3D" parent="Toy Locations"]
+[node name="location2" type="Marker3D" parent="Toy_locations"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9990396, 0, -6.056164)
 
-[node name="location3" type="Marker3D" parent="Toy Locations"]
+[node name="location3" type="Marker3D" parent="Toy_locations"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9990396, 0, -4.234129)
+
+[node name="location4" type="Marker3D" parent="Toy_locations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9990396, 0, -2.572064)
 
 [node name="Toys" type="Node3D" parent="."]
 
-[node name="Toy_Ball" parent="Toys" instance=ExtResource("2_yp2ti")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5105324, 1.6588812, -3.8003888)
-destination = "mumbai"
-
-[node name="Toy_Ball2" parent="Toys" instance=ExtResource("2_yp2ti")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5105324, 1.6588812, -5.796077)
-destination = "chennai"
-
-[node name="Toy_Ball3" parent="Toys" instance=ExtResource("2_yp2ti")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8739371, 1.6588812, -5.796077)
-destination = "chennai"
-
-[node name="Toy_Ball4" parent="Toys" instance=ExtResource("2_yp2ti")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8739371, 1.6588812, -7.202927)
-destination = "delhi"
-
 [node name="Boxes" type="Node3D" parent="."]
 
-[node name="Box" parent="Boxes" instance=ExtResource("3_3rhlx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.769795, 0.9500001, 0)
-destination = "mumbai"
+[node name="Boxes_locations" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.866, 0.95, 0)
 
-[node name="Box2" parent="Boxes" instance=ExtResource("3_3rhlx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.769795, 0.9500001, -1.9391217)
-destination = "delhi"
+[node name="blocation1" type="Marker3D" parent="Boxes_locations"]
 
-[node name="Box3" parent="Boxes" instance=ExtResource("3_3rhlx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.769795, 0.9500001, -3.6257105)
-destination = "chennai"
+[node name="blocation2" type="Marker3D" parent="Boxes_locations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+
+[node name="blocation3" type="Marker3D" parent="Boxes_locations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+
+[node name="blocation4" type="Marker3D" parent="Boxes_locations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9)
+
+[node name="blocation5" type="Marker3D" parent="Boxes_locations"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 10.258272, 0, 5.376114)
+
+[node name="blocation6" type="Marker3D" parent="Boxes_locations"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 7.2583723, 0, 5.4006705)
+
+[node name="blocation7" type="Marker3D" parent="Boxes_locations"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4.2584734, 0, 5.4252267)
+
+[node name="blocation8" type="Marker3D" parent="Boxes_locations"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.2585735, 0, 5.4497833)
