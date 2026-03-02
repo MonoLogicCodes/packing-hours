@@ -2,6 +2,7 @@ extends Node3D
 
 const TOY_BALL_SCENE:PackedScene = preload("res://Scenes/Toys/toy_ball.tscn")
 const BOX_SCENE:PackedScene = preload("res://Scenes/Box/box.tscn")
+var toy_script = load("res://Scripts/Toys.gd")
 
 @onready var toy_spawn_locations = $Toy_locations.get_children()
 @onready var box_spawn_locations = $Boxes_locations.get_children()
@@ -20,7 +21,13 @@ func try_spawn_toy(toy_data:Array):#called from gamemanager
 	next_toy_spawn_location = toy_spawn_locations[toys.get_child_count()]
 	Global.game_manager.toys_spawned_this_wave+=1
 	
-	var toy = TOY_BALL_SCENE.instantiate()
+	var toy:Area3D = toy_data[0].instantiate()	
+	toy.set_script(toy_script)
+	toy.set_collision_layer_value(1,false)
+	toy.set_collision_layer_value(2,true)
+	toy.set_collision_mask_value(1,false)
+	toy.set_collision_mask_value(9,true)
+	
 	toys.add_child(toy)
 	toy.set_data(toy_data)
 	toy.global_position = next_toy_spawn_location.global_position
@@ -36,6 +43,8 @@ func try_move_toy():#Should occur when i pick toy
 
 func spawn_boxes(toys_data):
 	var no_of_boxes = toys_data.size()
+	if no_of_boxes>box_spawn_locations.size():return#I dont have that many boxes!
+	
 	for i in no_of_boxes:
 		var box = BOX_SCENE.instantiate()
 		boxes.add_child(box)

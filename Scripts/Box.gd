@@ -1,6 +1,5 @@
-extends Node
+extends Area3D
 
-@export var model:String
 @export var destination:Global.destinations
 @export var anomaly:Global.anomaly_types=Global.anomaly_types.NONE
 var packed = false
@@ -23,7 +22,6 @@ func deposit_toy(object:Object):
 		return object
 	
 func set_data(data):
-	model=data[0]
 	destination=data[2]
 	anomaly=data[3]
 	#print(self.name, " to ",Global.destinations.keys()[destination], " has ", Global.anomaly_types.keys()[anomaly])

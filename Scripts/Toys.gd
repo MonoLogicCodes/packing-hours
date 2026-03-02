@@ -1,10 +1,8 @@
 extends Area3D
 
-@export var type:String
+@export var active:bool = true#take cares locally
 @export var destination:Global.destinations
 @export var anomaly:Global.anomaly_types = Global.anomaly_types.NONE
-
-@export var active:bool = true#take cares locally
 
 func pick_up_toy():#Called by player
 	if not active:return null
@@ -25,9 +23,8 @@ func set_data(toy_data:Array):#called by world
 	destination = toy_data[2]
 	anomaly = toy_data[3]
 	#print(self.name, " to ",Global.destinations.keys()[destination], " has ", Global.anomaly_types.keys()[anomaly], ";Active:",active)
-	
 	#temp
-	var mat = $MeshInstance3D.get_active_material(0).duplicate()
-	mat.albedo_color = Color(randf(),randf(),randf()) 
-	$MeshInstance3D.material_override = mat
+	#var mat = $MeshInstance3D.get_active_material(0).duplicate()
+	#mat.albedo_color = Color(randf(),randf(),randf()) 
+	#$MeshInstance3D.material_override = mat
 	
