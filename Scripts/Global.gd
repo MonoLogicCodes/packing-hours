@@ -1,6 +1,7 @@
 extends Node
 
 var game_manager:Node#set by game_manager itself
+var anomaly_manager:Node#set by anomaly_manager itself
 var player:Node3D
 var world:Node3D
 
@@ -16,10 +17,18 @@ var toy_models = {
 	"train2":preload("res://Scenes/Toys_models/train_2.tscn"),
 }
 
-enum anomaly_types {
-	NONE,FAST_SPEED,SLOW_SPEED,COLOR_INVERSION
+var toy_icons = {
+	"ball":preload("res://icon.svg"),
+	"car1":preload("res://Assets/2D_icons/car_1.png"),
+	"car2":preload("res://Assets/2D_icons/car_2.png"),
+	"car3":preload("res://Assets/2D_icons/car_3.png"),
+	"car4":preload("res://Assets/2D_icons/car_4.png"),
+	"ship1":preload("res://Assets/2D_icons/ship_1.png"),
+	"ship2":preload("res://Assets/2D_icons/ship_2.png"),
+	"train1":preload("res://Assets/2D_icons/train_1.png"),
+	"train2":preload("res://Assets/2D_icons/train_2.png"),	
 }
 
-enum destinations {
-	MUMBAI,CHENNAI,DELHI,KOLKATA
+enum anomaly_types {
+	NONE,FAST_SPEED,SLOW_SPEED,INVERT_CAMERA,INVERT_GRAVITY,INVERT_COLOR
 }

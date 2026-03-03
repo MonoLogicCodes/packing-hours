@@ -2,18 +2,27 @@ extends CharacterBody3D
 
 @onready var ray_cast = $Head/Camera3D/RayCast3D
 @onready var camera = $Head/Camera3D
-@onready var hand = $Hand
+@onready var hand = $Head/Camera3D/Hand
 
 const SENSITIVITY: float = 0.004
-const SPRINT_SPEED: float = 8.0
 const WALK_SPEED: float = 5.0
+const GRAVITY:float = -16#-ve imp here
+#ANOMALY DATAS
+const FAST_SPEED:float = 15
+const SLOW_SPEED:float = 2
+const NORMAL_FOV:float = 75
+const FAST_FOV:float = 110
+const SLOW_FOV:float = 40
+
 var speed:float = WALK_SPEED;
-var gravity:float = -16
+var curr_fov:float = NORMAL_FOV
+var gravity:float = GRAVITY
 var mouse_captured:bool = true
 
 var picked_toy:Object = null
 
 func _ready() -> void:
+	speed=WALK_SPEED
 	Global.player = self
 	mouse_capture(true)
 
@@ -35,22 +44,20 @@ func _physics_process(delta: float) -> void:
 func _handle_movement(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y += gravity*delta
-		
+	if gravity>0:
+		velocity.y = -GRAVITY
+	
 	var input_dir = Input.get_vector("left","right","forward","backward")
 	var move_dir  = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
-	if Input.is_action_pressed("sprint"):
-		speed = SPRINT_SPEED
+	if move_dir:
+		if camera.fov!=curr_fov:camera.fov=curr_fov
+		velocity.x = move_dir.x * speed
+		velocity.z = move_dir.z * speed
 	else:
-		speed = WALK_SPEED
-	
-	if is_on_floor():
-		if move_dir:
-			velocity.x = move_dir.x * speed
-			velocity.z = move_dir.z * speed
-		else:
-			velocity.x = move_toward(velocity.x, 0, speed)
-			velocity.z = move_toward(velocity.z, 0, speed) 
+		if curr_fov!=NORMAL_FOV:camera.fov = move_toward(camera.fov,NORMAL_FOV,speed)
+		velocity.x = move_toward(velocity.x, 0, speed)
+		velocity.z = move_toward(velocity.z, 0, speed) 
 		
 	move_and_slide()
 	
@@ -76,6 +83,25 @@ func check_raycast_collider(event: String) -> void:
 			if obj.has_method("deposit_toy"):#Box
 				if picked_toy:
 					picked_toy = obj.deposit_toy(picked_toy)
-				
+	
+	
+#ANOMALY_FUNCTIONS
+func set_fast_speed():
+	speed=FAST_SPEED
+	curr_fov = FAST_FOV
+
+func set_slow_speed():
+	speed=SLOW_SPEED
+	curr_fov = SLOW_FOV
+
+func reset_speed():
+	speed=WALK_SPEED
+	curr_fov = NORMAL_FOV
 		
-		
+func invert_gravity():
+	gravity = -GRAVITY
+	camera.rotation_degrees.z=180
+	
+func reset_gravity():
+	gravity = GRAVITY
+	camera.rotation_degrees.z=0

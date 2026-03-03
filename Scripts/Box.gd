@@ -1,15 +1,19 @@
 extends Area3D
 
-@export var destination:Global.destinations
+signal toy_placed(an:Global.anomaly_types)#used in world.gd
+
+@onready var toy_location_marker = $toy_location
+@export var model:String
 @export var anomaly:Global.anomaly_types=Global.anomaly_types.NONE
 var packed = false
 
 func deposit_toy(object:Object):
 	if packed:return object
 	
-	if(object.get_destination() == destination):
+	if(object.get_model()==model):
+		emit_signal("toy_placed",anomaly)
 		object.reparent(self)
-		object.global_position = self.global_position
+		object.global_position = toy_location_marker.global_position
 		object.deactivate()
 		packed=true
 		
@@ -22,6 +26,16 @@ func deposit_toy(object:Object):
 		return object
 	
 func set_data(data):
-	destination=data[2]
-	anomaly=data[3]
-	#print(self.name, " to ",Global.destinations.keys()[destination], " has ", Global.anomaly_types.keys()[anomaly])
+	model=data[0]
+	anomaly=data[2]
+	show_toy_icon()
+	
+func show_toy_icon():
+	var tex = Global.toy_icons[model]
+	$icon1.texture = tex
+	$icon2.texture = tex
+	$icon3.texture = tex
+	$icon4.texture = tex
+	
+	
+	

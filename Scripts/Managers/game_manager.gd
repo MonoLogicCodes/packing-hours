@@ -6,8 +6,8 @@ extends Node
 @onready var inter_wave_timer = $inter_wave_timer
 
 const WAVES:Dictionary = {#[no_of_toys,anomaly_types]
-	1:[4,[]],#no of toys MUST BE <= 8
-	2:[7,[Global.anomaly_types.FAST_SPEED,Global.anomaly_types.COLOR_INVERSION]],
+	1:[4,[Global.anomaly_types.SLOW_SPEED,Global.anomaly_types.FAST_SPEED]],#no of toys MUST BE <= 8
+	2:[7,[Global.anomaly_types.FAST_SPEED,Global.anomaly_types.INVERT_COLOR]],
 	3:[8,[]],
 }
 var curr_wave_details:Array=[]
@@ -16,7 +16,7 @@ var current_wave:int=0
 var toys_spawned_this_wave:int=0#Changes from world.gd
 var toys_left_to_place:int = 0#Changes from toys.gd
 
-var toys_data:Array#Array of [model,active,destination,anomaly]
+var toys_data:Array#Array of [model,active,anomaly]
 var toy_models_this_wave:Array
 
 func _ready() -> void:
@@ -31,13 +31,7 @@ func start_waves_timer():
 func start_toy_spawn_freq_timer():
 	if toy_spawn_freq.is_stopped():toy_spawn_freq.start()
 
-func try_start_wave(wave_no:int):
-	if toys_left_to_place!=0:
-		stop_wave_timers()
-		current_wave-=1#TO start back from the wave in which u lose
-		print("You Lose!")
-		return#u lose: did not pick up all by time
-	
+func try_start_wave(wave_no:int):	
 	if current_wave > WAVES.size():
 		stop_wave_timers()
 		print("You Won!")
@@ -58,17 +52,16 @@ func try_start_wave(wave_no:int):
 	
 	Global.world.spawn_boxes(toys_data)
 	
-func randomize_toy_data():#Toy model,Toy active,Toy destination,Toy anomaly
-	toy_models_this_wave = Global.toy_models.values().duplicate()
+func randomize_toy_data():#Toy model,Toy active,Toy anomaly
+	toy_models_this_wave = Global.toy_models.keys().duplicate()
 	toy_models_this_wave.shuffle()
 	toy_models_this_wave = toy_models_this_wave.slice(0,curr_wave_details[0])
 	
-	var destins = Global.destinations.values()
 	var anoms = curr_wave_details[1].duplicate()
 	for j in range(anoms.size(),curr_wave_details[0]):
 		anoms.append(Global.anomaly_types.NONE)
 	for i in curr_wave_details[0]:
-		toys_data.append([toy_models_this_wave[i],true,destins.pick_random(),anoms[i]])
+		toys_data.append([toy_models_this_wave[i],true,anoms[i]])
 	
 	toys_data.shuffle()
 
@@ -80,6 +73,10 @@ func check_if_all_placed():#Called by box.gd : Everytime u deposit toy
 		print("Wave DONE! Waiting for 3 seconds")
 
 func _on_wave_timer_timeout() -> void:
+	if toys_left_to_place!=0:
+		print("You Lose!")
+		stop_wave_timers()
+		return
 	if inter_wave_timer.is_stopped():inter_wave_timer.start()
 	print("Wave DONE! Waiting for 3 seconds")
 	stop_wave_timers()
