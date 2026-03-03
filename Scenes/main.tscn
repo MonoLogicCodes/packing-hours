@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://5w1qdgy6oegd"]
+[gd_scene load_steps=12 format=3 uid="uid://5w1qdgy6oegd"]
 
 [ext_resource type="PackedScene" uid="uid://bjdh63hcwc37g" path="res://Scenes/World/world.tscn" id="1_jjgbg"]
 [ext_resource type="Script" uid="uid://d2dtvclyryyrt" path="res://Scripts/Managers/game_manager.gd" id="2_bo1nx"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://vm8fhhjlhmsj" path="res://Scripts/UI/ui.gd" id="4_kry3j"]
 [ext_resource type="Texture2D" uid="uid://b276gntvgtxm2" path="res://Assets/UI/HUD/crosshair009.png" id="5_21xkr"]
 [ext_resource type="Texture2D" uid="uid://6ewmd7ki2wxc" path="res://Assets/UI/HUD/white_ring.png" id="6_6bp64"]
+[ext_resource type="FontFile" uid="uid://iy8yt2ouvhvt" path="res://Assets/fonts/BebasNeue-Regular.ttf" id="7_6bp64"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v2yv0"]
 bg_color = Color(0.16078432, 0.16078432, 0.16078432, 0.62352943)
@@ -63,7 +64,7 @@ one_shot = true
 [node name="AnomalyManager" type="Node" parent="Managers"]
 script = ExtResource("3_8gbba")
 
-[node name="UI" type="CanvasLayer" parent="." node_paths=PackedStringArray("wave_timer", "inter_wave_timer", "hud", "hud_wave_timer_label", "hud_wave_progress_bar", "hud_inter_wave_timer_label", "hud_inter_wave_timer_panel", "hud_curr_wave_number", "pause_menu")]
+[node name="UI" type="CanvasLayer" parent="." node_paths=PackedStringArray("wave_timer", "inter_wave_timer", "hud", "hud_wave_timer_label", "hud_wave_progress_bar", "hud_inter_wave_timer_label", "hud_inter_wave_timer_panel", "hud_curr_wave_number", "pause_menu", "lose_screen")]
 script = ExtResource("4_kry3j")
 wave_timer = NodePath("../Managers/GameManager/wave_timer")
 inter_wave_timer = NodePath("../Managers/GameManager/inter_wave_timer")
@@ -74,6 +75,7 @@ hud_inter_wave_timer_label = NodePath("HUD/PanelContainer/VBoxContainer/inter_wa
 hud_inter_wave_timer_panel = NodePath("HUD/PanelContainer")
 hud_curr_wave_number = NodePath("HUD/Panel2/current_wave")
 pause_menu = NodePath("PauseMenu")
+lose_screen = NodePath("YouLose")
 
 [node name="HUD" type="Control" parent="UI"]
 layout_mode = 3
@@ -215,7 +217,6 @@ text = "10"
 
 [node name="PauseMenu" type="Control" parent="UI"]
 process_mode = 3
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -240,7 +241,19 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_6bp64")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/PauseMenu/PanelContainer"]
 layout_mode = 2
-theme_override_constants/separation = 16
+theme_override_constants/separation = 5
+
+[node name="Label" type="Label" parent="UI/PauseMenu/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6901961, 0, 0.9764706, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/shadow_outline_size = 4
+theme_override_fonts/font = ExtResource("7_6bp64")
+theme_override_font_sizes/font_size = 28
+text = "GAME PAUSED"
+horizontal_alignment = 1
 
 [node name="resume" type="Button" parent="UI/PauseMenu/PanelContainer/VBoxContainer"]
 layout_mode = 2
@@ -250,11 +263,76 @@ text = "RESUME"
 layout_mode = 2
 text = "RELOAD PREVIOUS WAVE"
 
+[node name="Pstart_over" type="Button" parent="UI/PauseMenu/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "START OVER"
+
 [node name="main_menu" type="Button" parent="UI/PauseMenu/PanelContainer/VBoxContainer"]
 layout_mode = 2
 text = "QUIT TO MAIN MENU"
+
+[node name="YouLose" type="Control" parent="UI"]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/YouLose"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/YouLose/PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/YouLose/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 0.33333334, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 4
+theme_override_constants/shadow_offset_y = 4
+theme_override_constants/shadow_outline_size = 4
+theme_override_fonts/font = ExtResource("7_6bp64")
+theme_override_font_sizes/font_size = 71
+text = "YOU LOSE!"
+horizontal_alignment = 1
+
+[node name="reload" type="Button" parent="UI/YouLose/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "RELOAD PREVIOUS CHECKPOINT"
+
+[node name="start_over" type="Button" parent="UI/YouLose/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "START OVER
+"
+
+[node name="go_to_menu" type="Button" parent="UI/YouLose/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "QUIT TO MAIN MENU
+"
 
 [connection signal="timeout" from="Managers/GameManager/wave_timer" to="Managers/GameManager" method="_on_wave_timer_timeout"]
 [connection signal="timeout" from="Managers/GameManager/toy_spawn_freq" to="Managers/GameManager" method="_on_toy_spawn_freq_timeout"]
 [connection signal="timeout" from="Managers/GameManager/inter_wave_timer" to="Managers/GameManager" method="_on_inter_wave_timer_timeout"]
 [connection signal="pressed" from="UI/PauseMenu/PanelContainer/VBoxContainer/resume" to="UI" method="_on_resume_pressed"]
+[connection signal="pressed" from="UI/PauseMenu/PanelContainer/VBoxContainer/reload" to="UI" method="_on_reload_pressed"]
+[connection signal="pressed" from="UI/PauseMenu/PanelContainer/VBoxContainer/Pstart_over" to="UI" method="_on_pstart_over_pressed"]
+[connection signal="pressed" from="UI/PauseMenu/PanelContainer/VBoxContainer/main_menu" to="UI" method="_on_main_menu_pressed"]
+[connection signal="pressed" from="UI/YouLose/PanelContainer/VBoxContainer/reload" to="UI" method="_on_reload_pressed"]
+[connection signal="pressed" from="UI/YouLose/PanelContainer/VBoxContainer/start_over" to="UI" method="_on_start_over_pressed"]

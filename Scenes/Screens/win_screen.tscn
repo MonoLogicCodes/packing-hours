@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=3 uid="uid://dy64kj2s15bsl"]
+
+[ext_resource type="FontFile" uid="uid://iy8yt2ouvhvt" path="res://Assets/fonts/BebasNeue-Regular.ttf" id="1_3gse0"]
+[ext_resource type="Script" uid="uid://dgb3vaoesjpgk" path="res://Scripts/Scenes/win_screen.gd" id="1_ag6kh"]
+
+[node name="Win_screen" type="Node"]
+script = ExtResource("1_ag6kh")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.064299144, 0.6549489, 0.52831507, 1)
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 0.24705882, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 4
+theme_override_constants/shadow_offset_y = 4
+theme_override_constants/shadow_outline_size = 3
+theme_override_fonts/font = ExtResource("1_3gse0")
+theme_override_font_sizes/font_size = 116
+text = "YOU WON!"
+
+[node name="quit" type="Button" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -47.0
+offset_top = -31.0
+offset_right = 47.0
+offset_bottom = 31.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 31
+text = "QUIT"
+
+[connection signal="pressed" from="CanvasLayer/quit" to="." method="_on_quit_pressed"]

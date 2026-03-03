@@ -14,14 +14,20 @@ extends CanvasLayer
 @export_category("Pause Menu")
 @export var pause_menu:Control
 
+@export_category("Lose Screen")
+@export var lose_screen:Control
+
 func _ready() -> void:
 	hud_new_wave_started()
+	lose_screen.visible=false
 	pause_game(false)
 	#for HUD
 	wave_timer.timeout.connect(reset_hud_wave_timer_label)
 	inter_wave_timer.timeout.connect(hud_new_wave_started)
 	#for PauseScreen
 	Global.player.pause.connect(pause_game)
+	#For LoseScreen
+	Global.game_manager.game_lose.connect(game_lose)
 	set_hud_wave_timer_max()
 
 func _process(_delta: float) -> void:
@@ -47,10 +53,41 @@ func reset_hud_wave_timer_label():
 #Pause Menu functions
 func pause_game(to_pause:bool):
 	if to_pause:Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	else:Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		
+	else:Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)	
 	pause_menu.visible = to_pause
 	get_tree().paused = to_pause
-		
+
+func pause_without_ui():
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	get_tree().paused = true
+
 func _on_resume_pressed() -> void:
 	pause_game(false)
+
+func _on_reload_pressed() -> void:
+	reload_scene(false)
+	
+func _on_pstart_over_pressed() -> void:#seperate function cuz to add transition
+	pause_without_ui()
+	reload_scene(true)
+	
+func _on_main_menu_pressed() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	get_tree().change_scene_to_packed(Global.main_screen)
+#Lose Screen functions
+func game_lose():
+	pause_without_ui()
+	show_lose_screen(true)
+	
+func show_lose_screen(val:bool):
+	if val:Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	else:Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	lose_screen.visible = val
+
+func reload_scene(full_reload:bool):
+	if full_reload:Global.current_wave=1
+	get_tree().reload_current_scene()
+	
+func _on_start_over_pressed() -> void:
+	pause_without_ui()
+	reload_scene(true)
