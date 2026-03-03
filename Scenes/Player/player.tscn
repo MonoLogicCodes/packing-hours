@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://crugke31s5nm1"]
+[gd_scene load_steps=5 format=3 uid="uid://crugke31s5nm1"]
 
 [ext_resource type="Script" uid="uid://clpmwoc2b0kh" path="res://Scripts/player.gd" id="1_4ntmi"]
-[ext_resource type="Texture2D" uid="uid://dqvl7p3i8ixff" path="res://icon.svg" id="2_btcbx"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2bvtq"]
 albedo_color = Color(0.3371493, 0.80824965, 0.7742935, 1)
@@ -42,20 +41,3 @@ collide_with_areas = true
 
 [node name="Hand" type="Node3D" parent="Head/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.779, -0.546, -0.71774656)
-
-[node name="TextureRect" type="TextureRect" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -64.0
-offset_top = -64.0
-offset_right = 64.0
-offset_bottom = 64.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.1, 0.1)
-pivot_offset = Vector2(64, 64)
-mouse_filter = 2
-texture = ExtResource("2_btcbx")

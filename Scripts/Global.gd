@@ -5,6 +5,8 @@ var anomaly_manager:Node#set by anomaly_manager itself
 var player:Node3D
 var world:Node3D
 
+var current_wave=0
+
 var toy_models = {
 	"ball":preload("res://Scenes/Toys_models/ball_1.tscn"),
 	"car1":preload("res://Scenes/Toys_models/car_1.tscn"),

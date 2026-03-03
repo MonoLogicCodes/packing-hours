@@ -11,7 +11,6 @@ const WAVES:Dictionary = {#[no_of_toys,anomaly_types]
 	3:[8,[]],
 }
 var curr_wave_details:Array=[]
-var current_wave:int=0
 
 var toys_spawned_this_wave:int=0#Changes from world.gd
 var toys_left_to_place:int = 0#Changes from toys.gd
@@ -22,8 +21,8 @@ var toy_models_this_wave:Array
 func _ready() -> void:
 	Global.game_manager = self
 	
-	current_wave=1
-	try_start_wave(current_wave)
+	Global.current_wave=1
+	try_start_wave(Global.current_wave)
 
 func start_waves_timer():
 	if wave_timer.is_stopped():wave_timer.start()
@@ -32,7 +31,7 @@ func start_toy_spawn_freq_timer():
 	if toy_spawn_freq.is_stopped():toy_spawn_freq.start()
 
 func try_start_wave(wave_no:int):	
-	if current_wave > WAVES.size():
+	if Global.current_wave > WAVES.size():
 		stop_wave_timers()
 		print("You Won!")
 		return
@@ -82,13 +81,12 @@ func _on_wave_timer_timeout() -> void:
 	stop_wave_timers()
 
 func _on_inter_wave_timer_timeout() -> void:
-	current_wave+=1
-	try_start_wave(current_wave)
+	Global.current_wave+=1
+	try_start_wave(Global.current_wave)
 	
 func _on_toy_spawn_freq_timeout() -> void:
 	if toys_spawned_this_wave<curr_wave_details[0]:
 		Global.world.try_spawn_toy(toys_data[toys_spawned_this_wave])
-	$"../../UI/time_left".text = str(round(wave_timer.time_left))#Temp
 		
 func stop_wave_timers():
 	wave_timer.stop()

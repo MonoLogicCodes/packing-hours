@@ -1,14 +1,44 @@
-[gd_scene load_steps=5 format=3 uid="uid://5w1qdgy6oegd"]
+[gd_scene load_steps=11 format=3 uid="uid://5w1qdgy6oegd"]
 
 [ext_resource type="PackedScene" uid="uid://bjdh63hcwc37g" path="res://Scenes/World/world.tscn" id="1_jjgbg"]
 [ext_resource type="Script" uid="uid://d2dtvclyryyrt" path="res://Scripts/Managers/game_manager.gd" id="2_bo1nx"]
 [ext_resource type="Script" uid="uid://c8e3qqa072yim" path="res://Scripts/Managers/anomaly_manager.gd" id="3_8gbba"]
+[ext_resource type="Script" uid="uid://vm8fhhjlhmsj" path="res://Scripts/UI/ui.gd" id="4_kry3j"]
+[ext_resource type="Texture2D" uid="uid://b276gntvgtxm2" path="res://Assets/UI/HUD/crosshair009.png" id="5_21xkr"]
+[ext_resource type="Texture2D" uid="uid://6ewmd7ki2wxc" path="res://Assets/UI/HUD/white_ring.png" id="6_6bp64"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_bo1nx"]
-font_size = 36
-font_color = Color(0.9838348, 0.27865908, 0.49448496, 1)
-outline_size = 2
-outline_color = Color(0, 0, 0, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v2yv0"]
+bg_color = Color(0.16078432, 0.16078432, 0.16078432, 0.62352943)
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_344ge"]
+bg_color = Color(0.16078432, 0.16078432, 0.16078432, 0.62352943)
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_21xkr"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+corner_detail = 5
+expand_margin_left = 10.0
+expand_margin_right = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6bp64"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.2231029, 0.2231029, 0.22310287, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
 
 [node name="Main" type="Node"]
 
@@ -33,20 +63,198 @@ one_shot = true
 [node name="AnomalyManager" type="Node" parent="Managers"]
 script = ExtResource("3_8gbba")
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="." node_paths=PackedStringArray("wave_timer", "inter_wave_timer", "hud", "hud_wave_timer_label", "hud_wave_progress_bar", "hud_inter_wave_timer_label", "hud_inter_wave_timer_panel", "hud_curr_wave_number", "pause_menu")]
+script = ExtResource("4_kry3j")
+wave_timer = NodePath("../Managers/GameManager/wave_timer")
+inter_wave_timer = NodePath("../Managers/GameManager/inter_wave_timer")
+hud = NodePath("HUD")
+hud_wave_timer_label = NodePath("HUD/Panel/TextureProgressBar/wave_time_left")
+hud_wave_progress_bar = NodePath("HUD/Panel/TextureProgressBar")
+hud_inter_wave_timer_label = NodePath("HUD/PanelContainer/VBoxContainer/inter_wave_time")
+hud_inter_wave_timer_panel = NodePath("HUD/PanelContainer")
+hud_curr_wave_number = NodePath("HUD/Panel2/current_wave")
+pause_menu = NodePath("PauseMenu")
 
-[node name="time_left" type="Label" parent="UI"]
+[node name="HUD" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="cross_hair" type="TextureRect" parent="UI/HUD"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.5
+offset_top = -8.5
+offset_right = 8.5
+offset_bottom = 8.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_21xkr")
+expand_mode = 1
+
+[node name="Panel" type="Panel" parent="UI/HUD"]
+layout_mode = 1
+offset_right = 225.0
+offset_bottom = 50.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_v2yv0")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="UI/HUD/Panel"]
+layout_mode = 1
+offset_left = 6.0000005
+offset_top = 6.9999995
+offset_right = 70.0
+offset_bottom = 71.0
+scale = Vector2(0.595, 0.595)
+value = 100.0
+fill_mode = 5
+texture_under = ExtResource("6_6bp64")
+texture_progress = ExtResource("6_6bp64")
+tint_under = Color(0, 0, 0, 1)
+
+[node name="wave_time_left" type="Label" parent="UI/HUD/Panel/TextureProgressBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -9.5
+offset_top = -11.500002
+offset_right = 9.5
+offset_bottom = 11.500002
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 28
+text = "20"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="UI/HUD/Panel"]
+layout_mode = 0
+offset_left = 49.0
+offset_top = 15.0
+offset_right = 214.0
+offset_bottom = 38.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+text = "Wave time remaining"
+
+[node name="Panel2" type="Panel" parent="UI/HUD"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -100.0
+offset_bottom = 50.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_344ge")
+
+[node name="Label2" type="Label" parent="UI/HUD/Panel2"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 12.0
+offset_top = -11.5
+offset_right = 63.000008
+offset_bottom = 11.5
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+text = "Wave :"
+
+[node name="current_wave" type="Label" parent="UI/HUD/Panel2"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -33.0
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
+text = "0"
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/HUD"]
+layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -20.0
 offset_right = 20.0
-offset_bottom = 23.0
+offset_bottom = 40.0
 grow_horizontal = 2
-text = "20"
-label_settings = SubResource("LabelSettings_bo1nx")
-horizontal_alignment = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_21xkr")
+
+[node name="VBoxContainer" type="HBoxContainer" parent="UI/HUD/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = -2
+
+[node name="Label" type="Label" parent="UI/HUD/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Next wave starting in : "
+
+[node name="inter_wave_time" type="Label" parent="UI/HUD/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "10"
+
+[node name="PauseMenu" type="Control" parent="UI"]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/PauseMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6bp64")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PauseMenu/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="resume" type="Button" parent="UI/PauseMenu/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "RESUME"
+
+[node name="reload" type="Button" parent="UI/PauseMenu/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "RELOAD PREVIOUS WAVE"
+
+[node name="main_menu" type="Button" parent="UI/PauseMenu/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "QUIT TO MAIN MENU"
 
 [connection signal="timeout" from="Managers/GameManager/wave_timer" to="Managers/GameManager" method="_on_wave_timer_timeout"]
 [connection signal="timeout" from="Managers/GameManager/toy_spawn_freq" to="Managers/GameManager" method="_on_toy_spawn_freq_timeout"]
 [connection signal="timeout" from="Managers/GameManager/inter_wave_timer" to="Managers/GameManager" method="_on_inter_wave_timer_timeout"]
+[connection signal="pressed" from="UI/PauseMenu/PanelContainer/VBoxContainer/resume" to="UI" method="_on_resume_pressed"]
