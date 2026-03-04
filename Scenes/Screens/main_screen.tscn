@@ -63,7 +63,7 @@ theme_override_constants/shadow_offset_y = 4
 theme_override_constants/shadow_outline_size = 3
 theme_override_fonts/font = ExtResource("1_dslnq")
 theme_override_font_sizes/font_size = 116
-text = "PACKED HOURS!"
+text = "PACKING HOURS!"
 
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Load Game" to="." method="_on_load_game_pressed"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

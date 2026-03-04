@@ -14,6 +14,7 @@ func deposit_toy(object:Object):
 		emit_signal("toy_placed",anomaly)
 		object.reparent(self)
 		object.global_position = toy_location_marker.global_position
+		object.global_rotation = global_rotation
 		object.deactivate()
 		packed=true
 		

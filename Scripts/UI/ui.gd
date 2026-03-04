@@ -88,6 +88,10 @@ func reload_scene(full_reload:bool):
 	if full_reload:Global.current_wave=1
 	get_tree().reload_current_scene()
 	
+func _on_go_to_menu_pressed() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	get_tree().change_scene_to_packed(Global.main_screen)
+	
 func _on_start_over_pressed() -> void:
 	pause_without_ui()
 	reload_scene(true)

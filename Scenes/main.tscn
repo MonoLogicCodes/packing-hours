@@ -336,3 +336,4 @@ text = "QUIT TO MAIN MENU
 [connection signal="pressed" from="UI/PauseMenu/PanelContainer/VBoxContainer/main_menu" to="UI" method="_on_main_menu_pressed"]
 [connection signal="pressed" from="UI/YouLose/PanelContainer/VBoxContainer/reload" to="UI" method="_on_reload_pressed"]
 [connection signal="pressed" from="UI/YouLose/PanelContainer/VBoxContainer/start_over" to="UI" method="_on_start_over_pressed"]
+[connection signal="pressed" from="UI/YouLose/PanelContainer/VBoxContainer/go_to_menu" to="UI" method="_on_go_to_menu_pressed"]

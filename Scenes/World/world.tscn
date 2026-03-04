@@ -1,11 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://bjdh63hcwc37g"]
+[gd_scene load_steps=8 format=3 uid="uid://bjdh63hcwc37g"]
 
 [ext_resource type="PackedScene" uid="uid://crugke31s5nm1" path="res://Scenes/Player/player.tscn" id="1_t1gg8"]
 [ext_resource type="Script" uid="uid://3t5x5jovy7gs" path="res://Scripts/world.gd" id="1_vadfg"]
+[ext_resource type="PackedScene" uid="uid://dderq40n5jjel" path="res://Scenes/Room/room.tscn" id="3_3rhlx"]
+[ext_resource type="PackedScene" uid="uid://cc5ftemopyjxk" path="res://Scenes/conveyer_belt/conveyer_belt.tscn" id="4_vadfg"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_t1gg8"]
-sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
-ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+sky_top_color = Color(0, 0, 0, 1)
+sky_horizon_color = Color(0.24241182, 0.0043173283, 0.26080573, 1)
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(0.24313726, 0.003921569, 0.2627451, 1)
 
 [sub_resource type="Sky" id="Sky_yp2ti"]
 sky_material = SubResource("ProceduralSkyMaterial_t1gg8")
@@ -13,78 +17,104 @@ sky_material = SubResource("ProceduralSkyMaterial_t1gg8")
 [sub_resource type="Environment" id="Environment_3rhlx"]
 background_mode = 2
 sky = SubResource("Sky_yp2ti")
-tonemap_mode = 2
+ambient_light_source = 1
+ambient_light_color = Color(0.7643998, 0.00026115746, 0.71332157, 1)
+ambient_light_sky_contribution = 0.99
+tonemap_mode = 1
+tonemap_white = 0.8
 glow_enabled = true
+glow_bloom = 0.1
+fog_enabled = true
+fog_light_color = Color(0.33496156, 0.0012927919, 0.5837017, 1)
+fog_light_energy = 0.46
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_vadfg")
 
 [node name="Player" parent="." instance=ExtResource("1_t1gg8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1600652, 0)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1.1645312, -7.1957855)
 
-[node name="temp_platform" type="CSGBox3D" parent="."]
-use_collision = true
-collision_layer = 8
-collision_mask = 258
-size = Vector3(23.652344, 1, 28.228516)
+[node name="Room" parent="." instance=ExtResource("3_3rhlx")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -0.013, 0, -2.444)
 
-[node name="temp_platform2" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.160234, 0)
-use_collision = true
-collision_layer = 8
-collision_mask = 258
-size = Vector3(23.652344, 0.038085938, 28.228516)
+[node name="Conveyers" type="Node3D" parent="."]
 
-[node name="Environment" type="Node3D" parent="."]
+[node name="Conveyer_Belt" parent="Conveyers" instance=ExtResource("4_vadfg")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 8.163519, 0, -3.0410862)
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
-environment = SubResource("Environment_3rhlx")
+[node name="Conveyer_Belt2" parent="Conveyers" instance=ExtResource("4_vadfg")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -8.844671, 0, -3.13059)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
-transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
-shadow_enabled = true
+[node name="Conveyer_Belt3" parent="Conveyers" instance=ExtResource("4_vadfg")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2.6346748, 0, 2.915785)
 
 [node name="Toy_locations" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.911, 1.5, 2.455)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.175, 1, 0.756)
 
 [node name="location1" type="Marker3D" parent="Toy_locations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9577484e-05, 0, -8.172173)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9100647e-05, 0, -7.2026906)
 
 [node name="location2" type="Marker3D" parent="Toy_locations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9577484e-05, 0, -6.1921635)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9100647e-05, 0, -5.814735)
 
 [node name="location3" type="Marker3D" parent="Toy_locations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9577484e-05, 0, -4.3701286)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9100647e-05, 0, -4.5014887)
 
 [node name="location4" type="Marker3D" parent="Toy_locations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9577484e-05, 0, -2.708064)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9100647e-05, 0, -3.1885655)
 
 [node name="Toys" type="Node3D" parent="."]
 
 [node name="Boxes" type="Node3D" parent="."]
 
 [node name="Boxes_locations" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.866, 0.95, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.291, 1.4786525, 0)
 
 [node name="blocation1" type="Marker3D" parent="Boxes_locations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.502161, 0, -2.1610918)
 
 [node name="blocation2" type="Marker3D" parent="Boxes_locations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.502161, 0, -3.6636317)
 
 [node name="blocation3" type="Marker3D" parent="Boxes_locations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.502161, 0, -5.0252876)
 
 [node name="blocation4" type="Marker3D" parent="Boxes_locations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -9)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.502161, 0, -6.2780733)
 
 [node name="blocation5" type="Marker3D" parent="Boxes_locations"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 10.258272, 0, 5.376114)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 9.951848, 0, 3.1355143)
 
 [node name="blocation6" type="Marker3D" parent="Boxes_locations"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 7.2583723, 0, 5.4006705)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8.73197, 0, 3.160071)
 
 [node name="blocation7" type="Marker3D" parent="Boxes_locations"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4.2584734, 0, 5.4252267)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 7.4653845, 0, 3.184627)
 
 [node name="blocation8" type="Marker3D" parent="Boxes_locations"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.2585735, 0, 5.4497833)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 5.756219, 0, 3.2091837)
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_3rhlx")
+
+[node name="Lights" type="Node3D" parent="Environment"]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Environment/Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.385875, -2.0788126)
+light_color = Color(0.94214225, 0.98132247, 0.7955997, 1)
+light_energy = 2.0
+omni_range = 9.0
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="Environment/Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.072, 2.881661, -2.482)
+light_color = Color(0.94214225, 0.98132247, 0.7955997, 1)
+light_energy = 2.0
+omni_range = 9.0
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="Environment/Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.886629, 2.7447042, -2.6503737)
+light_color = Color(0.94214225, 0.98132247, 0.7955997, 1)
+light_energy = 2.0
+omni_range = 9.0

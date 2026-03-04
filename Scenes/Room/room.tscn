@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=3 uid="uid://dderq40n5jjel"]
+
+[ext_resource type="PackedScene" uid="uid://dpn17ffjg8gi6" path="res://Assets/Room/PackingFactory.glb" id="1_ogljc"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ogljc"]
+size = Vector3(19.858215, 0.33117676, 13.344482)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8ln5v"]
+size = Vector3(0.2, 4, 13.344)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gtrrj"]
+size = Vector3(19.858, 4, 0.3)
+
+[node name="Room" type="Node3D"]
+
+[node name="PackingFactory" parent="." instance=ExtResource("1_ogljc")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -7.926116, 0, 1.0795431)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 8
+collision_mask = 256
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.014556885, -0.1519897, 0.06364441)
+shape = SubResource("BoxShape3D_ogljc")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.044722, 2.0033493, 0)
+shape = SubResource("BoxShape3D_8ln5v")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.997258, 2.0033493, 0)
+shape = SubResource("BoxShape3D_8ln5v")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.005371, -6.746383)
+shape = SubResource("BoxShape3D_gtrrj")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.005371, 6.8722367)
+shape = SubResource("BoxShape3D_gtrrj")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.015, 4.1614757, 0.064)
+shape = SubResource("BoxShape3D_ogljc")
