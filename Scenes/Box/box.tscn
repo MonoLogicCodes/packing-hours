@@ -14,33 +14,35 @@ collision_mask = 256
 script = ExtResource("1_2frdm")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 material_override = SubResource("StandardMaterial3D_8rww4")
 size = Vector3(0.9, 0.9, 0.9)
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="CSGBox3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.038281202, 0)
 cast_shadow = 0
 operation = 2
-size = Vector3(0.8, 0.8, 0.8)
+size = Vector3(0.8, 0.8765625, 0.8)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_hex5h")
 
 [node name="toy_location" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.32, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18780065, 0)
 
 [node name="icon1" type="Sprite3D" parent="."]
-transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0, 0.455)
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0.46682394, 0.455)
 modulate = Color(0.61745477, 0.61745477, 0.6174547, 1)
 
 [node name="icon2" type="Sprite3D" parent="."]
-transform = Transform3D(-0.7, 0, 6.119594e-08, 0, 0.7, 0, -6.119594e-08, 0, -0.7, 0, 0, -0.455)
+transform = Transform3D(-0.8, 0, 1.2079664e-07, 0, 0.8, 0, -1.2079664e-07, 0, -0.8, 0, 0.46682394, -0.455)
 modulate = Color(0.61745477, 0.61745477, 0.6174547, 1)
 
 [node name="icon3" type="Sprite3D" parent="."]
-transform = Transform3D(-3.059797e-08, 0, 0.7, 0, 0.7, 0, -0.7, 0, -3.059797e-08, 0.455, 0, 0)
+transform = Transform3D(-3.4969112e-08, 0, 0.8, 0, 0.8, 0, -0.8, 0, -3.4969112e-08, 0.455, 0.46682394, 0)
 modulate = Color(0.61745477, 0.61745477, 0.6174547, 1)
 
 [node name="icon4" type="Sprite3D" parent="."]
-transform = Transform3D(-3.059797e-08, 0, -0.7, 0, 0.7, 0, 0.7, 0, -3.059797e-08, -0.455, 0, 0)
+transform = Transform3D(-3.4969112e-08, 0, -0.8, 0, 0.8, 0, 0.8, 0, -3.4969112e-08, -0.455, 0.46682394, 0)
 modulate = Color(0.61745477, 0.61745477, 0.6174547, 1)

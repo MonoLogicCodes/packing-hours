@@ -1,5 +1,8 @@
 extends Node3D
 
+@export var environment:WorldEnvironment
+@export var lights:Node3D
+
 const BOX_SCENE:PackedScene = preload("res://Scenes/Box/box.tscn")
 var toy_script = preload("res://Scripts/Toys.gd")
 
@@ -9,11 +12,16 @@ var toy_script = preload("res://Scripts/Toys.gd")
 @onready var toys = $Toys
 @onready var boxes = $Boxes
 
+#Anomaly
+var player_in_pickup_zone:bool = false
+var player_hyperopia:bool = false#Set in anomaly manager
+
 #Called from toys.gd too
 var next_toy_spawn_location
 
 func _ready() -> void:
 	Global.world = self
+	reset_fog()
 	
 func try_spawn_toy(toy_data:Array):#called from gamemanager
 	if toys.get_child_count() >= toy_spawn_locations.size():return
@@ -50,15 +58,18 @@ func try_move_toy():#Should occur when i pick toy
 		 .set_trans(Tween.TRANS_SINE)\
 		 .set_ease(Tween.EASE_IN_OUT)
 
-func spawn_boxes(toys_data):
-	var no_of_boxes = toys_data.size()
+func spawn_boxes(toys_data:Array):
+	var shuff_toys_data = toys_data.duplicate()
+	shuff_toys_data.shuffle()
+	
+	var no_of_boxes = shuff_toys_data.size()
 	if no_of_boxes>box_spawn_locations.size():return#I dont have that many boxes!
 	
 	for i in no_of_boxes:
 		var box = BOX_SCENE.instantiate()
 		box.toy_placed.connect(Global.anomaly_manager.clear_anomaly_effect)
 		boxes.add_child(box)
-		box.set_data(toys_data[i])
+		box.set_data(shuff_toys_data[i])
 		box.global_position = box_spawn_locations[i].global_position
 		
 func kill_all_toys_and_boxes():
@@ -67,4 +78,31 @@ func kill_all_toys_and_boxes():
 	for box in boxes.get_children():
 		box.queue_free()
 		
-		
+func set_fog():
+	var tween = get_tree().create_tween()
+	tween.tween_property(environment.environment,"fog_density",0.6,1)\
+		 .set_trans(Tween.TRANS_SINE)\
+		 .set_ease(Tween.EASE_IN_OUT)
+	
+func reset_fog():
+	var tween = get_tree().create_tween()
+	tween.tween_property(environment.environment,"fog_density",0.01,1)\
+		 .set_trans(Tween.TRANS_SINE)\
+		 .set_ease(Tween.EASE_IN_OUT)
+
+func lights_off():
+	lights.visible = false
+func lights_on():
+	lights.visible = true
+
+func _on_pickup_zone_body_entered(_body: Node3D) -> void:
+	if player_hyperopia:
+		show_icons_in_boxes(true)
+func _on_pickup_zone_body_exited(_body: Node3D) -> void:
+	if player_hyperopia:
+		show_icons_in_boxes(false)
+
+func show_icons_in_boxes(val:bool):
+	if boxes.get_children():
+		for box in boxes.get_children():
+			box.show_icon(val)

@@ -3,6 +3,9 @@ extends CanvasLayer
 @export var wave_timer:Timer
 @export var inter_wave_timer:Timer
 
+@export_category("Effects")
+@export var eff_anim_player:AnimationPlayer
+
 @export_category("HUD")
 @export var hud:Control
 @export var hud_wave_timer_label:Label
@@ -21,12 +24,15 @@ func _ready() -> void:
 	hud_new_wave_started()
 	lose_screen.visible=false
 	pause_game(false)
+	#For effects
+	eff_anim_player.play("RESET")
 	#for HUD
 	wave_timer.timeout.connect(reset_hud_wave_timer_label)
 	inter_wave_timer.timeout.connect(hud_new_wave_started)
 	#for PauseScreen
 	Global.player.pause.connect(pause_game)
 	#For LoseScreen
+	Global.player.game_over.connect(game_lose)
 	Global.game_manager.game_lose.connect(game_lose)
 	set_hud_wave_timer_max()
 
@@ -39,6 +45,8 @@ func _process(_delta: float) -> void:
 	if not inter_wave_timer.is_stopped():
 		hud_inter_wave_timer_panel.visible = true
 		hud_inter_wave_timer_label.text = str(ceili(inter_wave_timer.time_left))
+
+#Effects functions
 
 #HUD functions
 func set_hud_wave_timer_max():
@@ -77,6 +85,8 @@ func _on_main_menu_pressed() -> void:
 #Lose Screen functions
 func game_lose():
 	pause_without_ui()
+	eff_anim_player.play("lose_fade")
+	await eff_anim_player.animation_finished
 	show_lose_screen(true)
 	
 func show_lose_screen(val:bool):

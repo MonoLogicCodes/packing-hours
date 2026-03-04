@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bjdh63hcwc37g"]
+[gd_scene load_steps=9 format=3 uid="uid://bjdh63hcwc37g"]
 
 [ext_resource type="PackedScene" uid="uid://crugke31s5nm1" path="res://Scenes/Player/player.tscn" id="1_t1gg8"]
 [ext_resource type="Script" uid="uid://3t5x5jovy7gs" path="res://Scripts/world.gd" id="1_vadfg"]
@@ -25,11 +25,16 @@ tonemap_white = 0.8
 glow_enabled = true
 glow_bloom = 0.1
 fog_enabled = true
-fog_light_color = Color(0.33496156, 0.0012927919, 0.5837017, 1)
+fog_light_color = Color(0.55796057, 0.5580643, 0.50022036, 1)
 fog_light_energy = 0.46
 
-[node name="World" type="Node3D"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_vadfg"]
+size = Vector3(5.9189453, 1, 12.433594)
+
+[node name="World" type="Node3D" node_paths=PackedStringArray("environment", "lights")]
 script = ExtResource("1_vadfg")
+environment = NodePath("Environment/WorldEnvironment")
+lights = NodePath("Environment/Lights")
 
 [node name="Player" parent="." instance=ExtResource("1_t1gg8")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1.1645312, -7.1957855)
@@ -68,7 +73,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9100647e-05, 0, -3.1885655
 [node name="Boxes" type="Node3D" parent="."]
 
 [node name="Boxes_locations" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.291, 1.4786525, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5220103, 0.18218791, 0)
 
 [node name="blocation1" type="Marker3D" parent="Boxes_locations"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.502161, 0, -2.1610918)
@@ -83,16 +88,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.502161, 0, -5.0252876)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.502161, 0, -6.2780733)
 
 [node name="blocation5" type="Marker3D" parent="Boxes_locations"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 9.951848, 0, 3.1355143)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8.108305, 2.3841858e-07, 1.4006842)
 
 [node name="blocation6" type="Marker3D" parent="Boxes_locations"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8.73197, 0, 3.160071)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 6.8884273, 2.3841858e-07, 1.4252409)
 
 [node name="blocation7" type="Marker3D" parent="Boxes_locations"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 7.4653845, 0, 3.184627)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 5.621842, 2.3841858e-07, 1.449797)
 
 [node name="blocation8" type="Marker3D" parent="Boxes_locations"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 5.756219, 0, 3.2091837)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3.9126763, 2.3841858e-07, 1.4743537)
 
 [node name="Environment" type="Node3D" parent="."]
 
@@ -118,3 +123,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.886629, 2.7447042, -2.6503
 light_color = Color(0.94214225, 0.98132247, 0.7955997, 1)
 light_energy = 2.0
 omni_range = 9.0
+
+[node name="pickup_zone" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8122907, 1.2455554, -0.79219985)
+collision_layer = 128
+collision_mask = 256
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="pickup_zone"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.281214, 0, -1.7142198)
+shape = SubResource("BoxShape3D_vadfg")
+
+[connection signal="body_entered" from="pickup_zone" to="." method="_on_pickup_zone_body_entered"]
+[connection signal="body_exited" from="pickup_zone" to="." method="_on_pickup_zone_body_exited"]

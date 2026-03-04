@@ -8,17 +8,17 @@ signal game_lose#used in UI as overlay lose screen
 @onready var toy_spawn_freq = $toy_spawn_freq
 @onready var inter_wave_timer = $inter_wave_timer
 
-const WAVES:Dictionary = {#[no_of_toys,anomaly_types]
-	1:[4,[Global.anomaly_types.SLOW_SPEED,Global.anomaly_types.FAST_SPEED]],#no of toys MUST BE <= 8
-	2:[6,[Global.anomaly_types.FAST_SPEED,Global.anomaly_types.INVERT_COLOR]],
-	3:[2,[]],
+const WAVES:Dictionary = {#[no_of_toys,duration,anomaly_types]
+	1:[4,30,[Global.anomaly_types.HEAVY_TOY,Global.anomaly_types.HYPEROPIA]],#no of toys MUST BE <= 8
+	2:[6,60,[Global.anomaly_types.FAST_SPEED]],
+	3:[2,15,[]],
 }
 var curr_wave_details:Array=[]
 
 var toys_spawned_this_wave:int=0#Changes from world.gd
 var toys_left_to_place:int = 0#Changes from toys.gd
 
-var toys_data:Array#Array of [model,active,anomaly]
+var toys_data:Array#Array of [model,anomaly]
 var toy_models_this_wave:Array
 
 func _ready() -> void:
@@ -44,6 +44,7 @@ func try_start_wave(wave_no:int):
 	
 	curr_wave_details = WAVES[wave_no]
 	toys_left_to_place = curr_wave_details[0]
+	wave_timer.wait_time=curr_wave_details[1]
 	toys_spawned_this_wave=0
 	toys_data = []
 	toy_models_this_wave=[]
@@ -59,11 +60,11 @@ func randomize_toy_data():#Toy model,Toy active,Toy anomaly
 	toy_models_this_wave.shuffle()
 	toy_models_this_wave = toy_models_this_wave.slice(0,curr_wave_details[0])
 	
-	var anoms = curr_wave_details[1].duplicate()
+	var anoms = curr_wave_details[2].duplicate()
 	for j in range(anoms.size(),curr_wave_details[0]):
 		anoms.append(Global.anomaly_types.NONE)
 	for i in curr_wave_details[0]:
-		toys_data.append([toy_models_this_wave[i],true,anoms[i]])
+		toys_data.append([toy_models_this_wave[i],anoms[i]])
 	
 	toys_data.shuffle()
 

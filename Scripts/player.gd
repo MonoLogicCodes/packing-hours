@@ -1,6 +1,7 @@
 extends CharacterBody3D
 
 signal pause
+signal game_over
 
 @onready var ray_cast = $Head/Camera3D/RayCast3D
 @onready var camera = $Head/Camera3D
@@ -15,10 +16,12 @@ const SLOW_SPEED:float = 2
 const NORMAL_FOV:float = 75
 const FAST_FOV:float = 110
 const SLOW_FOV:float = 40
+const MAX_CAM_FALL:float = -1.3
 
 var speed:float = WALK_SPEED;
 var curr_fov:float = NORMAL_FOV
 var gravity:float = GRAVITY
+var cam_fall:bool = false
 
 var picked_toy:Object = null
 
@@ -50,15 +53,22 @@ func _handle_movement(delta: float) -> void:
 	var move_dir  = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
 	if move_dir:
-		if camera.fov!=curr_fov:camera.fov=move_toward(camera.fov,curr_fov,speed)
+		if camera.fov!=curr_fov and not cam_fall:camera.fov=move_toward(camera.fov,curr_fov,speed)
 		velocity.x = move_dir.x * speed
 		velocity.z = move_dir.z * speed
 	else:
-		if curr_fov!=NORMAL_FOV:camera.fov = move_toward(camera.fov,NORMAL_FOV,speed)
+		if curr_fov!=NORMAL_FOV and not cam_fall:camera.fov = move_toward(camera.fov,NORMAL_FOV,speed)
 		velocity.x = move_toward(velocity.x, 0, speed)
 		velocity.z = move_toward(velocity.z, 0, speed) 
 		
 	move_and_slide()
+	if cam_fall:
+		camera.position.y -= delta/4
+		camera.fov = move_toward(camera.fov,SLOW_FOV,delta*10)
+		if camera.position.y < MAX_CAM_FALL:
+			cam_fall=false
+			emit_signal("game_over")
+
 	
 
 func check_raycast_collider(event: String) -> void:
@@ -98,3 +108,10 @@ func invert_gravity():
 func reset_gravity():
 	gravity = GRAVITY
 	camera.rotation_degrees.z=0
+
+func fall_camera():
+	cam_fall=true
+	
+func reset_camera_y():
+	cam_fall=false
+	camera.position.y=0

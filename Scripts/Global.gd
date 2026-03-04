@@ -24,7 +24,7 @@ var toy_models = {
 }
 
 var toy_icons = {
-	"ball":preload("res://icon.svg"),
+	"ball":preload("res://Assets/2D_icons/foot_ball.png"),
 	"car1":preload("res://Assets/2D_icons/car_1.png"),
 	"car2":preload("res://Assets/2D_icons/car_2.png"),
 	"car3":preload("res://Assets/2D_icons/car_3.png"),
@@ -36,5 +36,5 @@ var toy_icons = {
 }
 
 enum anomaly_types {
-	NONE,FAST_SPEED,SLOW_SPEED,INVERT_CAMERA,INVERT_GRAVITY,INVERT_COLOR
+	NONE,FAST_SPEED,SLOW_SPEED,INVERT_GRAVITY,FOG,LIGHTS_OFF,HEAVY_TOY,HYPEROPIA
 }

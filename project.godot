@@ -62,4 +62,5 @@ sprint={
 3d_physics/layer_2="Toy"
 3d_physics/layer_3="Box"
 3d_physics/layer_4="Room"
+3d_physics/layer_8="Pickup Zone"
 3d_physics/layer_9="Player"

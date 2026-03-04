@@ -5,6 +5,7 @@ signal toy_placed(an:Global.anomaly_types)#used in world.gd
 @onready var toy_location_marker = $toy_location
 @export var model:String
 @export var anomaly:Global.anomaly_types=Global.anomaly_types.NONE
+
 var packed = false
 
 func deposit_toy(object:Object):
@@ -28,7 +29,7 @@ func deposit_toy(object:Object):
 	
 func set_data(data):
 	model=data[0]
-	anomaly=data[2]
+	anomaly=data[1]
 	show_toy_icon()
 	
 func show_toy_icon():
@@ -38,5 +39,9 @@ func show_toy_icon():
 	$icon3.texture = tex
 	$icon4.texture = tex
 	
-	
+func show_icon(val:bool):#Called from world
+	$icon1.visible = val
+	$icon2.visible = val
+	$icon3.visible = val
+	$icon4.visible = val
 	
