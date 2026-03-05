@@ -23,6 +23,14 @@ var toy_models = {
 	"train2":preload("res://Scenes/Toys_models/train_2.tscn"),
 }
 
+var box_models = {
+	"red":preload("res://Scenes/Box/GiftModels/redbox.tscn"),
+	"blue":preload("res://Scenes/Box/GiftModels/bluebox.tscn"),
+	"green":preload("res://Scenes/Box/GiftModels/greenbox.tscn"),
+	"white":preload("res://Scenes/Box/GiftModels/whitebox.tscn"),
+	"yellow":preload("res://Scenes/Box/GiftModels/yellowbox.tscn"),
+}
+
 var toy_icons = {
 	"ball":preload("res://Assets/2D_icons/foot_ball.png"),
 	"car1":preload("res://Assets/2D_icons/car_1.png"),
@@ -36,5 +44,6 @@ var toy_icons = {
 }
 
 enum anomaly_types {
-	NONE,FAST_SPEED,SLOW_SPEED,INVERT_GRAVITY,FOG,LIGHTS_OFF,HEAVY_TOY,HYPEROPIA
+	NONE,FAST_SPEED,SLOW_SPEED,INVERT_GRAVITY,FOG,LIGHTS_OFF,HEAVY_TOY,HYPEROPIA,ADAMANT_BOX\
+	,CLUMSY_TOY,RED_LIGHT
 }

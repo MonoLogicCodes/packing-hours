@@ -9,7 +9,7 @@ signal game_lose#used in UI as overlay lose screen
 @onready var inter_wave_timer = $inter_wave_timer
 
 const WAVES:Dictionary = {#[no_of_toys,duration,anomaly_types]
-	1:[4,30,[Global.anomaly_types.HEAVY_TOY,Global.anomaly_types.HYPEROPIA]],#no of toys MUST BE <= 8
+	1:[3,20,[]],#no of toys MUST BE <= 8
 	2:[6,60,[Global.anomaly_types.FAST_SPEED]],
 	3:[2,15,[]],
 }
@@ -70,6 +70,7 @@ func randomize_toy_data():#Toy model,Toy active,Toy anomaly
 
 func check_if_all_placed():#Called by box.gd : Everytime u deposit toy
 	if toys_left_to_place==0:#check later
+		Global.world.pack_all_boxes()
 		stop_wave_timers()
 		if inter_wave_timer.is_stopped():inter_wave_timer.start()
 		
@@ -83,8 +84,8 @@ func _on_wave_timer_timeout() -> void:
 		emit_signal("game_lose")
 		stop_wave_timers()
 		return
-	if Global.current_wave==WAVES.size():
-		pass
+	
+	Global.world.pack_all_boxes()
 	if inter_wave_timer.is_stopped():inter_wave_timer.start()
 	stop_wave_timers()
 
@@ -100,7 +101,7 @@ func stop_wave_timers():
 	wave_timer.stop()
 	toy_spawn_freq.stop()
 
-	
+
 func go_to_win_screen():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	get_tree().change_scene_to_packed(Global.win_screen)

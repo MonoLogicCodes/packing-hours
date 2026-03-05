@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bjdh63hcwc37g"]
+[gd_scene load_steps=12 format=3 uid="uid://bjdh63hcwc37g"]
 
 [ext_resource type="PackedScene" uid="uid://crugke31s5nm1" path="res://Scenes/Player/player.tscn" id="1_t1gg8"]
 [ext_resource type="Script" uid="uid://3t5x5jovy7gs" path="res://Scripts/world.gd" id="1_vadfg"]
@@ -28,13 +28,124 @@ fog_enabled = true
 fog_light_color = Color(0.55796057, 0.5580643, 0.50022036, 1)
 fog_light_energy = 0.46
 
+[sub_resource type="Animation" id="Animation_l1hd3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Lights:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Lights/OmniLight3D:light_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.94214225, 0.98132247, 0.7955997, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Lights/OmniLight3D3:light_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.94214225, 0.98132247, 0.7955997, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Lights/OmniLight3D2:light_color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.94214225, 0.98132247, 0.7955997, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_vadfg"]
+resource_name = "lights_flicker"
+length = 0.35
+step = 0.07
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Lights:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.07, 0.14, 0.21, 0.28, 0.35),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Lights/OmniLight3D:light_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.7046444, 0, 0.06327853, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Lights/OmniLight3D3:light_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.7046444, 0, 0.06327853, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Lights/OmniLight3D2:light_color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.7046444, 0, 0.06327853, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_adcqc"]
+_data = {
+&"RESET": SubResource("Animation_l1hd3"),
+&"lights_flicker": SubResource("Animation_vadfg")
+}
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_vadfg"]
 size = Vector3(5.9189453, 1, 12.433594)
 
-[node name="World" type="Node3D" node_paths=PackedStringArray("environment", "lights")]
+[node name="World" type="Node3D" node_paths=PackedStringArray("environment", "lights", "lights_anim_player")]
 script = ExtResource("1_vadfg")
 environment = NodePath("Environment/WorldEnvironment")
 lights = NodePath("Environment/Lights")
+lights_anim_player = NodePath("Environment/AnimationPlayer")
 
 [node name="Player" parent="." instance=ExtResource("1_t1gg8")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1.1645312, -7.1957855)
@@ -55,6 +166,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2.6
 
 [node name="Toy_locations" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.175, 1, 0.756)
+visible = false
 
 [node name="location1" type="Marker3D" parent="Toy_locations"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9100647e-05, 0, -7.2026906)
@@ -73,31 +185,84 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9100647e-05, 0, -3.1885655
 [node name="Boxes" type="Node3D" parent="."]
 
 [node name="Boxes_locations" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.5220103, 0.18218791, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.817603, 0.87981594, 2.9347258)
+visible = false
 
 [node name="blocation1" type="Marker3D" parent="Boxes_locations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.502161, 0, -2.1610918)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7977538, -0.697628, -5.0958176)
+
+[node name="Marker3D" type="Marker3D" parent="Boxes_locations/blocation1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.76, 0.875, 0)
 
 [node name="blocation2" type="Marker3D" parent="Boxes_locations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.502161, 0, -3.6636317)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7977538, -0.697628, -6.598357)
+
+[node name="Marker3D" type="Marker3D" parent="Boxes_locations/blocation2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.76, 0.875, 0)
 
 [node name="blocation3" type="Marker3D" parent="Boxes_locations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.502161, 0, -5.0252876)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7977538, -0.697628, -7.9600134)
+
+[node name="Marker3D" type="Marker3D" parent="Boxes_locations/blocation3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.76, 0.875, 0)
 
 [node name="blocation4" type="Marker3D" parent="Boxes_locations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.502161, 0, -6.2780733)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7977538, -0.697628, -9.212799)
+
+[node name="Marker3D" type="Marker3D" parent="Boxes_locations/blocation4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.76, 0.875, 0)
 
 [node name="blocation5" type="Marker3D" parent="Boxes_locations"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8.108305, 2.3841858e-07, 1.4006842)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 9.403898, -0.6976278, -1.5340415)
+
+[node name="Marker3D" type="Marker3D" parent="Boxes_locations/blocation5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.52, 0.875, 0)
 
 [node name="blocation6" type="Marker3D" parent="Boxes_locations"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 6.8884273, 2.3841858e-07, 1.4252409)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8.18402, -0.6976278, -1.5094849)
+
+[node name="Marker3D" type="Marker3D" parent="Boxes_locations/blocation6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.52, 0.875, 0)
 
 [node name="blocation7" type="Marker3D" parent="Boxes_locations"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 5.621842, 2.3841858e-07, 1.449797)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 6.9174347, -0.6976278, -1.4849287)
+
+[node name="Marker3D" type="Marker3D" parent="Boxes_locations/blocation7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.52, 0.875, 0)
 
 [node name="blocation8" type="Marker3D" parent="Boxes_locations"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3.9126763, 2.3841858e-07, 1.4743537)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 5.208269, -0.6976278, -1.4603721)
+
+[node name="Marker3D" type="Marker3D" parent="Boxes_locations/blocation8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.52, 0, 0)
+
+[node name="Random_locations" type="Node3D" parent="."]
+
+[node name="rloc1" type="Marker3D" parent="Random_locations"]
+
+[node name="rloc2" type="Marker3D" parent="Random_locations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6.691325)
+
+[node name="rloc3" type="Marker3D" parent="Random_locations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.2243695, 0, -6.691325)
+
+[node name="rloc4" type="Marker3D" parent="Random_locations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.2243695, 0, 2.205265)
+
+[node name="rloc5" type="Marker3D" parent="Random_locations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.6440706, 0, -2.6156192)
+
+[node name="rloc6" type="Marker3D" parent="Random_locations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.742009, 0, -8.3679085)
+
+[node name="rloc7" type="Marker3D" parent="Random_locations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.3630986)
+
+[node name="rloc8" type="Marker3D" parent="Random_locations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.77887, 0, -3.3630986)
+
+[node name="rloc9" type="Marker3D" parent="Random_locations"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.6984763, 0, -8.343948)
 
 [node name="Environment" type="Node3D" parent="."]
 
@@ -123,6 +288,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.886629, 2.7447042, -2.6503
 light_color = Color(0.94214225, 0.98132247, 0.7955997, 1)
 light_energy = 2.0
 omni_range = 9.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Environment"]
+libraries = {
+&"": SubResource("AnimationLibrary_adcqc")
+}
 
 [node name="pickup_zone" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8122907, 1.2455554, -0.79219985)

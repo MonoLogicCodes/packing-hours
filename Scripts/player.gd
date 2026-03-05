@@ -22,7 +22,8 @@ var speed:float = WALK_SPEED;
 var curr_fov:float = NORMAL_FOV
 var gravity:float = GRAVITY
 var cam_fall:bool = false
-
+var red_light_active:bool = false#used in world
+var can_move:bool = true
 var picked_toy:Object = null
 
 func _ready() -> void:
@@ -53,6 +54,7 @@ func _handle_movement(delta: float) -> void:
 	var move_dir  = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
 	if move_dir:
+		if red_light_active and not can_move:emit_signal("game_over")
 		if camera.fov!=curr_fov and not cam_fall:camera.fov=move_toward(camera.fov,curr_fov,speed)
 		velocity.x = move_dir.x * speed
 		velocity.z = move_dir.z * speed
@@ -86,7 +88,11 @@ func check_raycast_collider(event: String) -> void:
 			if obj.has_method("deposit_toy"):#Box
 				if picked_toy:
 					picked_toy = obj.deposit_toy(picked_toy)
-	
+
+func drop_toy():
+	picked_toy.reparent(Global.world)
+	picked_toy.global_rotation = Vector3.ZERO
+	picked_toy=null
 	
 #ANOMALY_FUNCTIONS
 func set_fast_speed():

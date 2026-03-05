@@ -96,7 +96,7 @@ one_shot = true
 wait_time = 0.5
 
 [node name="inter_wave_timer" type="Timer" parent="Managers/GameManager"]
-wait_time = 3.0
+wait_time = 5.0
 one_shot = true
 
 [node name="AnomalyManager" type="Node" parent="Managers"]
