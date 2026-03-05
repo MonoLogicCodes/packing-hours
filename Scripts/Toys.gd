@@ -20,6 +20,9 @@ func pick_up_toy():#Called by player
 		if times_to_fall_n_pick>1:
 			times_to_fall_n_pick-=1
 			try_dropping()
+	#Only for MIMIC
+	if anomaly==Global.anomaly_types.MIMIC:
+		visible = false
 	
 	active = false
 	return self

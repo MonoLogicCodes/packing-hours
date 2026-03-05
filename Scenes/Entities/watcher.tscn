@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://y7ii65x7l21l"]
+
+[ext_resource type="Texture2D" uid="uid://bkj8jfgi0ovdu" path="res://Assets/watcher/watcher.png" id="1_aglwc"]
+
+[node name="Watcher" type="Node3D"]
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 1.504, 0)
+billboard = 2
+texture = ExtResource("1_aglwc")
+
+[node name="VisibleOnScreenEnabler3D" type="VisibleOnScreenEnabler3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6692655, 0)
+aabb = AABB(-0.1862299, -1.5924387, -0.42703885, 0.3724598, 3.310854, 0.9243902)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.881, 0)
+light_color = Color(1, 0, 0, 1)

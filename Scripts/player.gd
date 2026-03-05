@@ -1,15 +1,20 @@
 extends CharacterBody3D
 
 signal pause
-signal game_over
+signal game_over#also emited from box
 
 @onready var ray_cast = $Head/Camera3D/RayCast3D
 @onready var camera = $Head/Camera3D
 @onready var hand = $Head/Camera3D/Hand
+@onready var head = $Head
 
 const SENSITIVITY: float = 0.004
 const WALK_SPEED: float = 5.0
 const GRAVITY:float = -16#-ve imp here
+const BOB_FREQ = 5.0
+const BOB_AMP = 0.01
+
+var bob_time := 0.0
 #ANOMALY DATAS
 const FAST_SPEED:float = 15
 const SLOW_SPEED:float = 2
@@ -25,6 +30,9 @@ var cam_fall:bool = false
 var red_light_active:bool = false#used in world
 var can_move:bool = true
 var picked_toy:Object = null
+
+var is_mimic_toy:bool = false
+var mimic_toy:Area3D
 
 func _ready() -> void:
 	speed=WALK_SPEED
@@ -54,11 +62,17 @@ func _handle_movement(delta: float) -> void:
 	var move_dir  = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
 	if move_dir:
+		bob_time += delta * speed
+		var y = sin(bob_time * BOB_FREQ) * BOB_AMP
+		var x = cos(bob_time * BOB_FREQ * 0.5) * BOB_AMP
+		head.position += Vector3(x, y, 0)
+		
 		if red_light_active and not can_move:emit_signal("game_over")
 		if camera.fov!=curr_fov and not cam_fall:camera.fov=move_toward(camera.fov,curr_fov,speed)
 		velocity.x = move_dir.x * speed
 		velocity.z = move_dir.z * speed
 	else:
+		
 		if curr_fov!=NORMAL_FOV and not cam_fall:camera.fov = move_toward(camera.fov,NORMAL_FOV,speed)
 		velocity.x = move_toward(velocity.x, 0, speed)
 		velocity.z = move_toward(velocity.z, 0, speed) 
@@ -72,7 +86,6 @@ func _handle_movement(delta: float) -> void:
 			emit_signal("game_over")
 
 	
-
 func check_raycast_collider(event: String) -> void:
 	if ray_cast.is_colliding():
 		var obj = ray_cast.get_collider() as Object
@@ -121,3 +134,16 @@ func fall_camera():
 func reset_camera_y():
 	cam_fall=false
 	camera.position.y=0
+
+func start_mimic_toy():
+	is_mimic_toy=true
+	while true:
+		mimic_toy = Global.toy_models.values().pick_random().instantiate()
+		hand.add_child(mimic_toy)
+		await get_tree().create_timer(0.4).timeout
+		if mimic_toy:mimic_toy.queue_free()
+		if !is_mimic_toy:break
+
+func stop_mimic_toy():
+	is_mimic_toy=false
+	if mimic_toy:mimic_toy.queue_free()

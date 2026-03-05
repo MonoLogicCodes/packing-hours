@@ -309,19 +309,19 @@ skeleton = NodePath("")
 
 [node name="icon1" type="Sprite3D" parent="box"]
 transform = Transform3D(-3.4969112e-08, 0, -0.8, 0, 0.8, 0, 0.8, 0, -3.4969112e-08, -0.455, -0.033176064, -1.9888683e-08)
-modulate = Color(0.61745477, 0.61745477, 0.6174547, 1)
+shaded = true
 
 [node name="icon2" type="Sprite3D" parent="box"]
 transform = Transform3D(1.5576575e-07, 0, 0.8, 0, 0.8, 0, -0.8, 0, 1.5576575e-07, 0.455, -0.033176064, 1.9888683e-08)
-modulate = Color(0.61745477, 0.61745477, 0.6174547, 1)
+shaded = true
 
 [node name="icon3" type="Sprite3D" parent="box"]
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -1.9888683e-08, -0.033176064, 0.455)
-modulate = Color(0.61745477, 0.61745477, 0.6174547, 1)
+shaded = true
 
 [node name="icon4" type="Sprite3D" parent="box"]
 transform = Transform3D(-0.8, 0, 6.9938224e-08, 0, 0.8, 0, -6.9938224e-08, 0, -0.8, 1.9888683e-08, -0.033176064, -0.455)
-modulate = Color(0.61745477, 0.61745477, 0.6174547, 1)
+shaded = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

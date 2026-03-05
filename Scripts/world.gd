@@ -5,10 +5,14 @@ extends Node3D
 @export var lights_anim_player:AnimationPlayer
 
 const BOX_SCENE:PackedScene = preload("res://Scenes/Box/box.tscn")
+const WATCHER_SCENE:PackedScene = preload("res://Scenes/Entities/watcher.tscn")
+
 var toy_script = preload("res://Scripts/Toys.gd")
 
 @onready var toy_init_spawn_pos = $Toy_locations.global_position
-@onready var box_init_spawn_pos = $Boxes_locations.global_position - Vector3(0,1,0)
+@onready var box_init_spawn_pos = $Boxes_locations.global_position 
+@onready var trash_box_pos = $Random_locations/rloc6.global_position
+@onready var watcher_pos = $watcher_pos.global_position
 @onready var toy_spawn_locations = $Toy_locations.get_children()
 @onready var box_spawn_locations = $Boxes_locations.get_children()
 @onready var random_locations = $Random_locations.get_children()
@@ -19,7 +23,8 @@ var toy_script = preload("res://Scripts/Toys.gd")
 var player_in_pickup_zone:bool = false
 var player_hyperopia:bool = false#Set in anomaly manager
 var teleported_box_init_pos:Vector3=Vector3.ZERO#used only for adamant boxes
-
+var t_box#used later to delete t_box once placed
+var watcher:Node3D
 #Called from toys.gd too
 var next_toy_spawn_location
 
@@ -75,10 +80,14 @@ func spawn_boxes(toys_data:Array):
 		boxes.add_child(box)
 		box.set_data(shuff_toys_data[i])
 		box.set_conv_belt_pos(box_spawn_locations[i].get_child(0).global_position)
-		
+		box.scale = Vector3(0.01,0.01,0.01)
 		box.global_position = box_init_spawn_pos
+		
 		var tween = get_tree().create_tween()
 		tween.tween_property(box,"global_position", box_spawn_locations[i].get_child(0).global_position,1)\
+		 .set_trans(Tween.TRANS_SINE)\
+		 .set_ease(Tween.EASE_IN_OUT)
+		tween.parallel().tween_property(box,"scale",Vector3(1,1,1),1)\
 		 .set_trans(Tween.TRANS_SINE)\
 		 .set_ease(Tween.EASE_IN_OUT)
 		tween.tween_property(box,"global_position", box_spawn_locations[i].global_position,0.2)\
@@ -93,6 +102,9 @@ func move_packed_box_back(box,pos):#Called from box
 	tween.tween_property(box,"global_position", box_init_spawn_pos ,0.8)\
 	 .set_trans(Tween.TRANS_SINE)\
 	 .set_ease(Tween.EASE_IN_OUT)
+	tween.parallel().tween_property(box,"scale",Vector3(0.01,0.01,0.01),0.8)\
+	 .set_trans(Tween.TRANS_SINE)\
+	 .set_ease(Tween.EASE_IN_OUT)
 	await tween.finished
 	box.visible = false
 	
@@ -103,6 +115,20 @@ func kill_all_toys_and_boxes():
 		box.queue_free()
 
 #anomalies		
+func spawn_trash_box(data):
+	if t_box!=null:return#only 1 t_box possible
+	t_box = BOX_SCENE.instantiate()
+	t_box.toy_placed.connect(Global.anomaly_manager.clear_anomaly_effect)
+	add_child(t_box)
+	t_box.global_position = trash_box_pos
+	t_box.set_data(data)
+	t_box.is_trash_box=true
+
+func remove_trash_box():
+	print("yea")
+	t_box.queue_free()
+	t_box = null
+
 func set_fog():
 	var tween = get_tree().create_tween()
 	tween.tween_property(environment.environment,"fog_density",0.6,1)\
@@ -175,4 +201,19 @@ func stop_red_light():
 	Global.player.can_move=true
 	lights_on()
 	lights_anim_player.play("RESET")
-		
+
+func spawn_watcher():
+	if watcher:return#only 1 watcher
+	watcher = WATCHER_SCENE.instantiate()
+	watcher.global_position = watcher_pos
+	add_child(watcher)
+
+func despawn_watcher():
+	if not watcher:return
+	watcher.queue_free()
+
+func is_watcher_visible():
+	var vis_box:VisibleOnScreenEnabler3D = watcher.get_node("VisibleOnScreenEnabler3D")
+	return vis_box.is_on_screen()
+	
+	

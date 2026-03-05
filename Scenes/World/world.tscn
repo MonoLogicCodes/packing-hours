@@ -303,5 +303,8 @@ collision_mask = 256
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.281214, 0, -1.7142198)
 shape = SubResource("BoxShape3D_vadfg")
 
+[node name="watcher_pos" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.541, 0, -3.265)
+
 [connection signal="body_entered" from="pickup_zone" to="." method="_on_pickup_zone_body_entered"]
 [connection signal="body_exited" from="pickup_zone" to="." method="_on_pickup_zone_body_exited"]

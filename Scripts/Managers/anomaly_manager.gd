@@ -25,6 +25,13 @@ func try_anomaly_effect(anom:Global.anomaly_types):#used in world.gd
 			pass
 		Global.anomaly_types.RED_LIGHT:
 			Global.world.start_red_light()
+		Global.anomaly_types.CORRUPTED_TOY:#Logic at box.gd
+			pass
+		Global.anomaly_types.MIMIC:
+			Global.player.start_mimic_toy()
+		Global.anomaly_types.WATCHER:
+			Global.world.lights_off()
+			Global.world.spawn_watcher()
 			
 func clear_anomaly_effect(anom:Global.anomaly_types):#used in world.gd
 	match anom:
@@ -49,6 +56,13 @@ func clear_anomaly_effect(anom:Global.anomaly_types):#used in world.gd
 			pass
 		Global.anomaly_types.RED_LIGHT:
 			Global.world.stop_red_light()
+		Global.anomaly_types.CORRUPTED_TOY:
+			Global.world.remove_trash_box()
+		Global.anomaly_types.MIMIC:
+			Global.player.stop_mimic_toy()
+		Global.anomaly_types.WATCHER:
+			Global.world.lights_on()
+			Global.world.despawn_watcher()
 
 func clear_all_anomalies():#No use yet maybe in the future(boss level?)
 	Global.player.reset_speed()

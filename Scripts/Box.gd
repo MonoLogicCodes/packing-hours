@@ -6,6 +6,7 @@ signal toy_placed(an:Global.anomaly_types)#used in world.gd
 @onready var anim_player:AnimationPlayer = $AnimationPlayer
 @onready var box_model:Node3D = $box
 
+var is_trash_box:bool = false#set by world while spawning t_box
 var gift_box
 var cb_pos:Vector3#for finally moving gift box to there
 var model:String
@@ -16,6 +17,11 @@ var no_of_clicks_to_place:int=1
 func deposit_toy(object:Object):
 	if packed:return object
 	
+	#FOR CORRUPTED TOYS ONLY
+	if anomaly==Global.anomaly_types.CORRUPTED_TOY and not is_trash_box:
+		Global.world.spawn_trash_box([model,anomaly])#only 1 can spawn(logic at world)
+		return object
+		
 	#for ADAMANT BOXES ONLY
 	if(no_of_clicks_to_place>1):
 		if(no_of_clicks_to_place==2):
@@ -25,8 +31,14 @@ func deposit_toy(object:Object):
 		no_of_clicks_to_place-=1
 		return object
 	
+	#FOR WATCHER
+	if(anomaly == Global.anomaly_types.WATCHER):
+		if Global.world.is_watcher_visible():
+			Global.player.emit_signal("game_over")
+	
 	if(object.get_model()==model):
 		emit_signal("toy_placed",anomaly)
+		object.visible=true
 		object.placed_in_box=true
 		object.reparent(toy_location_marker)#so that we can toggle visibility
 		object.global_position = toy_location_marker.global_position
