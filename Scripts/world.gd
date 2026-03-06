@@ -136,7 +136,6 @@ func spawn_trash_box(data):
 	t_box.is_trash_box=true
 
 func remove_trash_box():
-	print("yea")
 	t_box.queue_free()
 	t_box = null
 
@@ -163,6 +162,7 @@ func _on_pickup_zone_body_entered(_body: Node3D) -> void:
 		show_icons_in_boxes(true)
 func _on_pickup_zone_body_exited(_body: Node3D) -> void:
 	if player_hyperopia:
+		Global.audio_manager.pop.play()
 		show_icons_in_boxes(false)
 
 func show_icons_in_boxes(val:bool):
@@ -177,6 +177,7 @@ func pack_all_boxes():#Called from gamemanager
 
 func teleport_box(box:Area3D,back_to_init:bool = false):
 	if !teleported_box_init_pos:teleported_box_init_pos=box.global_position
+	Global.audio_manager.teleport.play()
 	if back_to_init:
 		box.global_position = teleported_box_init_pos
 		teleported_box_init_pos=Vector3.ZERO
@@ -185,23 +186,35 @@ func teleport_box(box:Area3D,back_to_init:bool = false):
 	box.global_position = to_loc
 
 func start_red_light():
+	Global.audio_manager.green_light.play()
 	lights_anim_player.play("lights_flicker")
 	await lights_anim_player.animation_finished
+	
+	Global.audio_manager.green_light.stop()
+	Global.audio_manager.bulb_break.play()
+	
 	Global.player.red_light_active=true
 	Global.player.can_move=true#as lights off when anim finishes
 	
 	while Global.player.red_light_active:
 		await get_tree().create_timer(randf_range(0.4,1)).timeout
 		if !Global.player.red_light_active:break
+		
+		Global.audio_manager.green_light.play()
 		lights_anim_player.play("lights_flicker")
 		await lights_anim_player.animation_finished
+		Global.audio_manager.green_light.stop()
 		if !Global.player.red_light_active:break
+
 		lights_on()
 		Global.player.can_move=false
 		await get_tree().create_timer(randf_range(1,1.5)).timeout
 		if !Global.player.red_light_active:break
+		Global.audio_manager.green_light.play()
 		lights_anim_player.play("lights_flicker")
 		await lights_anim_player.animation_finished
+		Global.audio_manager.green_light.stop()
+		Global.audio_manager.bulb_break.play()
 		if !Global.player.red_light_active:break
 		Global.player.can_move=true
 	
@@ -217,6 +230,8 @@ func stop_red_light():
 #WATCHER
 func spawn_watcher():
 	if watcher:return#only 1 watcher
+	Global.audio_manager.entity_appear.play()
+	Global.audio_manager.play_current_main_theme("watcher")
 	
 	var tween = get_tree().create_tween()
 	tween.tween_property(environment.environment,"fog_density",0.1,1)\
@@ -249,6 +264,7 @@ func despawn_watcher():
 	watcher_timer=null
 	saw_watcher=false
 	times_to_see_watcher=5#garbage!=1
+	Global.audio_manager.play_current_main_theme("normal")
 
 func seeing_watcher():
 	if not saw_watcher:saw_watcher=true
@@ -259,9 +275,10 @@ func not_seeing_watcher():
 func is_player_seeing_watcher():
 	if not saw_watcher:return
 	if !watcher_in_view:
-		Global.player.emit_signal("game_over")
+		Global.player.emit_signal("game_over","Did not see watcher teleport")
 	times_to_see_watcher-=1
 	if times_to_see_watcher==0:despawn_watcher()
+	Global.audio_manager.teleport.play()
 	watcher.global_position = random_locations.pick_random().global_position
 	
 func spawn_eye():

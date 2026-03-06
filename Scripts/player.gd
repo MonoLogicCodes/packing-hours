@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
 signal pause
-signal game_over#also emited from box,world
+signal game_over(reason:String)#also emited from box,world
 
 @onready var ray_cast = $Head/Camera3D/RayCast3D
 @onready var camera = $Head/Camera3D
@@ -16,8 +16,8 @@ const BOB_AMP = 0.01
 
 var bob_time := 0.0
 #ANOMALY DATAS
-const FAST_SPEED:float = 15
-const SLOW_SPEED:float = 2
+const FAST_SPEED:float = 13
+const SLOW_SPEED:float = 2.7
 const NORMAL_FOV:float = 75
 const FAST_FOV:float = 110
 const SLOW_FOV:float = 40
@@ -70,7 +70,7 @@ func _handle_movement(delta: float) -> void:
 		if !Global.audio_manager.walking.playing:
 			Global.audio_manager.walking.play()
 		
-		if red_light_active and not can_move:emit_signal("game_over")
+		if red_light_active and not can_move:emit_signal("game_over","Can't move in red light")
 		if camera.fov!=curr_fov and not cam_fall:camera.fov=move_toward(camera.fov,curr_fov,speed)
 		velocity.x = move_dir.x * speed
 		velocity.z = move_dir.z * speed
@@ -88,7 +88,7 @@ func _handle_movement(delta: float) -> void:
 		camera.fov = move_toward(camera.fov,SLOW_FOV,delta*10)
 		if camera.position.y < MAX_CAM_FALL:
 			cam_fall=false
-			emit_signal("game_over")
+			emit_signal("game_over","Heavy toy: You fell")
 
 	
 func check_raycast_collider(event: String) -> void:
@@ -102,6 +102,7 @@ func check_raycast_collider(event: String) -> void:
 				if picked_toy:
 					picked_toy.reparent(hand)
 					picked_toy.global_position = hand.global_position
+					picked_toy.rotation = Vector3.ZERO
 				
 			if obj.has_method("deposit_toy"):#Box
 				if picked_toy:
@@ -114,36 +115,49 @@ func drop_toy():
 	
 #ANOMALY_FUNCTIONS
 func set_fast_speed():
+	Global.audio_manager.walking.pitch_scale=3.5
 	speed=FAST_SPEED
 	curr_fov = FAST_FOV
 
 func set_slow_speed():
+	Global.audio_manager.walking.pitch_scale=1
 	speed=SLOW_SPEED
 	curr_fov = SLOW_FOV
 
 func reset_speed():
+	Global.audio_manager.walking.pitch_scale=1.5
 	speed=WALK_SPEED
 	curr_fov = NORMAL_FOV
 		
 func invert_gravity():
+	Global.audio_manager.gravity.play()
 	gravity = -GRAVITY
 	camera.rotation_degrees.z=180
+	hand.position += Vector3(0,0.2,0)
+	ray_cast.target_position.z = -4
 	
 func reset_gravity():
+	Global.audio_manager.gravity.play()
 	gravity = GRAVITY
 	camera.rotation_degrees.z=0
+	hand.position = Vector3(0.779,-0.546,-0.718)
+	ray_cast.target_position.z = -2.5
 
 func fall_camera():
+	Global.audio_manager.riser.play()
 	cam_fall=true
 	
 func reset_camera_y():
+	Global.audio_manager.riser.stop()
 	cam_fall=false
 	camera.position.y=0
 
 func start_mimic_toy():
 	is_mimic_toy=true
 	while true:
-		mimic_toy = Global.toy_models.values().pick_random().instantiate()
+		var model = Global.toy_models.keys().pick_random()
+		mimic_toy = Global.toy_models[model].instantiate()
+		Global.audio_manager.picked_up_toy(model)
 		hand.add_child(mimic_toy)
 		await get_tree().create_timer(0.4).timeout
 		if mimic_toy:mimic_toy.queue_free()

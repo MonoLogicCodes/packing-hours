@@ -31,6 +31,9 @@ func pick_up_toy():#Called by player
 func get_model():
 	return model
 
+func get_anomaly():
+	return anomaly
+
 func deactivate():#Called from box
 	active=false
 	
@@ -39,7 +42,7 @@ func set_data(toy_data:Array):#called by world
 	anomaly = toy_data[1]
 	#ONLY FOR CLUMSY TOYS
 	if anomaly==Global.anomaly_types.CLUMSY_TOY:
-		times_to_fall_n_pick = randi_range(7,10)
+		times_to_fall_n_pick = randi_range(25,40)
 		print(times_to_fall_n_pick)
 #Anomaly
 func try_dropping():
@@ -51,4 +54,6 @@ func try_dropping():
 	var tween = get_tree().create_tween()
 	tween.tween_property(self,"global_position", Vector3(global_position.x,0,global_position.z),0.1)\
 	 .set_trans(Tween.TRANS_SINE)\
-	 .set_ease(Tween.EASE_IN_OUT)	
+	 .set_ease(Tween.EASE_IN_OUT)
+	await tween.finished
+	Global.audio_manager.fall.play()

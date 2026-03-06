@@ -118,7 +118,7 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_a8dol")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hex5h"]
-size = Vector3(0.82836914, 0.19604492, 0.85058594)
+size = Vector3(0.82836914, 0.7537842, 0.85058594)
 
 [sub_resource type="Animation" id="Animation_8rww4"]
 length = 0.001
@@ -341,7 +341,7 @@ transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -1.9888683e-08, -0.0331
 transform = Transform3D(-0.8, 0, 6.9938224e-08, 0, 0.8, 0, -6.9938224e-08, 0, -0.8, 1.9888683e-08, -0.033176064, -0.455)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.712429, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.43355936, 0)
 shape = SubResource("BoxShape3D_hex5h")
 
 [node name="toy_location" type="Marker3D" parent="."]

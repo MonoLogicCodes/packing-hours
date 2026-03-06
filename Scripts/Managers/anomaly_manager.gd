@@ -7,8 +7,6 @@ func try_anomaly_effect(anom:Global.anomaly_types):#used in world.gd
 	match anom:
 		Global.anomaly_types.FAST_SPEED:
 			Global.player.set_fast_speed()
-		Global.anomaly_types.SLOW_SPEED:
-			Global.player.set_slow_speed()
 		Global.anomaly_types.INVERT_GRAVITY:
 			Global.player.invert_gravity()
 		Global.anomaly_types.FOG:
@@ -17,6 +15,7 @@ func try_anomaly_effect(anom:Global.anomaly_types):#used in world.gd
 			Global.world.lights_off()
 		Global.anomaly_types.HEAVY_TOY:
 			Global.player.fall_camera()
+			Global.player.set_slow_speed()
 		Global.anomaly_types.HYPEROPIA:
 			Global.world.player_hyperopia=true
 		Global.anomaly_types.ADAMANT_BOX:#handled in box itself
@@ -30,8 +29,6 @@ func try_anomaly_effect(anom:Global.anomaly_types):#used in world.gd
 		Global.anomaly_types.MIMIC:
 			Global.player.start_mimic_toy()
 		Global.anomaly_types.WATCHER:
-			Global.audio_manager.entity_appear.play()
-			Global.audio_manager.play_current_main_theme("watcher")
 			Global.world.lights_off()
 			Global.world.spawn_watcher()
 		Global.anomaly_types.THE_EYE:
@@ -43,8 +40,6 @@ func clear_anomaly_effect(anom:Global.anomaly_types):#used in world.gd
 	match anom:
 		Global.anomaly_types.FAST_SPEED:
 			Global.player.reset_speed()
-		Global.anomaly_types.SLOW_SPEED:
-			Global.player.reset_speed()
 		Global.anomaly_types.INVERT_GRAVITY:
 			Global.player.reset_gravity()
 		Global.anomaly_types.FOG:
@@ -53,6 +48,7 @@ func clear_anomaly_effect(anom:Global.anomaly_types):#used in world.gd
 			Global.world.lights_on()
 		Global.anomaly_types.HEAVY_TOY:
 			Global.player.reset_camera_y()
+			Global.player.reset_speed()
 		Global.anomaly_types.HYPEROPIA:
 			Global.world.player_hyperopia=false
 			Global.world.show_icons_in_boxes(true)
@@ -67,7 +63,6 @@ func clear_anomaly_effect(anom:Global.anomaly_types):#used in world.gd
 		Global.anomaly_types.MIMIC:
 			Global.player.stop_mimic_toy()
 		Global.anomaly_types.WATCHER:#despawn mechanic in world itself
-			Global.audio_manager.play_current_main_theme("normal")
 			Global.world.lights_on()
 		Global.anomaly_types.THE_EYE:
 			Global.audio_manager.play_current_main_theme("normal")

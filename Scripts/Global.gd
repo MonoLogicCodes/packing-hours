@@ -46,17 +46,17 @@ var toy_icons = {
 
 var toy_pickup_sounds = {
 	"ball":[preload("res://SFX/GameSounds/pickup_football.wav"),-20],
-	"car1":[preload("res://SFX/GameSounds/pickup_plastic_toy.wav"),0],
-	"car2":[preload("res://SFX/GameSounds/pickup_plastic_toy.wav"),0],
-	"car3":[preload("res://SFX/GameSounds/pickup_plastic_toy.wav"),0],
-	"car4":[preload("res://SFX/GameSounds/pickup_plastic_toy.wav"),0],
-	"ship1":[preload("res://SFX/GameSounds/pickup_plastic_toy.wav"),0],
-	"ship2":[preload("res://SFX/GameSounds/pickup_plastic_toy.wav"),0],
-	"train1":[preload("res://SFX/GameSounds/pickup_plastic_toy.wav"),0],
-	"train2":[preload("res://SFX/GameSounds/pickup_plastic_toy.wav"),0],	
+	"car1":[preload("res://SFX/GameSounds/pickup_plastic_toy.wav"),2],
+	"car2":[preload("res://SFX/GameSounds/pickup_plastic_toy.wav"),2],
+	"car3":[preload("res://SFX/GameSounds/pickup_plastic_toy.wav"),2],
+	"car4":[preload("res://SFX/GameSounds/pickup_plastic_toy.wav"),2],
+	"ship1":[preload("res://SFX/GameSounds/pickup_plastic_toy.wav"),2],
+	"ship2":[preload("res://SFX/GameSounds/pickup_plastic_toy.wav"),2],
+	"train1":[preload("res://SFX/GameSounds/pickup_plastic_toy.wav"),2],
+	"train2":[preload("res://SFX/GameSounds/pickup_plastic_toy.wav"),2],	
 }
 
 enum anomaly_types {
-	NONE,FAST_SPEED,SLOW_SPEED,INVERT_GRAVITY,FOG,LIGHTS_OFF,HEAVY_TOY,HYPEROPIA,ADAMANT_BOX\
+	NONE,FAST_SPEED,INVERT_GRAVITY,FOG,LIGHTS_OFF,HEAVY_TOY,HYPEROPIA,ADAMANT_BOX\
 	,CLUMSY_TOY,RED_LIGHT,CORRUPTED_TOY,MIMIC,WATCHER,THE_EYE
 }

@@ -14,6 +14,12 @@ extends Node
 @onready var entity_appear: AudioStreamPlayer = $AmbientSounds/EntityAppear
 @onready var swoosh: AudioStreamPlayer = $GameSounds/swoosh
 @onready var swoosh_2: AudioStreamPlayer = $GameSounds/swoosh2
+@onready var gravity: AudioStreamPlayer = $GameSounds/gravity
+@onready var riser: AudioStreamPlayer = $GameSounds/riser
+@onready var teleport: AudioStreamPlayer = $GameSounds/teleport
+@onready var fall: AudioStreamPlayer = $GameSounds/fall
+@onready var green_light: AudioStreamPlayer = $GameSounds/green_light
+@onready var bulb_break: AudioStreamPlayer = $GameSounds/bulb_break
 
 
 @onready var bgm_themes = {

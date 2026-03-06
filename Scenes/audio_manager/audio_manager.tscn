@@ -1,7 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://dv41ifxk3bdlx"]
+[gd_scene load_steps=20 format=3 uid="uid://dv41ifxk3bdlx"]
 
 [ext_resource type="Script" uid="uid://b614ti18ds0h8" path="res://Scripts/Managers/audio_manager.gd" id="1_3veih"]
-[ext_resource type="AudioStream" uid="uid://0vrcx26hc3py" path="res://SFX/GameSounds/walking.ogg" id="2_cfpoy"]
+[ext_resource type="AudioStream" uid="uid://ktfbn4ves3qx" path="res://SFX/GameSounds/walking.wav" id="2_nxg5c"]
 [ext_resource type="AudioStream" uid="uid://cp13tpee1p16m" path="res://SFX/GameSounds/box_flap_close.wav" id="4_a75f0"]
 [ext_resource type="AudioStream" uid="uid://didqmm1cpn1d7" path="res://SFX/GameSounds/place_toy.wav" id="4_jf51j"]
 [ext_resource type="AudioStream" uid="uid://ui4cyediiv7w" path="res://SFX/GameSounds/gift_wrap.wav" id="4_oqt60"]
@@ -10,9 +10,15 @@
 [ext_resource type="AudioStream" uid="uid://hv80npldwum8" path="res://SFX/GameSounds/swoosh.wav" id="7_qk3ae"]
 [ext_resource type="AudioStream" uid="uid://oyf1kr7flkxd" path="res://SFX/Ambience/Ventilation.ogg" id="8_mtnen"]
 [ext_resource type="AudioStream" uid="uid://4fi302lbyhn0" path="res://SFX/GameSounds/swoosh2.wav" id="8_nxg5c"]
+[ext_resource type="AudioStream" uid="uid://dix44wxl4ltpd" path="res://SFX/GameSounds/jump.wav" id="9_bl677"]
 [ext_resource type="AudioStream" uid="uid://r178fhevneqv" path="res://SFX/Ambience/the_eye.ogg" id="9_l8crj"]
 [ext_resource type="AudioStream" uid="uid://8eoic8ig48v1" path="res://SFX/Ambience/EntityAppear.wav" id="10_8tofm"]
+[ext_resource type="AudioStream" uid="uid://l1fthtj5t0uw" path="res://SFX/GameSounds/riser.ogg" id="10_mnvy3"]
 [ext_resource type="AudioStream" uid="uid://dn7xvg6hif63w" path="res://SFX/Ambience/intenseMusic.wav" id="11_qk3ae"]
+[ext_resource type="AudioStream" uid="uid://di8dymtisshg1" path="res://SFX/GameSounds/teleport.wav" id="11_vtmw5"]
+[ext_resource type="AudioStream" uid="uid://dg5rmfb5rthb" path="res://SFX/GameSounds/fall.wav" id="12_sky2s"]
+[ext_resource type="AudioStream" uid="uid://bawfrk4ns4wai" path="res://SFX/GameSounds/green_light.ogg" id="13_kmn4n"]
+[ext_resource type="AudioStream" uid="uid://d0iyx58n1ge87" path="res://SFX/GameSounds/bulb_break.wav" id="14_muw3v"]
 
 [node name="AudioManager" type="Node"]
 script = ExtResource("1_3veih")
@@ -20,11 +26,13 @@ script = ExtResource("1_3veih")
 [node name="GameSounds" type="Node" parent="."]
 
 [node name="walking" type="AudioStreamPlayer" parent="GameSounds"]
-stream = ExtResource("2_cfpoy")
-volume_db = -15.0
+stream = ExtResource("2_nxg5c")
+volume_db = -2.0
+pitch_scale = 1.5
 bus = &"GameSounds"
 
 [node name="toy_picked" type="AudioStreamPlayer" parent="GameSounds"]
+volume_db = 2.0
 bus = &"GameSounds"
 
 [node name="toy_placed" type="AudioStreamPlayer" parent="GameSounds"]
@@ -53,6 +61,31 @@ bus = &"GameSounds"
 
 [node name="swoosh2" type="AudioStreamPlayer" parent="GameSounds"]
 stream = ExtResource("8_nxg5c")
+volume_db = 7.0
+bus = &"GameSounds"
+
+[node name="gravity" type="AudioStreamPlayer" parent="GameSounds"]
+stream = ExtResource("9_bl677")
+bus = &"GameSounds"
+
+[node name="riser" type="AudioStreamPlayer" parent="GameSounds"]
+stream = ExtResource("10_mnvy3")
+bus = &"GameSounds"
+
+[node name="teleport" type="AudioStreamPlayer" parent="GameSounds"]
+stream = ExtResource("11_vtmw5")
+bus = &"GameSounds"
+
+[node name="fall" type="AudioStreamPlayer" parent="GameSounds"]
+stream = ExtResource("12_sky2s")
+bus = &"GameSounds"
+
+[node name="green_light" type="AudioStreamPlayer" parent="GameSounds"]
+stream = ExtResource("13_kmn4n")
+bus = &"GameSounds"
+
+[node name="bulb_break" type="AudioStreamPlayer" parent="GameSounds"]
+stream = ExtResource("14_muw3v")
 bus = &"GameSounds"
 
 [node name="MenuSounds" type="Node" parent="."]

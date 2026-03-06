@@ -2,14 +2,14 @@ extends Node
 #Handles Waves, Win/Lose
 
 signal game_won#used in this script itself as scene change only
-signal game_lose#used in UI as overlay lose screen
+signal game_lose(reason:String)#used in UI as overlay lose screen
 
 @onready var wave_timer = $wave_timer
 @onready var toy_spawn_freq = $toy_spawn_freq
 @onready var inter_wave_timer = $inter_wave_timer
 
 const WAVES:Dictionary = {#[no_of_toys,duration,anomaly_types]
-	1:[2,40,[Global.anomaly_types.THE_EYE]],#no of toys MUST BE <= 8
+	1:[2,40,[Global.anomaly_types.HEAVY_TOY,Global.anomaly_types.RED_LIGHT]],#no of toys MUST BE <= 8
 	2:[6,60,[Global.anomaly_types.FAST_SPEED]],
 	3:[2,15,[]],
 }
@@ -81,7 +81,7 @@ func check_if_all_placed():#Called by box.gd : Everytime u deposit toy
 
 func _on_wave_timer_timeout() -> void:
 	if toys_left_to_place!=0:
-		emit_signal("game_lose")
+		emit_signal("game_lose","Time out")
 		stop_wave_timers()
 		return
 	

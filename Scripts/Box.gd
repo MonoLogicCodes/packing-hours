@@ -5,6 +5,7 @@ signal toy_placed(an:Global.anomaly_types)#used in world.gd
 @onready var toy_location_marker = $toy_location
 @onready var anim_player:AnimationPlayer = $AnimationPlayer
 @onready var box_model:Node3D = $box
+@onready var static_body_3d: StaticBody3D = $StaticBody3D
 
 var is_trash_box:bool = false#set by world while spawning t_box
 var gift_box
@@ -16,9 +17,14 @@ var no_of_clicks_to_place:int=1
 
 func deposit_toy(object:Object):
 	if packed:return object
-	if object.get_model()!=model:return object
+	if object.get_model()!=model:
+		if object.get_anomaly() == Global.anomaly_types.MIMIC:
+			Global.player.emit_signal("game_over","Mimic toy placed in wrong box")
+		return object
+	
 	#FOR CORRUPTED TOYS ONLY
 	if anomaly==Global.anomaly_types.CORRUPTED_TOY and not is_trash_box:
+		anim_player.play("box_shake")
 		Global.world.spawn_trash_box([model,anomaly])#only 1 can spawn(logic at world)
 		return object
 		
@@ -31,8 +37,9 @@ func deposit_toy(object:Object):
 				Global.world.teleport_box(self)
 		if(anomaly == Global.anomaly_types.THE_EYE):
 			if Global.world.is_eye_watching():
-				Global.player.emit_signal("game_over")
+				Global.player.emit_signal("game_over","The eye caught you placing toy")
 				return object
+			Global.audio_manager.toy_placed.play()
 			anim_player.play("box_shake")
 		no_of_clicks_to_place-=1
 		return object
@@ -40,7 +47,7 @@ func deposit_toy(object:Object):
 	#for WATCHER ONLY
 	if(anomaly == Global.anomaly_types.WATCHER):
 		if Global.world.watcher:
-			Global.player.emit_signal("game_over")
+			Global.player.emit_signal("game_over","The watcher is here")
 			
 	
 	emit_signal("toy_placed",anomaly)
@@ -66,9 +73,11 @@ func set_data(data):
 	model=data[0]
 	anomaly=data[1]
 	show_toy_icon()
+	
 	if anomaly==Global.anomaly_types.ADAMANT_BOX or anomaly == Global.anomaly_types.THE_EYE:
 		no_of_clicks_to_place=randi_range(4,8)
-	
+	elif anomaly == Global.anomaly_types.HEAVY_TOY:
+		static_body_3d.set_collision_layer_value(4,false)
 	gift_box = Global.box_models.values().pick_random().instantiate()
 	gift_box.visible = false
 	add_child(gift_box)
