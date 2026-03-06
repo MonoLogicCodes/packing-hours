@@ -37,7 +37,7 @@ current = true
 
 [node name="RayCast3D" type="RayCast3D" parent="Head/Camera3D"]
 target_position = Vector3(0, 0, -4)
-collision_mask = 6
+collision_mask = 14
 collide_with_areas = true
 
 [node name="Hand" type="Node3D" parent="Head/Camera3D"]

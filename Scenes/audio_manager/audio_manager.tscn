@@ -1,0 +1,83 @@
+[gd_scene load_steps=14 format=3 uid="uid://dv41ifxk3bdlx"]
+
+[ext_resource type="Script" uid="uid://b614ti18ds0h8" path="res://Scripts/Managers/audio_manager.gd" id="1_3veih"]
+[ext_resource type="AudioStream" uid="uid://0vrcx26hc3py" path="res://SFX/GameSounds/walking.ogg" id="2_cfpoy"]
+[ext_resource type="AudioStream" uid="uid://cp13tpee1p16m" path="res://SFX/GameSounds/box_flap_close.wav" id="4_a75f0"]
+[ext_resource type="AudioStream" uid="uid://didqmm1cpn1d7" path="res://SFX/GameSounds/place_toy.wav" id="4_jf51j"]
+[ext_resource type="AudioStream" uid="uid://ui4cyediiv7w" path="res://SFX/GameSounds/gift_wrap.wav" id="4_oqt60"]
+[ext_resource type="AudioStream" uid="uid://4j65ms3061xo" path="res://SFX/GameSounds/pop.wav" id="5_oqt60"]
+[ext_resource type="AudioStream" uid="uid://bxwje3v3ymyk3" path="res://SFX/MenuSounds/lose_screen.ogg" id="7_fncwv"]
+[ext_resource type="AudioStream" uid="uid://hv80npldwum8" path="res://SFX/GameSounds/swoosh.wav" id="7_qk3ae"]
+[ext_resource type="AudioStream" uid="uid://oyf1kr7flkxd" path="res://SFX/Ambience/Ventilation.ogg" id="8_mtnen"]
+[ext_resource type="AudioStream" uid="uid://4fi302lbyhn0" path="res://SFX/GameSounds/swoosh2.wav" id="8_nxg5c"]
+[ext_resource type="AudioStream" uid="uid://r178fhevneqv" path="res://SFX/Ambience/the_eye.ogg" id="9_l8crj"]
+[ext_resource type="AudioStream" uid="uid://8eoic8ig48v1" path="res://SFX/Ambience/EntityAppear.wav" id="10_8tofm"]
+[ext_resource type="AudioStream" uid="uid://dn7xvg6hif63w" path="res://SFX/Ambience/intenseMusic.wav" id="11_qk3ae"]
+
+[node name="AudioManager" type="Node"]
+script = ExtResource("1_3veih")
+
+[node name="GameSounds" type="Node" parent="."]
+
+[node name="walking" type="AudioStreamPlayer" parent="GameSounds"]
+stream = ExtResource("2_cfpoy")
+volume_db = -15.0
+bus = &"GameSounds"
+
+[node name="toy_picked" type="AudioStreamPlayer" parent="GameSounds"]
+bus = &"GameSounds"
+
+[node name="toy_placed" type="AudioStreamPlayer" parent="GameSounds"]
+stream = ExtResource("4_jf51j")
+volume_db = -15.0
+bus = &"GameSounds"
+
+[node name="box_close" type="AudioStreamPlayer" parent="GameSounds"]
+stream = ExtResource("4_a75f0")
+volume_db = -3.0
+
+[node name="gift_wrap" type="AudioStreamPlayer" parent="GameSounds"]
+stream = ExtResource("4_oqt60")
+volume_db = -10.0
+bus = &"GameSounds"
+
+[node name="pop" type="AudioStreamPlayer" parent="GameSounds"]
+stream = ExtResource("5_oqt60")
+volume_db = -10.0
+bus = &"GameSounds"
+
+[node name="swoosh" type="AudioStreamPlayer" parent="GameSounds"]
+stream = ExtResource("7_qk3ae")
+volume_db = -8.0
+bus = &"GameSounds"
+
+[node name="swoosh2" type="AudioStreamPlayer" parent="GameSounds"]
+stream = ExtResource("8_nxg5c")
+bus = &"GameSounds"
+
+[node name="MenuSounds" type="Node" parent="."]
+
+[node name="lose_screen" type="AudioStreamPlayer" parent="MenuSounds"]
+stream = ExtResource("7_fncwv")
+bus = &"Menu"
+
+[node name="AmbientSounds" type="Node" parent="."]
+
+[node name="Ventillation" type="AudioStreamPlayer" parent="AmbientSounds"]
+stream = ExtResource("8_mtnen")
+volume_db = -8.0
+autoplay = true
+bus = &"Ambience"
+
+[node name="TheEye" type="AudioStreamPlayer" parent="AmbientSounds"]
+stream = ExtResource("9_l8crj")
+volume_db = -10.0
+bus = &"Ambience"
+
+[node name="EntityAppear" type="AudioStreamPlayer" parent="AmbientSounds"]
+stream = ExtResource("10_8tofm")
+bus = &"Ambience"
+
+[node name="Watcher" type="AudioStreamPlayer" parent="AmbientSounds"]
+stream = ExtResource("11_qk3ae")
+volume_db = -4.0

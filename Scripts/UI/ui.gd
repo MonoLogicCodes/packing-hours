@@ -82,9 +82,11 @@ func _on_pstart_over_pressed() -> void:#seperate function cuz to add transition
 func _on_main_menu_pressed() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	get_tree().change_scene_to_packed(Global.main_screen)
+	
 #Lose Screen functions
 func game_lose():
 	pause_without_ui()
+	Global.audio_manager.lose_screen.play()
 	eff_anim_player.play("lose_fade")
 	await eff_anim_player.animation_finished
 	show_lose_screen(true)

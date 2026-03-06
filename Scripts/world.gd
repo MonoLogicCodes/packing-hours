@@ -63,6 +63,7 @@ func try_spawn_toy(toy_data:Array):#called from gamemanager
 	tween.tween_property(toy,"global_position", next_toy_spawn_location.global_position,0.2)\
 	 .set_trans(Tween.TRANS_SINE)\
 	 .set_ease(Tween.EASE_IN_OUT)
+	Global.audio_manager.swoosh_2.play()
 
 func try_move_toy():#Should occur when i pick toy
 	await get_tree().create_timer(0.4).timeout
@@ -108,6 +109,7 @@ func move_packed_box_back(box,pos):#Called from box
 	tween.tween_property(box,"global_position", pos,0.2)\
 	 .set_trans(Tween.TRANS_SINE)\
 	 .set_ease(Tween.EASE_IN_OUT)
+	Global.audio_manager.swoosh.play()
 	tween.tween_property(box,"global_position", box_init_spawn_pos ,0.8)\
 	 .set_trans(Tween.TRANS_SINE)\
 	 .set_ease(Tween.EASE_IN_OUT)
@@ -238,7 +240,8 @@ func spawn_watcher():
 	
 func despawn_watcher():
 	reset_fog()
-	
+	Global.audio_manager.entity_appear.play()
+	Global.audio_manager.watcher.stop()
 	if not watcher:return
 	watcher.queue_free()
 	watcher_visibility_box = null

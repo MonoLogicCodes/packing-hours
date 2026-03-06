@@ -30,9 +30,12 @@ func try_anomaly_effect(anom:Global.anomaly_types):#used in world.gd
 		Global.anomaly_types.MIMIC:
 			Global.player.start_mimic_toy()
 		Global.anomaly_types.WATCHER:
+			Global.audio_manager.entity_appear.play()
+			Global.audio_manager.play_current_main_theme("watcher")
 			Global.world.lights_off()
 			Global.world.spawn_watcher()
 		Global.anomaly_types.THE_EYE:
+			Global.audio_manager.play_current_main_theme("the_eye")
 			Global.world.lights_off()
 			Global.world.spawn_eye()
 			
@@ -64,8 +67,11 @@ func clear_anomaly_effect(anom:Global.anomaly_types):#used in world.gd
 		Global.anomaly_types.MIMIC:
 			Global.player.stop_mimic_toy()
 		Global.anomaly_types.WATCHER:#despawn mechanic in world itself
+			Global.audio_manager.play_current_main_theme("normal")
 			Global.world.lights_on()
 		Global.anomaly_types.THE_EYE:
+			Global.audio_manager.play_current_main_theme("normal")
+			Global.audio_manager.entity_appear.play()
 			Global.world.lights_on()
 			Global.world.despawn_eye()
 

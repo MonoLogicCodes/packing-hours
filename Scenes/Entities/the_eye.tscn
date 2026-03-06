@@ -146,32 +146,34 @@ texture = ExtResource("1_2c7j3")
 
 [node name="Sprite3D2" type="Sprite3D" parent="."]
 transform = Transform3D(-4.3711385e-08, 0, 0.8, 0, 1, 0, -0.99999994, 0, -3.4969112e-08, 0, 0.013, 0.60418963)
+billboard = 2
 texture = ExtResource("2_slv8u")
 
 [node name="Sprite3D3" type="Sprite3D" parent="."]
 transform = Transform3D(-4.3711385e-08, 0, 0.8, 0, 1, 0, -0.99999994, 0, -3.4969112e-08, 0, 0.018, -0.61294603)
+billboard = 2
 texture = ExtResource("2_slv8u")
 
 [node name="right_yellow" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.648)
 light_color = Color(1, 1, 0, 1)
+light_energy = 0.6
 shadow_enabled = true
 
 [node name="left_orange" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.687)
 light_color = Color(1, 0.4, 0, 1)
-light_energy = 3.119
 omni_range = 0.85178566
 
 [node name="right_orange" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.648)
 light_color = Color(1, 0.4, 0, 1)
-light_energy = 3.331
 omni_range = 0.85178566
 
 [node name="left_yellow" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.687)
 light_color = Color(1, 1, 0, 1)
+light_energy = 0.6
 shadow_enabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

@@ -12,6 +12,7 @@ var times_to_fall_n_pick:int=1
 func pick_up_toy():#Called by player
 	if not active:return null
 	
+	Global.audio_manager.picked_up_toy(model)
 	Global.world.try_move_toy()
 	emit_signal("toy_picked",anomaly)
 	

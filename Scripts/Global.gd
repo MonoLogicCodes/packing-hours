@@ -2,6 +2,7 @@ extends Node
 
 var game_manager:Node#set by game_manager itself
 var anomaly_manager:Node#set by anomaly_manager itself
+var audio_manager:Node
 var player:Node3D#set by player itself
 var world:Node3D#set by world itself
 #Scenes:PackedScenes
@@ -41,6 +42,18 @@ var toy_icons = {
 	"ship2":preload("res://Assets/2D_icons/ship_2.png"),
 	"train1":preload("res://Assets/2D_icons/train_1.png"),
 	"train2":preload("res://Assets/2D_icons/train_2.png"),	
+}
+
+var toy_pickup_sounds = {
+	"ball":[preload("res://SFX/GameSounds/pickup_football.wav"),-20],
+	"car1":[preload("res://SFX/GameSounds/pickup_plastic_toy.wav"),0],
+	"car2":[preload("res://SFX/GameSounds/pickup_plastic_toy.wav"),0],
+	"car3":[preload("res://SFX/GameSounds/pickup_plastic_toy.wav"),0],
+	"car4":[preload("res://SFX/GameSounds/pickup_plastic_toy.wav"),0],
+	"ship1":[preload("res://SFX/GameSounds/pickup_plastic_toy.wav"),0],
+	"ship2":[preload("res://SFX/GameSounds/pickup_plastic_toy.wav"),0],
+	"train1":[preload("res://SFX/GameSounds/pickup_plastic_toy.wav"),0],
+	"train2":[preload("res://SFX/GameSounds/pickup_plastic_toy.wav"),0],	
 }
 
 enum anomaly_types {

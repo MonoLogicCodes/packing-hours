@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://5w1qdgy6oegd"]
+[gd_scene load_steps=16 format=3 uid="uid://5w1qdgy6oegd"]
 
 [ext_resource type="PackedScene" uid="uid://bjdh63hcwc37g" path="res://Scenes/World/world.tscn" id="1_jjgbg"]
 [ext_resource type="Script" uid="uid://d2dtvclyryyrt" path="res://Scripts/Managers/game_manager.gd" id="2_bo1nx"]
 [ext_resource type="Script" uid="uid://c8e3qqa072yim" path="res://Scripts/Managers/anomaly_manager.gd" id="3_8gbba"]
+[ext_resource type="PackedScene" uid="uid://dv41ifxk3bdlx" path="res://Scenes/audio_manager/audio_manager.tscn" id="4_344ge"]
 [ext_resource type="Script" uid="uid://vm8fhhjlhmsj" path="res://Scripts/UI/ui.gd" id="4_kry3j"]
 [ext_resource type="Texture2D" uid="uid://b276gntvgtxm2" path="res://Assets/UI/HUD/crosshair009.png" id="5_21xkr"]
 [ext_resource type="Texture2D" uid="uid://6ewmd7ki2wxc" path="res://Assets/UI/HUD/white_ring.png" id="6_6bp64"]
@@ -101,6 +102,8 @@ one_shot = true
 
 [node name="AnomalyManager" type="Node" parent="Managers"]
 script = ExtResource("3_8gbba")
+
+[node name="AudioManager" parent="Managers" instance=ExtResource("4_344ge")]
 
 [node name="UI" type="CanvasLayer" parent="." node_paths=PackedStringArray("wave_timer", "inter_wave_timer", "eff_anim_player", "hud", "hud_wave_timer_label", "hud_wave_progress_bar", "hud_inter_wave_timer_label", "hud_inter_wave_timer_panel", "hud_curr_wave_number", "pause_menu", "lose_screen")]
 script = ExtResource("4_kry3j")

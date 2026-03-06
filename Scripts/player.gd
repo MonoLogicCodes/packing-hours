@@ -67,11 +67,16 @@ func _handle_movement(delta: float) -> void:
 		var x = cos(bob_time * BOB_FREQ * 0.5) * BOB_AMP
 		head.position += Vector3(x, y, 0)
 		
+		if !Global.audio_manager.walking.playing:
+			Global.audio_manager.walking.play()
+		
 		if red_light_active and not can_move:emit_signal("game_over")
 		if camera.fov!=curr_fov and not cam_fall:camera.fov=move_toward(camera.fov,curr_fov,speed)
 		velocity.x = move_dir.x * speed
 		velocity.z = move_dir.z * speed
 	else:
+		
+		Global.audio_manager.walking.stop()
 		
 		if curr_fov!=NORMAL_FOV and not cam_fall:camera.fov = move_toward(camera.fov,NORMAL_FOV,speed)
 		velocity.x = move_toward(velocity.x, 0, speed)

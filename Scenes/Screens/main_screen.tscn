@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bhfbw2dhyms4f"]
+[gd_scene load_steps=4 format=3 uid="uid://bhfbw2dhyms4f"]
 
 [ext_resource type="Script" uid="uid://vqqwdv3egxet" path="res://Scripts/Scenes/main_screen.gd" id="1_4otkm"]
 [ext_resource type="FontFile" uid="uid://iy8yt2ouvhvt" path="res://Assets/fonts/BebasNeue-Regular.ttf" id="1_dslnq"]
+[ext_resource type="AudioStream" uid="uid://cuakp5jl7ugfo" path="res://SFX/MenuSounds/main_menu.ogg" id="3_euuhy"]
 
 [node name="MainScreen" type="Node"]
 process_mode = 3
@@ -64,6 +65,11 @@ theme_override_constants/shadow_outline_size = 3
 theme_override_fonts/font = ExtResource("1_dslnq")
 theme_override_font_sizes/font_size = 116
 text = "PACKING HOURS!"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_euuhy")
+volume_db = -10.0
+autoplay = true
 
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Load Game" to="." method="_on_load_game_pressed"]
 [connection signal="pressed" from="CanvasLayer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

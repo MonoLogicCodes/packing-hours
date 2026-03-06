@@ -16,7 +16,7 @@ var no_of_clicks_to_place:int=1
 
 func deposit_toy(object:Object):
 	if packed:return object
-	
+	if object.get_model()!=model:return object
 	#FOR CORRUPTED TOYS ONLY
 	if anomaly==Global.anomaly_types.CORRUPTED_TOY and not is_trash_box:
 		Global.world.spawn_trash_box([model,anomaly])#only 1 can spawn(logic at world)
@@ -42,23 +42,25 @@ func deposit_toy(object:Object):
 		if Global.world.watcher:
 			Global.player.emit_signal("game_over")
 			
-	if(object.get_model()==model):
-		emit_signal("toy_placed",anomaly)
-		object.visible=true
-		object.placed_in_box=true
-		object.reparent(toy_location_marker)#so that we can toggle visibility
-		object.global_position = toy_location_marker.global_position
-		object.global_rotation = global_rotation
-		object.deactivate()
-		packed=true
-		
-		if Global.game_manager.toys_left_to_place>0:
-			Global.game_manager.toys_left_to_place-=1
-		Global.game_manager.check_if_all_placed()
-		
-		return null#now picked_toy will be null
-	else:#wrong destination(reject back toy)
-		return object
+	
+	emit_signal("toy_placed",anomaly)
+	
+	Global.audio_manager.picked_up_toy(model)
+	Global.audio_manager.toy_placed.play()
+	
+	object.visible=true
+	object.placed_in_box=true
+	object.reparent(toy_location_marker)#so that we can toggle visibility
+	object.global_position = toy_location_marker.global_position
+	object.global_rotation = global_rotation
+	object.deactivate()
+	packed=true
+	
+	if Global.game_manager.toys_left_to_place>0:
+		Global.game_manager.toys_left_to_place-=1
+	Global.game_manager.check_if_all_placed()
+	
+	return null#now picked_toy will be null
 	
 func set_data(data):
 	model=data[0]
@@ -86,13 +88,20 @@ func show_icon(val:bool):#Called from world
 	
 func close_box():
 	anim_player.play("flaps_close")
+	Global.audio_manager.box_close.play()
 	await anim_player.animation_finished
+	
 	toy_location_marker.visible = false
 	anim_player.play("box_pop")
+	Global.audio_manager.gift_wrap.play()
 	await anim_player.animation_finished
+	
+	Global.audio_manager.gift_wrap.stop()
 	box_model.visible = false
 	gift_box.visible = true
+	Global.audio_manager.pop.play()
 	await get_tree().create_timer(1).timeout
+	
 	Global.world.move_packed_box_back(self,cb_pos)
 
 func set_conv_belt_pos(pos:Vector3):
