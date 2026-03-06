@@ -32,6 +32,9 @@ func try_anomaly_effect(anom:Global.anomaly_types):#used in world.gd
 		Global.anomaly_types.WATCHER:
 			Global.world.lights_off()
 			Global.world.spawn_watcher()
+		Global.anomaly_types.THE_EYE:
+			Global.world.lights_off()
+			Global.world.spawn_eye()
 			
 func clear_anomaly_effect(anom:Global.anomaly_types):#used in world.gd
 	match anom:
@@ -60,9 +63,11 @@ func clear_anomaly_effect(anom:Global.anomaly_types):#used in world.gd
 			Global.world.remove_trash_box()
 		Global.anomaly_types.MIMIC:
 			Global.player.stop_mimic_toy()
-		Global.anomaly_types.WATCHER:
+		Global.anomaly_types.WATCHER:#despawn mechanic in world itself
 			Global.world.lights_on()
-			Global.world.despawn_watcher()
+		Global.anomaly_types.THE_EYE:
+			Global.world.lights_on()
+			Global.world.despawn_eye()
 
 func clear_all_anomalies():#No use yet maybe in the future(boss level?)
 	Global.player.reset_speed()

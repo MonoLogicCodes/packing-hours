@@ -22,20 +22,26 @@ func deposit_toy(object:Object):
 		Global.world.spawn_trash_box([model,anomaly])#only 1 can spawn(logic at world)
 		return object
 		
-	#for ADAMANT BOXES ONLY
+	#for ADAMANT BOXES & THE_EYE ONLY
 	if(no_of_clicks_to_place>1):
-		if(no_of_clicks_to_place==2):
-			Global.world.teleport_box(self,true)
-		else:
-			Global.world.teleport_box(self)
+		if anomaly == Global.anomaly_types.ADAMANT_BOX:
+			if(no_of_clicks_to_place==2):
+				Global.world.teleport_box(self,true)
+			else:
+				Global.world.teleport_box(self)
+		if(anomaly == Global.anomaly_types.THE_EYE):
+			if Global.world.is_eye_watching():
+				Global.player.emit_signal("game_over")
+				return object
+			anim_player.play("box_shake")
 		no_of_clicks_to_place-=1
 		return object
-	
-	#FOR WATCHER
+
+	#for WATCHER ONLY
 	if(anomaly == Global.anomaly_types.WATCHER):
-		if Global.world.is_watcher_visible():
+		if Global.world.watcher:
 			Global.player.emit_signal("game_over")
-	
+			
 	if(object.get_model()==model):
 		emit_signal("toy_placed",anomaly)
 		object.visible=true
@@ -58,8 +64,8 @@ func set_data(data):
 	model=data[0]
 	anomaly=data[1]
 	show_toy_icon()
-	if anomaly==Global.anomaly_types.ADAMANT_BOX:
-		no_of_clicks_to_place=randi_range(3,7)
+	if anomaly==Global.anomaly_types.ADAMANT_BOX or anomaly == Global.anomaly_types.THE_EYE:
+		no_of_clicks_to_place=randi_range(4,8)
 	
 	gift_box = Global.box_models.values().pick_random().instantiate()
 	gift_box.visible = false

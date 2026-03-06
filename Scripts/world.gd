@@ -6,13 +6,14 @@ extends Node3D
 
 const BOX_SCENE:PackedScene = preload("res://Scenes/Box/box.tscn")
 const WATCHER_SCENE:PackedScene = preload("res://Scenes/Entities/watcher.tscn")
-
+const THE_EYE:PackedScene = preload("res://Scenes/Entities/the_eye.tscn")
 var toy_script = preload("res://Scripts/Toys.gd")
 
 @onready var toy_init_spawn_pos = $Toy_locations.global_position
 @onready var box_init_spawn_pos = $Boxes_locations.global_position 
 @onready var trash_box_pos = $Random_locations/rloc6.global_position
-@onready var watcher_pos = $watcher_pos.global_position
+@onready var watcher_pos =$Random_locations/rloc5.global_position
+@onready var the_eye_pos = $the_eye_pos.global_position
 @onready var toy_spawn_locations = $Toy_locations.get_children()
 @onready var box_spawn_locations = $Boxes_locations.get_children()
 @onready var random_locations = $Random_locations.get_children()
@@ -24,7 +25,15 @@ var player_in_pickup_zone:bool = false
 var player_hyperopia:bool = false#Set in anomaly manager
 var teleported_box_init_pos:Vector3=Vector3.ZERO#used only for adamant boxes
 var t_box#used later to delete t_box once placed
-var watcher:Node3D
+
+var watcher:Node3D#used as ref in box.gd too
+var watcher_visibility_box:VisibleOnScreenNotifier3D
+var watcher_timer:Timer
+var saw_watcher:bool = false #initiates the 'watching' game
+var watcher_in_view:bool = false
+var times_to_see_watcher:int
+
+var the_eye:Node3D
 #Called from toys.gd too
 var next_toy_spawn_location
 
@@ -140,6 +149,7 @@ func reset_fog():
 	tween.tween_property(environment.environment,"fog_density",0.01,1)\
 		 .set_trans(Tween.TRANS_SINE)\
 		 .set_ease(Tween.EASE_IN_OUT)
+	environment.environment.fog_light_color = Color("8e8e80")
 
 func lights_off():
 	lights.visible = false
@@ -202,18 +212,66 @@ func stop_red_light():
 	lights_on()
 	lights_anim_player.play("RESET")
 
+#WATCHER
 func spawn_watcher():
 	if watcher:return#only 1 watcher
+	
+	var tween = get_tree().create_tween()
+	tween.tween_property(environment.environment,"fog_density",0.1,1)\
+		 .set_trans(Tween.TRANS_SINE)\
+		 .set_ease(Tween.EASE_IN_OUT)
+	tween.parallel().tween_property(environment.environment,"fog_light_color",Color("580000ff"),1)
+	
+	
 	watcher = WATCHER_SCENE.instantiate()
-	watcher.global_position = watcher_pos
 	add_child(watcher)
-
+	watcher.global_position = watcher_pos
+	
+	watcher_visibility_box = watcher.get_node("VisibleOnScreenNotifier3D")
+	watcher_timer = watcher.get_node("Timer")
+	watcher_visibility_box.screen_entered.connect(seeing_watcher)
+	watcher_visibility_box.screen_exited.connect(not_seeing_watcher)
+	watcher_timer.timeout.connect(is_player_seeing_watcher)
+	
+	times_to_see_watcher = randi_range(10,15)
+	print(times_to_see_watcher)
+	
 func despawn_watcher():
+	reset_fog()
+	
 	if not watcher:return
 	watcher.queue_free()
+	watcher_visibility_box = null
+	watcher_in_view=false
+	watcher_timer=null
+	saw_watcher=false
+	times_to_see_watcher=5#garbage!=1
 
-func is_watcher_visible():
-	var vis_box:VisibleOnScreenEnabler3D = watcher.get_node("VisibleOnScreenEnabler3D")
-	return vis_box.is_on_screen()
+func seeing_watcher():
+	if not saw_watcher:saw_watcher=true
+	watcher_in_view=true
+func not_seeing_watcher():
+	watcher_in_view=false
+
+func is_player_seeing_watcher():
+	if not saw_watcher:return
+	if !watcher_in_view:
+		Global.player.emit_signal("game_over")
+	times_to_see_watcher-=1
+	if times_to_see_watcher==0:despawn_watcher()
+	watcher.global_position = random_locations.pick_random().global_position
 	
+func spawn_eye():
+	if the_eye:return#only 1 eye
+	the_eye = THE_EYE.instantiate()
+	add_child(the_eye)
+	the_eye.global_position = the_eye_pos
+	
+func despawn_eye():
+	if not the_eye_pos:return
+	the_eye.queue_free()
+
+func is_eye_watching():
+	if not the_eye:return false
+	return the_eye.get_node("is_watching").visible
 	

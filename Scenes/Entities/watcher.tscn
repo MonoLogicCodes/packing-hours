@@ -1,18 +1,25 @@
-[gd_scene load_steps=2 format=3 uid="uid://y7ii65x7l21l"]
+[gd_scene load_steps=2 format=3 uid="uid://yf7lq77oahm3"]
 
-[ext_resource type="Texture2D" uid="uid://bkj8jfgi0ovdu" path="res://Assets/watcher/watcher.png" id="1_aglwc"]
+[ext_resource type="Texture2D" uid="uid://bkj8jfgi0ovdu" path="res://Assets/Watcher/stalker.png" id="1_cb341"]
 
 [node name="Watcher" type="Node3D"]
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 1.504, 0)
+transform = Transform3D(0.65, 0, 0, 0, 0.65, 0, 0, 0, 0.65, 0, 1.5141091, 0)
 billboard = 2
-texture = ExtResource("1_aglwc")
+shaded = true
+texture = ExtResource("1_cb341")
 
-[node name="VisibleOnScreenEnabler3D" type="VisibleOnScreenEnabler3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6692655, 0)
-aabb = AABB(-0.1862299, -1.5924387, -0.42703885, 0.3724598, 3.310854, 0.9243902)
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5388299, -0.025505543)
+aabb = AABB(-0.5077192, -1.4082111, -0.49945092, 1.0154384, 3.3632972, 0.99890184)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.881, 0)
-light_color = Color(1, 0, 0, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8493401, 0)
+light_color = Color(0.972549, 0, 0, 1)
+light_indirect_energy = 2.377
+omni_range = 9.0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true

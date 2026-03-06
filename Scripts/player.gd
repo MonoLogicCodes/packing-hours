@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
 signal pause
-signal game_over#also emited from box
+signal game_over#also emited from box,world
 
 @onready var ray_cast = $Head/Camera3D/RayCast3D
 @onready var camera = $Head/Camera3D
