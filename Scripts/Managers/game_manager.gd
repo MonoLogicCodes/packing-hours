@@ -9,7 +9,7 @@ signal game_lose(reason:String)#used in UI as overlay lose screen
 @onready var inter_wave_timer = $inter_wave_timer
 
 const WAVES:Dictionary = {#[no_of_toys,duration,anomaly_types]
-	1:[2,40,[Global.anomaly_types.HEAVY_TOY,Global.anomaly_types.RED_LIGHT]],#no of toys MUST BE <= 8
+	1:[8,60,[]],#no of toys MUST BE <= 8
 	2:[6,60,[Global.anomaly_types.FAST_SPEED]],
 	3:[2,15,[]],
 }
@@ -24,6 +24,15 @@ var toy_models_this_wave:Array
 func _ready() -> void:
 	Global.game_manager = self
 	game_won.connect(go_to_win_screen)
+	
+	if !Global.first_time:start_the_waves()
+	else:
+		Global.world.lights_off()
+
+func start_game():#called from world
+	Global.world.lights_on()
+	
+	await get_tree().create_timer(7).timeout
 	start_the_waves()
 
 func start_the_waves():

@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://bjdh63hcwc37g"]
+[gd_scene load_steps=16 format=3 uid="uid://bjdh63hcwc37g"]
 
 [ext_resource type="PackedScene" uid="uid://crugke31s5nm1" path="res://Scenes/Player/player.tscn" id="1_t1gg8"]
 [ext_resource type="Script" uid="uid://3t5x5jovy7gs" path="res://Scripts/world.gd" id="1_vadfg"]
 [ext_resource type="PackedScene" uid="uid://dderq40n5jjel" path="res://Scenes/Room/room.tscn" id="3_3rhlx"]
 [ext_resource type="PackedScene" uid="uid://cc5ftemopyjxk" path="res://Scenes/conveyer_belt/conveyer_belt.tscn" id="4_vadfg"]
+[ext_resource type="Texture2D" uid="uid://gfhbxf0bunbr" path="res://Assets/boss/boss2.png" id="5_l1hd3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_t1gg8"]
 sky_top_color = Color(0, 0, 0, 1)
@@ -140,6 +141,116 @@ _data = {
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vadfg"]
 size = Vector3(5.9189453, 1, 12.433594)
+
+[sub_resource type="Animation" id="Animation_adcqc"]
+resource_name = "boss_appear"
+length = 3.0
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OmniLight3D:omni_range")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.4, 0.5, 0.61901706, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [1.0, 5.0, 2.0, 5.0, 3.0, 5.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("OmniLight3D:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite3D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 2, 2.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0.135, -0.089), Vector3(0, 0.135, -0.089), Vector3(0, 0.135, -0.063)]
+}
+
+[sub_resource type="Animation" id="Animation_7staa"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OmniLight3D:omni_range")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("OmniLight3D:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite3D:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite3D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.135, -0.089)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7staa"]
+_data = {
+&"RESET": SubResource("Animation_7staa"),
+&"boss_appear": SubResource("Animation_adcqc")
+}
 
 [node name="World" type="Node3D" node_paths=PackedStringArray("environment", "lights", "lights_anim_player")]
 script = ExtResource("1_vadfg")
@@ -305,6 +416,32 @@ shape = SubResource("BoxShape3D_vadfg")
 
 [node name="the_eye_pos" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.691355, 2.464052, -3.265)
+
+[node name="boss" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9216162, -9.114734)
+
+[node name="Sprite3D" type="Sprite3D" parent="boss"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.135, -0.089)
+visible = false
+modulate = Color(0.28627452, 1, 1, 1)
+texture = ExtResource("5_l1hd3")
+
+[node name="Sprite3D2" type="Sprite3D" parent="boss/Sprite3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.020599365)
+modulate = Color(0, 1, 1, 0.5176471)
+shaded = true
+texture = ExtResource("5_l1hd3")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="boss"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.17317045, 0.24688053)
+visible = false
+light_color = Color(0, 1, 1, 1)
+omni_range = 1.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="boss"]
+libraries = {
+&"": SubResource("AnimationLibrary_7staa")
+}
 
 [connection signal="body_entered" from="pickup_zone" to="." method="_on_pickup_zone_body_entered"]
 [connection signal="body_exited" from="pickup_zone" to="." method="_on_pickup_zone_body_exited"]

@@ -22,6 +22,7 @@ extends CanvasLayer
 @export var lose_reason_label:Label
 
 func _ready() -> void:
+		
 	lose_reason_label.text = ""
 	hud_new_wave_started()
 	lose_screen.visible=false
@@ -37,7 +38,7 @@ func _ready() -> void:
 	Global.player.game_over.connect(game_lose)
 	Global.game_manager.game_lose.connect(game_lose)
 	set_hud_wave_timer_max()
-
+	
 func _process(_delta: float) -> void:
 	#HUD
 	if not wave_timer.is_stopped():
@@ -68,6 +69,7 @@ func pause_game(to_pause:bool):
 	get_tree().paused = to_pause
 
 func pause_without_ui():
+
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	get_tree().paused = true
 

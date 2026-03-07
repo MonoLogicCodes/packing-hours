@@ -19,7 +19,7 @@ var toy_script = preload("res://Scripts/Toys.gd")
 @onready var random_locations = $Random_locations.get_children()
 @onready var toys = $Toys
 @onready var boxes = $Boxes
-
+@onready var boss_anim_player = $boss/AnimationPlayer
 #Anomaly
 var player_in_pickup_zone:bool = false
 var player_hyperopia:bool = false#Set in anomaly manager
@@ -295,3 +295,13 @@ func is_eye_watching():
 	if not the_eye:return false
 	return the_eye.get_node("is_watching").visible
 	
+#Boss
+func show_boss():
+	boss_anim_player.play("boss_appear")
+func hide_boss():
+	boss_anim_player.play_backwards("boss_appear")
+	await boss_anim_player.animation_finished
+	Global.game_manager.start_game()
+	Global.audio_manager.green_light.play()
+	await get_tree().create_timer(1).timeout
+	Global.audio_manager.green_light.stop()

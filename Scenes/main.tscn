@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://5w1qdgy6oegd"]
+[gd_scene load_steps=18 format=3 uid="uid://5w1qdgy6oegd"]
 
 [ext_resource type="PackedScene" uid="uid://bjdh63hcwc37g" path="res://Scenes/World/world.tscn" id="1_jjgbg"]
 [ext_resource type="Script" uid="uid://d2dtvclyryyrt" path="res://Scripts/Managers/game_manager.gd" id="2_bo1nx"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dv41ifxk3bdlx" path="res://Scenes/audio_manager/audio_manager.tscn" id="4_344ge"]
 [ext_resource type="Script" uid="uid://vm8fhhjlhmsj" path="res://Scripts/UI/ui.gd" id="4_kry3j"]
 [ext_resource type="Texture2D" uid="uid://b276gntvgtxm2" path="res://Assets/UI/HUD/crosshair009.png" id="5_21xkr"]
+[ext_resource type="Script" uid="uid://c66tdhmkdiqmu" path="res://Scripts/Managers/narration_manager.gd" id="5_ynf5e"]
 [ext_resource type="Texture2D" uid="uid://6ewmd7ki2wxc" path="res://Assets/UI/HUD/white_ring.png" id="6_6bp64"]
 [ext_resource type="FontFile" uid="uid://iy8yt2ouvhvt" path="res://Assets/fonts/BebasNeue-Regular.ttf" id="7_6bp64"]
 
@@ -80,6 +81,18 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 5
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ynf5e"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.101960786, 0.101960786, 0.101960786, 0.34509805)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
 [node name="Main" type="Node"]
 
 [node name="World" parent="." instance=ExtResource("1_jjgbg")]
@@ -104,6 +117,13 @@ one_shot = true
 script = ExtResource("3_8gbba")
 
 [node name="AudioManager" parent="Managers" instance=ExtResource("4_344ge")]
+
+[node name="NarrationManager" type="Node" parent="Managers" node_paths=PackedStringArray("audio_player", "subtitle_label")]
+script = ExtResource("5_ynf5e")
+audio_player = NodePath("AudioStreamPlayer")
+subtitle_label = NodePath("../../UI/Narration/PanelContainer/Label")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Managers/NarrationManager"]
 
 [node name="UI" type="CanvasLayer" parent="." node_paths=PackedStringArray("wave_timer", "inter_wave_timer", "eff_anim_player", "hud", "hud_wave_timer_label", "hud_wave_progress_bar", "hud_inter_wave_timer_label", "hud_inter_wave_timer_panel", "hud_curr_wave_number", "pause_menu", "lose_screen", "lose_reason_label")]
 script = ExtResource("4_kry3j")
@@ -205,7 +225,6 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 28
-text = "20"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -341,6 +360,7 @@ text = "QUIT TO MAIN MENU"
 
 [node name="YouLose" type="Control" parent="UI"]
 process_mode = 3
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -414,9 +434,38 @@ theme_override_font_sizes/font_size = 18
 text = "QUIT TO MAIN MENU
 "
 
+[node name="Narration" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="UI/Narration"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ynf5e")
+
+[node name="Label" type="Label" parent="UI/Narration/PanelContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+
 [connection signal="timeout" from="Managers/GameManager/wave_timer" to="Managers/GameManager" method="_on_wave_timer_timeout"]
 [connection signal="timeout" from="Managers/GameManager/toy_spawn_freq" to="Managers/GameManager" method="_on_toy_spawn_freq_timeout"]
 [connection signal="timeout" from="Managers/GameManager/inter_wave_timer" to="Managers/GameManager" method="_on_inter_wave_timer_timeout"]
+[connection signal="finished" from="Managers/NarrationManager/AudioStreamPlayer" to="Managers/NarrationManager" method="_on_audio_stream_player_finished"]
 [connection signal="pressed" from="UI/PauseMenu/PanelContainer/VBoxContainer/resume" to="UI" method="_on_resume_pressed"]
 [connection signal="pressed" from="UI/PauseMenu/PanelContainer/VBoxContainer/reload" to="UI" method="_on_reload_pressed"]
 [connection signal="pressed" from="UI/PauseMenu/PanelContainer/VBoxContainer/Pstart_over" to="UI" method="_on_pstart_over_pressed"]

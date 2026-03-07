@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://crerpalkhug7r"
+path="res://.godot/imported/b boxes dont pack themselves.mp3-af4e2b7977cdd71d3316375d45bb1e90.mp3str"
+
+[deps]
+
+source_file="res://SFX/Narration/b boxes dont pack themselves.mp3"
+dest_files=["res://.godot/imported/b boxes dont pack themselves.mp3-af4e2b7977cdd71d3316375d45bb1e90.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

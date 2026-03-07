@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bftuqlwktq08x"
+path="res://.godot/imported/p breathin.mp3-985df4e5b04586c2948e022c18e1d079.mp3str"
+
+[deps]
+
+source_file="res://SFX/Narration/p breathin.mp3"
+dest_files=["res://.godot/imported/p breathin.mp3-985df4e5b04586c2948e022c18e1d079.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

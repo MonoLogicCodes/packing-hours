@@ -3,6 +3,8 @@ extends Node
 var game_manager:Node#set by game_manager itself
 var anomaly_manager:Node#set by anomaly_manager itself
 var audio_manager:Node
+var narration_manager:Node
+
 var player:Node3D#set by player itself
 var world:Node3D#set by world itself
 #Scenes:PackedScenes
@@ -10,7 +12,8 @@ var main:PackedScene = preload("res://Scenes/main.tscn")
 var main_screen:PackedScene = preload("res://Scenes/Screens/main_screen.tscn")
 var win_screen:PackedScene = preload("res://Scenes/Screens/win_screen.tscn")
 
-var current_wave=1#start with 1 only :)
+var first_time:bool=true
+var current_wave:int=1#start with 1 only :)
 
 var toy_models = {
 	"ball":preload("res://Scenes/Toys_models/ball_1.tscn"),

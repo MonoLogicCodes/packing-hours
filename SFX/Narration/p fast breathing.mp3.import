@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://wy5k6752ixtv"
+path="res://.godot/imported/p fast breathing.mp3-6f97d40de9a3bfe8f21ace4cd0761302.mp3str"
+
+[deps]
+
+source_file="res://SFX/Narration/p fast breathing.mp3"
+dest_files=["res://.godot/imported/p fast breathing.mp3-6f97d40de9a3bfe8f21ace4cd0761302.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

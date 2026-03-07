@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c455xgkougwyf"
+path="res://.godot/imported/b overtimee.mp3-74ab281ccb336580a71a7c5bf7828f03.mp3str"
+
+[deps]
+
+source_file="res://SFX/Narration/b overtimee.mp3"
+dest_files=["res://.godot/imported/b overtimee.mp3-74ab281ccb336580a71a7c5bf7828f03.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
