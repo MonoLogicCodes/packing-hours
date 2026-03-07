@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbf7b48e7a8pf"]
+
+[ext_resource type="PackedScene" uid="uid://bsoqojgafftpe" path="res://Assets/3D_models/bulb/light.glb" id="1_bppbr"]
+
+[node name="bulb" instance=ExtResource("1_bppbr")]
+
+[node name="light" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.01, -7.995, 1.655)

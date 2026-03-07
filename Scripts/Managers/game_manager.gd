@@ -9,8 +9,8 @@ signal game_lose(reason:String)#used in UI as overlay lose screen
 @onready var inter_wave_timer = $inter_wave_timer
 
 const WAVES:Dictionary = {#[no_of_toys,duration,anomaly_types]
-	1:[8,60,[]],#no of toys MUST BE <= 8
-	2:[6,60,[Global.anomaly_types.FAST_SPEED]],
+	1:[6,60,[]],#no of toys MUST BE <= 8
+	2:[6,60,[Global.anomaly_types.FOG]],
 	3:[2,15,[]],
 }
 var curr_wave_details:Array=[]

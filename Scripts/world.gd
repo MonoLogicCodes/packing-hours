@@ -8,6 +8,7 @@ const BOX_SCENE:PackedScene = preload("res://Scenes/Box/box.tscn")
 const WATCHER_SCENE:PackedScene = preload("res://Scenes/Entities/watcher.tscn")
 const THE_EYE:PackedScene = preload("res://Scenes/Entities/the_eye.tscn")
 var toy_script = preload("res://Scripts/Toys.gd")
+var bulb_mat:BaseMaterial3D = preload("res://Assets/3D_models/bulb/bulbmat.tres")
 
 @onready var toy_init_spawn_pos = $Toy_locations.global_position
 @onready var box_init_spawn_pos = $Boxes_locations.global_position 
@@ -154,8 +155,10 @@ func reset_fog():
 
 func lights_off():
 	lights.visible = false
+	bulb_mat.emission_energy_multiplier=0.0
 func lights_on():
 	lights.visible = true
+	bulb_mat.emission_energy_multiplier=1
 
 func _on_pickup_zone_body_entered(_body: Node3D) -> void:
 	if player_hyperopia:

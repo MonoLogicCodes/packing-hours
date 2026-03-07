@@ -1,0 +1,13 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://bcjetvpdu5jtc"]
+
+[ext_resource type="FontFile" uid="uid://ea5slc5d3oby" path="res://Assets/fonts/FiraSans-Regular.ttf" id="1_hcbfh"]
+[ext_resource type="StyleBox" uid="uid://yfy1c24vp7ag" path="res://Assets/UI/uistylebox.tres" id="2_s5krc"]
+
+[resource]
+Button/font_sizes/font_size = 32
+Button/fonts/font = ExtResource("1_hcbfh")
+Label/colors/font_shadow_color = Color(0, 0, 0, 1)
+Label/constants/shadow_offset_x = 2
+Label/constants/shadow_offset_y = 2
+Label/fonts/font = ExtResource("1_hcbfh")
+Panel/styles/panel = ExtResource("2_s5krc")

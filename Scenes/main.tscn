@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://5w1qdgy6oegd"]
+[gd_scene load_steps=19 format=3 uid="uid://5w1qdgy6oegd"]
 
 [ext_resource type="PackedScene" uid="uid://bjdh63hcwc37g" path="res://Scenes/World/world.tscn" id="1_jjgbg"]
 [ext_resource type="Script" uid="uid://d2dtvclyryyrt" path="res://Scripts/Managers/game_manager.gd" id="2_bo1nx"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://c66tdhmkdiqmu" path="res://Scripts/Managers/narration_manager.gd" id="5_ynf5e"]
 [ext_resource type="Texture2D" uid="uid://6ewmd7ki2wxc" path="res://Assets/UI/HUD/white_ring.png" id="6_6bp64"]
 [ext_resource type="FontFile" uid="uid://iy8yt2ouvhvt" path="res://Assets/fonts/BebasNeue-Regular.ttf" id="7_6bp64"]
+[ext_resource type="FontFile" uid="uid://ea5slc5d3oby" path="res://Assets/fonts/FiraSans-Regular.ttf" id="10_hptm8"]
 
 [sub_resource type="Animation" id="Animation_344ge"]
 length = 0.001
@@ -191,7 +192,7 @@ expand_mode = 1
 
 [node name="Panel" type="Panel" parent="UI/HUD"]
 layout_mode = 1
-offset_right = 225.0
+offset_right = 240.0
 offset_bottom = 50.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_v2yv0")
 
@@ -222,9 +223,12 @@ offset_bottom = 11.500002
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 28
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("10_hptm8")
+theme_override_font_sizes/font_size = 32
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -232,12 +236,18 @@ vertical_alignment = 1
 layout_mode = 0
 offset_left = 49.0
 offset_top = 15.0
-offset_right = 214.0
+offset_right = 231.055
 offset_bottom = 38.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("10_hptm8")
+theme_override_font_sizes/font_size = 18
 text = "Wave time remaining"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Panel2" type="Panel" parent="UI/HUD"]
 layout_mode = 1
@@ -260,8 +270,12 @@ offset_right = 63.000008
 offset_bottom = 11.5
 grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("10_hptm8")
+theme_override_font_sizes/font_size = 18
 text = "Wave :"
 
 [node name="current_wave" type="Label" parent="UI/HUD/Panel2"]
@@ -276,6 +290,13 @@ offset_top = -11.5
 offset_bottom = 11.5
 grow_horizontal = 0
 grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/shadow_outline_size = 1
+theme_override_fonts/font = ExtResource("10_hptm8")
+theme_override_font_sizes/font_size = 18
 text = "0"
 
 [node name="PanelContainer" type="PanelContainer" parent="UI/HUD"]
