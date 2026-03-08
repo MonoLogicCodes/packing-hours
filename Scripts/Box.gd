@@ -81,7 +81,7 @@ func set_data(data):
 	show_toy_icon()
 	
 	if anomaly==Global.anomaly_types.ADAMANT_BOX or anomaly == Global.anomaly_types.THE_EYE:
-		no_of_clicks_to_place=randi_range(4,8)
+		no_of_clicks_to_place=randi_range(4,6)
 	elif anomaly == Global.anomaly_types.HEAVY_TOY:
 		static_body_3d.set_collision_layer_value(4,false)
 	gift_box = Global.box_models.values().pick_random().instantiate()

@@ -21,6 +21,8 @@ extends CanvasLayer
 @export var lose_screen:Control
 @export var lose_reason_label:Label
 @export var lose_what_to_do_label:Label
+@export var lose_anomaly_manager:ScrollContainer
+@export var lose_need_help:Button
 
 func _ready() -> void:
 		
@@ -28,6 +30,7 @@ func _ready() -> void:
 	lose_what_to_do_label.text = ""
 	hud_new_wave_started()
 	lose_screen.visible=false
+	lose_anomaly_manager.visible=false
 	pause_game(false)
 	#For effects
 	eff_anim_player.play("RESET")
@@ -115,3 +118,6 @@ func _on_go_to_menu_pressed() -> void:
 func _on_start_over_pressed() -> void:
 	pause_without_ui()
 	reload_scene(true)
+
+func _on_needhellp_toggled(_toggled_on: bool) -> void:
+	lose_anomaly_manager.visible = !lose_anomaly_manager.visible

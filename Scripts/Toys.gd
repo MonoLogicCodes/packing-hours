@@ -47,7 +47,7 @@ func set_data(toy_data:Array):#called by world
 #Anomaly
 func try_dropping():
 	if placed_in_box:return
-	await get_tree().create_timer(0.4).timeout
+	await get_tree().create_timer(0.7).timeout
 	if placed_in_box:return
 	Global.player.drop_toy()
 	active=true

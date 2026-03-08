@@ -6,13 +6,6 @@ extends Node
 
 var curr_line_idx=0
 
-var temp_skip:bool = true 
-
-func _input(event: InputEvent) -> void:
-	if temp_skip and event.is_action_released("sprint"):
-		skip_narration()
-		temp_skip=false
-
 func _ready() -> void:
 	narration_ui.visible=true
 	subtitle_label.get_parent().visible = false
@@ -31,7 +24,6 @@ func _on_audio_stream_player_finished() -> void:
 		#Final transition
 		if Global.last_time and curr_line_idx==Global.curr_dailogue_texts.size()-3:
 			Global.world.play_last_transition()
-			print("YO")
 			
 		await get_tree().create_timer(Global.curr_dialogue_audios[curr_line_idx][1]).timeout
 		curr_line_idx+=1
@@ -41,7 +33,8 @@ func _on_audio_stream_player_finished() -> void:
 		if Global.first_time:
 			Global.world.hide_boss()
 			Global.first_time=false
-		if Global.last_time:
+			
+		if Global.last_time:#End of game code
 			Global.reset_game()
 			await get_tree().create_timer(1.8).timeout
 			var tween = get_tree().create_tween()

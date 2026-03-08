@@ -317,7 +317,6 @@ func hide_boss():
 	Global.game_manager.start_game()
 
 func play_last_transition():
-	print("Last transition")
 	Global.audio_manager.the_eye.play()
 	fwatcher.visible = true
 	var tween = get_tree().create_tween()

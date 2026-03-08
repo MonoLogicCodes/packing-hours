@@ -11,7 +11,6 @@
 [ext_resource type="Texture2D" uid="uid://gfhbxf0bunbr" path="res://Assets/boss/boss2.png" id="4_ldepl"]
 [ext_resource type="PackedScene" uid="uid://ctmnaykt3xmun" path="res://Scenes/Box/GiftModels/yellowbox.tscn" id="5_db7vu"]
 [ext_resource type="PackedScene" uid="uid://mj2upkrg2x8o" path="res://Scenes/Box/GiftModels/bluebox.tscn" id="5_ggq8p"]
-[ext_resource type="Material" uid="uid://bqaeorefvpq78" path="res://Assets/3D_models/bulb/bulbmat.tres" id="10_ka62w"]
 [ext_resource type="Theme" uid="uid://bcjetvpdu5jtc" path="res://Assets/UI/uitheme.tres" id="11_itotw"]
 [ext_resource type="Texture2D" uid="uid://ci8tuys3jmo85" path="res://Assets/UI/MainMenu/mouse_move.png" id="13_taeyj"]
 [ext_resource type="Texture2D" uid="uid://ct6ttvcpw5sfe" path="res://Assets/UI/MainMenu/mouse_right.png" id="14_qi300"]
@@ -830,7 +829,15 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_vy3ah")
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_dt3sc"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_taeyj"]
+resource_name = "Material.002"
+cull_mode = 2
+albedo_color = Color(0.9063318, 0.9063318, 0.9063318, 1)
+roughness = 0.5
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_qi300"]
 resource_name = "light_Cylinder_001"
 _surfaces = [{
 "aabb": AABB(7.6378884, 7.6590896, -3.0408106, 0.6179261, 0.30896282, 2.6291008),
@@ -839,7 +846,7 @@ _surfaces = [{
 "index_count": 192,
 "index_data": PackedByteArray("BAAGAAIABAAIAAYAEgACAAYACAASAAYACQAIAAQABAADAAkABAACAAMAAAAJAAMAAAAIAAkAAAADAAcAAgAHAAMAEwAAAAcAEwAHABQAFQAAABMAFQATABQAFQAIAAAABwAMABQAFQAUAAwAAgAMAAcADQAVAAwADQAMABYAFwAVAA0AFwANABYADAAYABYAFwAWABgAAgAZAAwADAAZABgADgAXABgADgAYAA8AGAAZAA8AGgAXAA4AGgAVABcAGgAOAA8AGgAPABkACAAVABoABQAaABkABQAZABAAGwAaAAUAGwAFABAAGQAcABAAGwAQABwAGQAdABwAAgAdABkAEQAbABwAEQAcAAEAHAAdAAEAHgAbABEAHgAaABsAHgARAAEACAAaAB4AHgABAB0ACwAeAB0ACAAeAB8AHwAeAAsACAAfACAACAAgABIAHwALACEACwAdACEAIAAfAAoAIAAKABIAHwAhAAoAHQAKACEACgACABIAHQACAAoA"),
 "lods": [0.030598292, PackedByteArray("BAAGAAIABAAIAAYACgACAAYACAAKAAYACQAIAAQABAADAAkABAACAAMAAAAJAAMAAAAIAAkAAgAHAAMAAAADAAcACAALAAoAAAAHAAwAAgAMAAcADQAAAAwAAQACAAoACwABAAoADgAAAA0ACAAAAA4ADQAMAA8ADgANAA8AAgAQAAwADAAQAA8AAgABABAADgAPABAABQAQAAEABQAOABAAEQAFAAEAEQAOAAUACwARAAEACAAOABEACAARAAsA"), 0.2070347, PackedByteArray("BAAGAAIAAQACAAYAAgABAAcABQABAAYAAgAHAAMABAACAAMAAAAHAAEABQAAAAEAAAADAAcACAAFAAYACAAAAAUABAAIAAYAAAAJAAMABAADAAkAAAAIAAkACQAIAAQA"), 0.6634387, PackedByteArray("BAAFAAIABQABAAIABAACAAMAAgABAAMABAAAAAUABQAAAAEABAADAAAAAAADAAEA"), 1.3558849, PackedByteArray("AAABAAIAAgABAAMAAAADAAEAAgADAAAA")],
-"material": ExtResource("10_ka62w"),
+"material": SubResource("StandardMaterial3D_taeyj"),
 "name": "Material.002",
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
@@ -1050,7 +1057,7 @@ transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -5.4
 
 [node name="light" type="MeshInstance3D" parent="World/bulb3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.01, -7.995, 1.655)
-mesh = SubResource("ArrayMesh_dt3sc")
+mesh = SubResource("ArrayMesh_qi300")
 skeleton = NodePath("")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://5w1qdgy6oegd"]
+[gd_scene load_steps=23 format=3 uid="uid://5w1qdgy6oegd"]
 
 [ext_resource type="PackedScene" uid="uid://bjdh63hcwc37g" path="res://Scenes/World/world.tscn" id="1_jjgbg"]
 [ext_resource type="Script" uid="uid://d2dtvclyryyrt" path="res://Scripts/Managers/game_manager.gd" id="2_bo1nx"]
@@ -83,6 +83,21 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 corner_detail = 5
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d1ilt"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+border_width_bottom = 5
+border_color = Color(0.07683588, 0.07683579, 0.07683582, 0.8117647)
+border_blend = true
+corner_detail = 5
+
+[sub_resource type="Theme" id="Theme_d1ilt"]
+
+[sub_resource type="Theme" id="Theme_6iyac"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ynf5e"]
 content_margin_left = 0.0
 content_margin_top = 0.0
@@ -128,7 +143,7 @@ subtitle_label = NodePath("../../UI/Narration/PanelContainer/Label")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Managers/NarrationManager"]
 
-[node name="UI" type="CanvasLayer" parent="." node_paths=PackedStringArray("wave_timer", "inter_wave_timer", "eff_anim_player", "hud", "hud_wave_timer_label", "hud_wave_progress_bar", "hud_inter_wave_timer_label", "hud_inter_wave_timer_panel", "hud_curr_wave_number", "pause_menu", "lose_screen", "lose_reason_label", "lose_what_to_do_label")]
+[node name="UI" type="CanvasLayer" parent="." node_paths=PackedStringArray("wave_timer", "inter_wave_timer", "eff_anim_player", "hud", "hud_wave_timer_label", "hud_wave_progress_bar", "hud_inter_wave_timer_label", "hud_inter_wave_timer_panel", "hud_curr_wave_number", "pause_menu", "lose_screen", "lose_reason_label", "lose_what_to_do_label", "lose_anomaly_manager", "lose_need_help")]
 script = ExtResource("4_kry3j")
 wave_timer = NodePath("../Managers/GameManager/wave_timer")
 inter_wave_timer = NodePath("../Managers/GameManager/inter_wave_timer")
@@ -143,6 +158,8 @@ pause_menu = NodePath("PauseMenu")
 lose_screen = NodePath("YouLose")
 lose_reason_label = NodePath("YouLose/lose_reason")
 lose_what_to_do_label = NodePath("YouLose/lose_what_to_do")
+lose_anomaly_manager = NodePath("YouLose/ScrollContainer")
+lose_need_help = NodePath("YouLose/needhellp")
 
 [node name="Effects" type="Control" parent="UI"]
 process_mode = 3
@@ -408,7 +425,6 @@ text = "QUIT TO MAIN MENU"
 
 [node name="YouLose" type="Control" parent="UI"]
 process_mode = 3
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -494,6 +510,461 @@ theme_override_font_sizes/font_size = 18
 text = "QUIT TO MAIN MENU
 "
 
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/YouLose"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -406.0
+offset_top = -258.0
+offset_right = -71.0
+offset_bottom = 258.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/YouLose/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Panel0" type="Panel" parent="UI/YouLose/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_d1ilt")
+
+[node name="Label" type="Label" parent="UI/YouLose/ScrollContainer/VBoxContainer/Panel0"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -30.0
+offset_right = 30.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 0.24705882, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 3
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_fonts/font = ExtResource("7_6bp64")
+theme_override_font_sizes/font_size = 24
+text = "ANOMALY GUIDE"
+
+[node name="Label2" type="Label" parent="UI/YouLose/ScrollContainer/VBoxContainer/Panel0"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -8.0
+offset_right = 311.0
+offset_bottom = 38.0
+grow_vertical = 2
+theme = SubResource("Theme_d1ilt")
+theme_override_font_sizes/font_size = 10
+text = "Having trouble with certain anomalies?  
+Here are some hints to help you survive the shift."
+horizontal_alignment = 1
+
+[node name="clumsytoy" type="Panel" parent="UI/YouLose/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_d1ilt")
+
+[node name="Label" type="Label" parent="UI/YouLose/ScrollContainer/VBoxContainer/clumsytoy"]
+layout_mode = 0
+offset_left = 6.0
+offset_right = 66.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(1, 1, 0.24705882, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 3
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_fonts/font = ExtResource("7_6bp64")
+text = "CLUMSY TOY"
+
+[node name="Label2" type="Label" parent="UI/YouLose/ScrollContainer/VBoxContainer/clumsytoy"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -156.0
+offset_top = -24.0
+offset_right = 156.0
+offset_bottom = 41.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_d1ilt")
+theme_override_font_sizes/font_size = 10
+text = "This toy slips from your hands a few seconds after you pick it up.
+Try picking it and going close to the respective toy box. When 
+you are close to the correct box. Quickly grab the toy and
+immediately place it in the box before it falls again."
+
+[node name="adamantbox" type="Panel" parent="UI/YouLose/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_d1ilt")
+
+[node name="Label" type="Label" parent="UI/YouLose/ScrollContainer/VBoxContainer/adamantbox"]
+layout_mode = 0
+offset_left = 5.0
+offset_right = 74.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(1, 1, 0.24705882, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 3
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_fonts/font = ExtResource("7_6bp64")
+text = "ADAMANT BOX"
+
+[node name="Label2" type="Label" parent="UI/YouLose/ScrollContainer/VBoxContainer/adamantbox"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -155.0
+offset_top = -26.0
+offset_right = 155.0
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_d1ilt")
+theme_override_font_sizes/font_size = 10
+text = "The box teleports away whenever you try to place a toy inside it.
+Keep attempting to place the toy each time the box teleports.
+After 4-6 attempts, the box will stop teleporting 
+and accept the toy."
+
+[node name="hyperopia" type="Panel" parent="UI/YouLose/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_d1ilt")
+
+[node name="Label" type="Label" parent="UI/YouLose/ScrollContainer/VBoxContainer/hyperopia"]
+layout_mode = 0
+offset_left = 5.0
+offset_right = 64.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(1, 1, 0.24705882, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 3
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_fonts/font = ExtResource("7_6bp64")
+text = "Hyperopia"
+
+[node name="Label2" type="Label" parent="UI/YouLose/ScrollContainer/VBoxContainer/hyperopia"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -155.0
+offset_top = -26.0
+offset_right = 155.0
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_d1ilt")
+theme_override_font_sizes/font_size = 10
+text = "The toy icons become invisible when you move away from the
+toys conveyor belt. Return close to the toys conveyor belt
+to see the icons again and identify the correct toy."
+
+[node name="corrupted" type="Panel" parent="UI/YouLose/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_d1ilt")
+
+[node name="Label" type="Label" parent="UI/YouLose/ScrollContainer/VBoxContainer/corrupted"]
+layout_mode = 0
+offset_left = 5.0
+offset_right = 64.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(1, 1, 0.24705882, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 3
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_fonts/font = ExtResource("7_6bp64")
+text = "corrupted toy"
+
+[node name="Label2" type="Label" parent="UI/YouLose/ScrollContainer/VBoxContainer/corrupted"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -155.0
+offset_top = -26.0
+offset_right = 155.0
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_d1ilt")
+theme_override_font_sizes/font_size = 10
+text = "This toy cannot be placed in any of the normal boxes.
+A trash box will appear near the conveyor belt. The 
+corrupted toy must be thrown into that trash box
+instead."
+
+[node name="invertg" type="Panel" parent="UI/YouLose/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_d1ilt")
+
+[node name="Label" type="Label" parent="UI/YouLose/ScrollContainer/VBoxContainer/invertg"]
+layout_mode = 0
+offset_left = 5.0
+offset_right = 64.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(1, 1, 0.24705882, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 3
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_fonts/font = ExtResource("7_6bp64")
+text = "inverted gravity"
+
+[node name="Label2" type="Label" parent="UI/YouLose/ScrollContainer/VBoxContainer/invertg"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -155.0
+offset_top = -26.0
+offset_right = 155.0
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_d1ilt")
+theme_override_font_sizes/font_size = 10
+text = "Gravity flips when you pick up the toy, causing you to walk on the
+ceiling. Place the toy in the correct box while upside down. Avoid
+standing directly above a box while placing the toy, or you may
+get stuck inside it."
+
+[node name="redlight" type="Panel" parent="UI/YouLose/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_d1ilt")
+
+[node name="Label" type="Label" parent="UI/YouLose/ScrollContainer/VBoxContainer/redlight"]
+layout_mode = 0
+offset_left = 5.0
+offset_right = 64.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(1, 1, 0.24705882, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 3
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_fonts/font = ExtResource("7_6bp64")
+text = "Red Light"
+
+[node name="Label2" type="Label" parent="UI/YouLose/ScrollContainer/VBoxContainer/redlight"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -155.0
+offset_top = -26.0
+offset_right = 155.0
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_d1ilt")
+theme_override_font_sizes/font_size = 10
+text = "You can only move when the lights are OFF.
+When the lights turn RED, you must stop moving. 
+Flickering lights indicate that the state is about 
+to change."
+
+[node name="mimic" type="Panel" parent="UI/YouLose/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_d1ilt")
+
+[node name="Label" type="Label" parent="UI/YouLose/ScrollContainer/VBoxContainer/mimic"]
+layout_mode = 0
+offset_left = 5.0
+offset_right = 64.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(1, 1, 0.24705882, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 3
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_fonts/font = ExtResource("7_6bp64")
+text = "Mimic"
+
+[node name="Label2" type="Label" parent="UI/YouLose/ScrollContainer/VBoxContainer/mimic"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -155.0
+offset_top = -26.0
+offset_right = 155.0
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_d1ilt")
+theme_override_font_sizes/font_size = 10
+text = "The toy in your hand try to mislead you.
+The real toy is the one you picked up directly
+from the conveyor belt. Place it in the box that
+matches that toy."
+
+[node name="heavytoy" type="Panel" parent="UI/YouLose/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_d1ilt")
+
+[node name="Label" type="Label" parent="UI/YouLose/ScrollContainer/VBoxContainer/heavytoy"]
+layout_mode = 0
+offset_left = 5.0
+offset_right = 64.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(1, 1, 0.24705882, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 3
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_fonts/font = ExtResource("7_6bp64")
+text = "Heavy Toy"
+
+[node name="Label2" type="Label" parent="UI/YouLose/ScrollContainer/VBoxContainer/heavytoy"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -155.0
+offset_top = -26.0
+offset_right = 155.0
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_d1ilt")
+theme_override_font_sizes/font_size = 10
+text = "The toy is extremely heavy and forces the camera downward.
+Move quickly toward the correct box and rapidly press the
+place button to place the toy before it becomes too difficult
+to hold."
+
+[node name="theeye" type="Panel" parent="UI/YouLose/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_d1ilt")
+
+[node name="Label" type="Label" parent="UI/YouLose/ScrollContainer/VBoxContainer/theeye"]
+layout_mode = 0
+offset_left = 5.0
+offset_right = 64.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(1, 1, 0.24705882, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 3
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_fonts/font = ExtResource("7_6bp64")
+text = "The Eye"
+
+[node name="Label2" type="Label" parent="UI/YouLose/ScrollContainer/VBoxContainer/theeye"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -155.0
+offset_top = -26.0
+offset_right = 155.0
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_d1ilt")
+theme_override_font_sizes/font_size = 10
+text = "A large eye watches the boxes while you try to place
+the toy. Wait until the eye closes. When it closes,
+the lights dim slightly
+- this is the safe moment to place the toy."
+
+[node name="watcher" type="Panel" parent="UI/YouLose/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_d1ilt")
+
+[node name="Label" type="Label" parent="UI/YouLose/ScrollContainer/VBoxContainer/watcher"]
+layout_mode = 0
+offset_left = 5.0
+offset_right = 64.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(1, 1, 0.24705882, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = 3
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_fonts/font = ExtResource("7_6bp64")
+text = "The Watcher"
+
+[node name="Label2" type="Label" parent="UI/YouLose/ScrollContainer/VBoxContainer/watcher"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -155.0
+offset_top = -26.0
+offset_right = 155.0
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_d1ilt")
+theme_override_font_sizes/font_size = 10
+text = "The Watcher appears when you pick up a toy.
+Once you see it, it will start teleporting around the room.
+Make sure you spot it every time it teleports. If you lose 
+sight of it, you lose."
+
+[node name="needhellp" type="Button" parent="UI/YouLose"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -8.0
+offset_right = 4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = SubResource("Theme_6iyac")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+toggle_mode = true
+text = "Need Help?"
+flat = true
+
 [node name="Narration" type="Control" parent="UI"]
 visible = false
 layout_mode = 3
@@ -534,3 +1005,4 @@ horizontal_alignment = 1
 [connection signal="pressed" from="UI/YouLose/PanelContainer/VBoxContainer/reload" to="UI" method="_on_reload_pressed"]
 [connection signal="pressed" from="UI/YouLose/PanelContainer/VBoxContainer/start_over" to="UI" method="_on_start_over_pressed"]
 [connection signal="pressed" from="UI/YouLose/PanelContainer/VBoxContainer/go_to_menu" to="UI" method="_on_go_to_menu_pressed"]
+[connection signal="toggled" from="UI/YouLose/needhellp" to="UI" method="_on_needhellp_toggled"]
