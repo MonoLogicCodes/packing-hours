@@ -6,6 +6,8 @@ signal toy_placed(an:Global.anomaly_types)#used in world.gd
 @onready var anim_player:AnimationPlayer = $AnimationPlayer
 @onready var box_model:Node3D = $box
 @onready var static_body_3d: StaticBody3D = $StaticBody3D
+@onready var box_label: Label3D = $Label3D
+
 
 var is_trash_box:bool = false#set by world while spawning t_box
 var gift_box
@@ -19,12 +21,15 @@ func deposit_toy(object:Object):
 	if packed:return object
 	if object.get_model()!=model:
 		if object.get_anomaly() == Global.anomaly_types.MIMIC:
-			Global.player.emit_signal("game_over","Mimic toy placed in wrong box")
+			Global.player.emit_signal("game_over","Mimic toy placed in wrong box","The real toy is the toy you picked")
+		if object.get_anomaly() == Global.anomaly_types.HYPEROPIA:
+			Global.player.emit_signal("game_over","Hyperopia Toy placed in wrong box","Correct boxes are visible only from toy pickup line")
 		return object
 	
 	#FOR CORRUPTED TOYS ONLY
 	if anomaly==Global.anomaly_types.CORRUPTED_TOY and not is_trash_box:
 		anim_player.play("box_shake")
+		box_label.text = "Corrupted Toy"
 		Global.world.spawn_trash_box([model,anomaly])#only 1 can spawn(logic at world)
 		return object
 		
@@ -37,17 +42,18 @@ func deposit_toy(object:Object):
 				Global.world.teleport_box(self)
 		if(anomaly == Global.anomaly_types.THE_EYE):
 			if Global.world.is_eye_watching():
-				Global.player.emit_signal("game_over","The eye caught you placing toy")
+				Global.player.emit_signal("game_over","The eye caught you placing toy","Place the toy when the eye closes")
 				return object
 			Global.audio_manager.toy_placed.play()
 			anim_player.play("box_shake")
+			box_label.text = "Place again"
 		no_of_clicks_to_place-=1
 		return object
 
 	#for WATCHER ONLY
 	if(anomaly == Global.anomaly_types.WATCHER):
 		if Global.world.watcher:
-			Global.player.emit_signal("game_over","The watcher is here")
+			Global.player.emit_signal("game_over","The watcher is here","Can't place toy when the watcher is there")
 			
 	
 	emit_signal("toy_placed",anomaly)

@@ -9,9 +9,18 @@ signal game_lose(reason:String)#used in UI as overlay lose screen
 @onready var inter_wave_timer = $inter_wave_timer
 
 const WAVES:Dictionary = {#[no_of_toys,duration,anomaly_types]
-	1:[6,60,[]],#no of toys MUST BE <= 8
-	2:[6,60,[Global.anomaly_types.FOG]],
-	3:[2,15,[]],
+	#1:[4,35,[]],#no of toys MUST BE <= 8
+	1:[1,35,[]],#no of toys MUST BE <= 8
+	2:[6,50,[Global.anomaly_types.FOG,Global.anomaly_types.LIGHTS_OFF,Global.anomaly_types.FAST_SPEED,Global.anomaly_types.FAST_SPEED]],
+	3:[7,70,[Global.anomaly_types.HYPEROPIA,Global.anomaly_types.HYPEROPIA,Global.anomaly_types.ADAMANT_BOX,Global.anomaly_types.CLUMSY_TOY]],
+	4:[7,70,[Global.anomaly_types.HYPEROPIA,Global.anomaly_types.INVERT_GRAVITY,Global.anomaly_types.CORRUPTED_TOY,Global.anomaly_types.CORRUPTED_TOY]],
+	5:[7,80,[Global.anomaly_types.INVERT_GRAVITY,Global.anomaly_types.CLUMSY_TOY,Global.anomaly_types.HYPEROPIA,Global.anomaly_types.ADAMANT_BOX,Global.anomaly_types.RED_LIGHT]],
+	6:[7,105,[Global.anomaly_types.ADAMANT_BOX,Global.anomaly_types.CLUMSY_TOY,Global.anomaly_types.INVERT_GRAVITY,Global.anomaly_types.MIMIC,Global.anomaly_types.RED_LIGHT]],
+	7:[8,100,[Global.anomaly_types.MIMIC,Global.anomaly_types.ADAMANT_BOX,Global.anomaly_types.HEAVY_TOY,Global.anomaly_types.RED_LIGHT,Global.anomaly_types.RED_LIGHT]],
+	8:[8,100,[Global.anomaly_types.MIMIC,Global.anomaly_types.HEAVY_TOY,Global.anomaly_types.INVERT_GRAVITY,Global.anomaly_types.RED_LIGHT,Global.anomaly_types.THE_EYE]],
+	9:[8,100,[Global.anomaly_types.THE_EYE,Global.anomaly_types.HEAVY_TOY,Global.anomaly_types.MIMIC,Global.anomaly_types.THE_EYE,Global.anomaly_types.INVERT_GRAVITY]],
+	#10:[8,110,[Global.anomaly_types.WATCHER,Global.anomaly_types.WATCHER,Global.anomaly_types.THE_EYE,Global.anomaly_types.FAST_SPEED,Global.anomaly_types.MIMIC]]
+	10:[1,10,[]]
 }
 var curr_wave_details:Array=[]
 
@@ -23,16 +32,22 @@ var toy_models_this_wave:Array
 
 func _ready() -> void:
 	Global.game_manager = self
-	game_won.connect(go_to_win_screen)
+	game_won.connect(play_end_narration)
 	
-	if !Global.first_time:start_the_waves()
+	if !Global.first_time:
+		start_the_waves()
 	else:
 		Global.world.lights_off()
+		await  get_tree().create_timer(2).timeout
+		Global.world.show_boss()
+		Global.curr_dailogue_texts = Global.initial_dialogue_text
+		Global.curr_dialogue_audios = Global.initial_dialogue_audio
+		Global.narration_manager.speak_next_line()
 
 func start_game():#called from world
 	Global.world.lights_on()
 	
-	await get_tree().create_timer(7).timeout
+	await get_tree().create_timer(5).timeout
 	start_the_waves()
 
 func start_the_waves():
@@ -90,7 +105,7 @@ func check_if_all_placed():#Called by box.gd : Everytime u deposit toy
 
 func _on_wave_timer_timeout() -> void:
 	if toys_left_to_place!=0:
-		emit_signal("game_lose","Time out")
+		emit_signal("game_lose","Time out","Place the toys before wave timer runs out")
 		stop_wave_timers()
 		return
 	
@@ -99,7 +114,8 @@ func _on_wave_timer_timeout() -> void:
 	stop_wave_timers()
 
 func _on_inter_wave_timer_timeout() -> void:
-	Global.current_wave+=1
+	if Global.current_wave>=WAVES.size():return
+	Global.current_wave+=9
 	try_start_wave(Global.current_wave)
 	
 func _on_toy_spawn_freq_timeout() -> void:
@@ -111,6 +127,19 @@ func stop_wave_timers():
 	toy_spawn_freq.stop()
 
 
-func go_to_win_screen():
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	get_tree().change_scene_to_packed(Global.win_screen)
+func play_end_narration():
+	Global.last_time=true
+	Global.player.can_pause=false
+	
+	Global.world.lights_off()
+	await  get_tree().create_timer(2).timeout
+	
+	Global.player.set_process_unhandled_input(false)
+	Global.player.set_physics_process(false)
+	Global.world.player_go_to_tv()
+	Global.world.show_boss()
+	
+	Global.curr_dailogue_texts=Global.final_dialogue_text
+	Global.curr_dialogue_audios=Global.final_dialogue_audio
+	Global.narration_manager.curr_line_idx=0
+	Global.narration_manager.speak_next_line()

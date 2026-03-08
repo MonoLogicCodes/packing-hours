@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bjdh63hcwc37g"]
+[gd_scene load_steps=18 format=3 uid="uid://bjdh63hcwc37g"]
 
 [ext_resource type="PackedScene" uid="uid://crugke31s5nm1" path="res://Scenes/Player/player.tscn" id="1_t1gg8"]
 [ext_resource type="Script" uid="uid://3t5x5jovy7gs" path="res://Scripts/world.gd" id="1_vadfg"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cbf7b48e7a8pf" path="res://Scenes/bulb/bulb.tscn" id="4_adcqc"]
 [ext_resource type="PackedScene" uid="uid://cc5ftemopyjxk" path="res://Scenes/conveyer_belt/conveyer_belt.tscn" id="4_vadfg"]
 [ext_resource type="Texture2D" uid="uid://gfhbxf0bunbr" path="res://Assets/boss/boss2.png" id="5_l1hd3"]
+[ext_resource type="Texture2D" uid="uid://bkj8jfgi0ovdu" path="res://Assets/Watcher/stalker.png" id="7_7staa"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_t1gg8"]
 sky_top_color = Color(0, 0, 0, 1)
@@ -260,7 +261,7 @@ lights = NodePath("Environment/Lights")
 lights_anim_player = NodePath("Environment/AnimationPlayer")
 
 [node name="Player" parent="." instance=ExtResource("1_t1gg8")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1645312, -0.9288883)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.7531698, 1.1645312, 2.5971186)
 
 [node name="Room" parent="." instance=ExtResource("3_3rhlx")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -0.013, 0, -2.444)
@@ -452,6 +453,31 @@ omni_range = 1.0
 libraries = {
 &"": SubResource("AnimationLibrary_7staa")
 }
+
+[node name="fwatcher" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.076, 0.222, 0.314878)
+visible = false
+
+[node name="Sprite3D" type="Sprite3D" parent="fwatcher"]
+transform = Transform3D(0.65, 0, 0, 0, 0.65, 0, 0, 0, 0.65, 0, 1.5141091, 0)
+billboard = 2
+shaded = true
+texture = ExtResource("7_7staa")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="fwatcher"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8493401, 0)
+light_color = Color(0.972549, 0, 0, 1)
+light_indirect_energy = 2.377
+omni_range = 9.0
+
+[node name="final_fade" type="ColorRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
 
 [connection signal="body_entered" from="pickup_zone" to="." method="_on_pickup_zone_body_entered"]
 [connection signal="body_exited" from="pickup_zone" to="." method="_on_pickup_zone_body_exited"]

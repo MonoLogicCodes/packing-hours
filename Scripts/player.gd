@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
 signal pause
-signal game_over(reason:String)#also emited from box,world
+signal game_over(reason:String,wtd:String)#also emited from box,world
 
 @onready var ray_cast = $Head/Camera3D/RayCast3D
 @onready var camera = $Head/Camera3D
@@ -33,13 +33,14 @@ var picked_toy:Object = null
 
 var is_mimic_toy:bool = false
 var mimic_toy:Area3D
+var can_pause:bool = true
 
 func _ready() -> void:
 	speed=WALK_SPEED
 	Global.player = self
 
 func _unhandled_input(event: InputEvent) -> void:
-	if Input.is_action_just_pressed("escape"):
+	if Input.is_action_just_pressed("escape") and can_pause:
 		emit_signal("pause",true)
 	if Input.is_action_just_pressed("right_click"):
 		check_raycast_collider("right_click")
@@ -70,7 +71,7 @@ func _handle_movement(delta: float) -> void:
 		if !Global.audio_manager.walking.playing:
 			Global.audio_manager.walking.play()
 		
-		if red_light_active and not can_move:emit_signal("game_over","Can't move in red light")
+		if red_light_active and not can_move:emit_signal("game_over","Can't move in red light","move only when the lights are out")
 		if camera.fov!=curr_fov and not cam_fall:camera.fov=move_toward(camera.fov,curr_fov,speed)
 		velocity.x = move_dir.x * speed
 		velocity.z = move_dir.z * speed
@@ -88,7 +89,7 @@ func _handle_movement(delta: float) -> void:
 		camera.fov = move_toward(camera.fov,SLOW_FOV,delta*10)
 		if camera.position.y < MAX_CAM_FALL:
 			cam_fall=false
-			emit_signal("game_over","Heavy toy: You fell")
+			emit_signal("game_over","Heavy toy: You fell","place heavy toy in box quickly")
 
 	
 func check_raycast_collider(event: String) -> void:

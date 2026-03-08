@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cfk2ldoq8h87g"
+path="res://.godot/imported/p all toys placed.mp3-2f7966f3fdb8940759244ef622a6cb02.mp3str"
+
+[deps]
+
+source_file="res://SFX/Narration/End/p all toys placed.mp3"
+dest_files=["res://.godot/imported/p all toys placed.mp3-2f7966f3fdb8940759244ef622a6cb02.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

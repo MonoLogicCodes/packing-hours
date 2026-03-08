@@ -20,10 +20,12 @@ extends CanvasLayer
 @export_category("Lose Screen")
 @export var lose_screen:Control
 @export var lose_reason_label:Label
+@export var lose_what_to_do_label:Label
 
 func _ready() -> void:
 		
 	lose_reason_label.text = ""
+	lose_what_to_do_label.text = ""
 	hud_new_wave_started()
 	lose_screen.visible=false
 	pause_game(false)
@@ -88,12 +90,13 @@ func _on_main_menu_pressed() -> void:
 	get_tree().change_scene_to_packed(Global.main_screen)
 	
 #Lose Screen functions
-func game_lose(reason:String = ""):
+func game_lose(reason:String = "",what_to_do:String = ""):
 	pause_without_ui()
 	Global.audio_manager.lose_screen.play()
 	eff_anim_player.play("lose_fade")
 	await eff_anim_player.animation_finished
 	lose_reason_label.text = reason
+	lose_what_to_do_label.text = what_to_do
 	show_lose_screen(true)
 	
 func show_lose_screen(val:bool):

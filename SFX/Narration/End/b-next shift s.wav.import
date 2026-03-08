@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://5gqr1jbba2nh"
+path="res://.godot/imported/b-next shift s.wav-c3020e692834912f5d822804a2a7f2c3.sample"
+
+[deps]
+
+source_file="res://SFX/Narration/End/b-next shift s.wav"
+dest_files=["res://.godot/imported/b-next shift s.wav-c3020e692834912f5d822804a2a7f2c3.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

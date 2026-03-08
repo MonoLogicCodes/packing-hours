@@ -21,6 +21,9 @@ var bulb_mat:BaseMaterial3D = preload("res://Assets/3D_models/bulb/bulbmat.tres"
 @onready var toys = $Toys
 @onready var boxes = $Boxes
 @onready var boss_anim_player = $boss/AnimationPlayer
+@onready var fwatcher: Node3D = $fwatcher
+@onready var final_fade: ColorRect = $final_fade
+
 #Anomaly
 var player_in_pickup_zone:bool = false
 var player_hyperopia:bool = false#Set in anomaly manager
@@ -41,6 +44,7 @@ var next_toy_spawn_location
 func _ready() -> void:
 	Global.world = self
 	reset_fog()
+	bulb_mat.emission_energy_multiplier=1#reset material
 	
 func try_spawn_toy(toy_data:Array):#called from gamemanager
 	if toys.get_child_count() >= toy_spawn_locations.size():return
@@ -135,6 +139,7 @@ func spawn_trash_box(data):
 	t_box.global_position = trash_box_pos
 	t_box.set_data(data)
 	t_box.is_trash_box=true
+	Global.audio_manager.teleport.play()
 
 func remove_trash_box():
 	t_box.queue_free()
@@ -163,6 +168,7 @@ func lights_on():
 func _on_pickup_zone_body_entered(_body: Node3D) -> void:
 	if player_hyperopia:
 		show_icons_in_boxes(true)
+		Global.audio_manager.pop.play()
 func _on_pickup_zone_body_exited(_body: Node3D) -> void:
 	if player_hyperopia:
 		Global.audio_manager.pop.play()
@@ -227,6 +233,7 @@ func start_red_light():
 func stop_red_light():
 	Global.player.red_light_active=false
 	Global.player.can_move=true
+	Global.audio_manager.green_light.stop()
 	lights_on()
 	lights_anim_player.play("RESET")
 
@@ -278,7 +285,7 @@ func not_seeing_watcher():
 func is_player_seeing_watcher():
 	if not saw_watcher:return
 	if !watcher_in_view:
-		Global.player.emit_signal("game_over","Did not see watcher teleport")
+		Global.player.emit_signal("game_over","Did not see watcher teleport","make sure you have an eye on the watcher just as it teleports")
 	times_to_see_watcher-=1
 	if times_to_see_watcher==0:despawn_watcher()
 	Global.audio_manager.teleport.play()
@@ -301,10 +308,33 @@ func is_eye_watching():
 #Boss
 func show_boss():
 	boss_anim_player.play("boss_appear")
+	
 func hide_boss():
+	Global.audio_manager.green_light.play()
 	boss_anim_player.play_backwards("boss_appear")
 	await boss_anim_player.animation_finished
-	Global.game_manager.start_game()
-	Global.audio_manager.green_light.play()
-	await get_tree().create_timer(1).timeout
 	Global.audio_manager.green_light.stop()
+	Global.game_manager.start_game()
+
+func play_last_transition():
+	print("Last transition")
+	Global.audio_manager.the_eye.play()
+	fwatcher.visible = true
+	var tween = get_tree().create_tween()
+	tween.tween_property(Global.player,"rotation_degrees", Vector3(0,-180,0),3)\
+	 .set_trans(Tween.TRANS_SINE)\
+	 .set_ease(Tween.EASE_IN_OUT)
+	
+func player_go_to_tv():#Called from game_manager
+	print("go to tv")
+	var final_pos = Vector3(0.076,0.222,-5.515)
+	var tween = get_tree().create_tween()
+	tween.tween_property(Global.player,"global_position", final_pos,2)\
+	 .set_trans(Tween.TRANS_SINE)\
+	 .set_ease(Tween.EASE_IN_OUT)
+	tween.parallel().tween_property(Global.player.camera,"rotation", Vector3.ZERO,2)\
+	 .set_trans(Tween.TRANS_SINE)\
+	 .set_ease(Tween.EASE_IN_OUT)	
+	tween.parallel().tween_property(Global.player,"rotation", Vector3.ZERO,2)\
+	 .set_trans(Tween.TRANS_SINE)\
+	 .set_ease(Tween.EASE_IN_OUT)
