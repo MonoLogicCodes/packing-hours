@@ -31,5 +31,4 @@ func _on_credits_pressed() -> void:
 
 func _on_start_pressed() -> void:
 	Global.current_wave=1
-	await get_tree().process_frame
 	get_tree().change_scene_to_packed(Global.main)

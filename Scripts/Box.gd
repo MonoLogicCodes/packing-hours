@@ -8,8 +8,6 @@ signal toy_placed(an:Global.anomaly_types)#used in world.gd
 @onready var static_body_3d: StaticBody3D = $StaticBody3D
 @onready var box_label: Label3D = $Label3D
 
-
-var is_trash_box:bool = false#set by world while spawning t_box
 var gift_box
 var cb_pos:Vector3#for finally moving gift box to there
 var model:String
@@ -24,13 +22,6 @@ func deposit_toy(object:Object):
 			Global.player.emit_signal("game_over","Mimic toy placed in wrong box","The real toy is the toy you picked")
 		if object.get_anomaly() == Global.anomaly_types.HYPEROPIA:
 			Global.player.emit_signal("game_over","Hyperopia Toy placed in wrong box","Correct boxes are visible only from toy pickup line")
-		return object
-	
-	#FOR CORRUPTED TOYS ONLY
-	if anomaly==Global.anomaly_types.CORRUPTED_TOY and not is_trash_box:
-		anim_player.play("box_shake")
-		box_label.text = "Corrupted Toy"
-		Global.world.spawn_trash_box([model,anomaly])#only 1 can spawn(logic at world)
 		return object
 		
 	#for ADAMANT BOXES & THE_EYE ONLY

@@ -286,52 +286,51 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.9100647e-05, 0, -3.1885655
 
 [node name="Boxes_locations" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.817603, 0.87981594, 2.9347258)
-visible = false
 
 [node name="blocation1" type="Marker3D" parent="Boxes_locations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7977538, -0.697628, -5.0958176)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7977538, -0.8202803, -5.0958176)
 
 [node name="Marker3D" type="Marker3D" parent="Boxes_locations/blocation1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.76, 0.875, 0)
 
 [node name="blocation2" type="Marker3D" parent="Boxes_locations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7977538, -0.697628, -6.598357)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7977538, -0.8202803, -6.598357)
 
 [node name="Marker3D" type="Marker3D" parent="Boxes_locations/blocation2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.76, 0.875, 0)
 
 [node name="blocation3" type="Marker3D" parent="Boxes_locations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7977538, -0.697628, -7.9600134)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7977538, -0.8202803, -7.9600134)
 
 [node name="Marker3D" type="Marker3D" parent="Boxes_locations/blocation3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.76, 0.875, 0)
 
 [node name="blocation4" type="Marker3D" parent="Boxes_locations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7977538, -0.697628, -9.212799)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7977538, -0.8202803, -9.212799)
 
 [node name="Marker3D" type="Marker3D" parent="Boxes_locations/blocation4"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.76, 0.875, 0)
 
 [node name="blocation5" type="Marker3D" parent="Boxes_locations"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 9.403898, -0.6976278, -1.5340415)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 9.403898, -0.8202801, -1.5340415)
 
 [node name="Marker3D" type="Marker3D" parent="Boxes_locations/blocation5"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.52, 0.875, 0)
 
 [node name="blocation6" type="Marker3D" parent="Boxes_locations"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8.18402, -0.6976278, -1.5094849)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 8.18402, -0.8202801, -1.5094849)
 
 [node name="Marker3D" type="Marker3D" parent="Boxes_locations/blocation6"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.52, 0.875, 0)
 
 [node name="blocation7" type="Marker3D" parent="Boxes_locations"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 6.9174347, -0.6976278, -1.4849287)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 6.9174347, -0.8202801, -1.4849287)
 
 [node name="Marker3D" type="Marker3D" parent="Boxes_locations/blocation7"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.52, 0.875, 0)
 
 [node name="blocation8" type="Marker3D" parent="Boxes_locations"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 5.208269, -0.6976278, -1.4603721)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 5.208269, -0.8202801, -1.4603721)
 
 [node name="Marker3D" type="Marker3D" parent="Boxes_locations/blocation8"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.52, 0, 0)
@@ -447,6 +446,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8493401, 0)
 light_color = Color(0.972549, 0, 0, 1)
 light_indirect_energy = 2.377
 omni_range = 9.0
+
+[node name="final_fade" type="ColorRect" parent="."]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
 
 [connection signal="body_entered" from="pickup_zone" to="." method="_on_pickup_zone_body_entered"]
 [connection signal="body_exited" from="pickup_zone" to="." method="_on_pickup_zone_body_exited"]

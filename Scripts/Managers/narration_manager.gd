@@ -12,8 +12,8 @@ func _ready() -> void:
 	Global.narration_manager = self
 	
 func speak_next_line():
-	subtitle_label.get_parent().visible = true
 	subtitle_label.text = Global.curr_dailogue_texts[curr_line_idx][0]
+	subtitle_label.get_parent().visible = true
 	if !Global.curr_dailogue_texts[curr_line_idx][1] == "":subtitle_label.text +=" : " + Global.curr_dailogue_texts[curr_line_idx][1]
 	audio_player.stream = Global.curr_dialogue_audios[curr_line_idx][0]
 	audio_player.play()
@@ -37,12 +37,11 @@ func _on_audio_stream_player_finished() -> void:
 		if Global.last_time:#End of game code
 			Global.reset_game()
 			await get_tree().create_timer(1.8).timeout
-			#var tween = get_tree().create_tween()
-			#Global.world.final_fade.visible=true
-			#tween.tween_property(Global.world.final_fade,"color",Color("000000"),1.5)
-			#await tween.finished
+			var tween = get_tree().create_tween()
+			Global.world.final_fade.visible=true
+			tween.tween_property(Global.world.final_fade,"color",Color("000000"),1.5)
+			await tween.finished
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-			print(Global.audio_manager.the_eye.get_playback_position())
 			await get_tree().process_frame
 			get_tree().change_scene_to_packed(Global.win_screen)
 			

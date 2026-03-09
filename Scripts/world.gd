@@ -22,12 +22,12 @@ var bulb_mat:BaseMaterial3D = preload("res://Assets/3D_models/bulb/bulbmat.tres"
 @onready var boxes = $Boxes
 @onready var boss_anim_player = $boss/AnimationPlayer
 @onready var fwatcher: Node3D = $fwatcher
+@onready var final_fade: ColorRect = $final_fade
 
 #Anomaly
 var player_in_pickup_zone:bool = false
 var player_hyperopia:bool = false#Set in anomaly manager
 var teleported_box_init_pos:Vector3=Vector3.ZERO#used only for adamant boxes
-var t_box#used later to delete t_box once placed
 
 var watcher:Node3D#used as ref in box.gd too
 var watcher_visibility_box:VisibleOnScreenNotifier3D
@@ -41,11 +41,8 @@ var the_eye:Node3D
 var next_toy_spawn_location
 
 func _ready() -> void:
-	print("world loaded")
-	#await get_tree().physics_frame
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	Global.world = self
-	#reset_fog()
 	bulb_mat.emission_energy_multiplier=1#reset material
 	
 func try_spawn_toy(toy_data:Array):#called from gamemanager
@@ -133,32 +130,6 @@ func kill_all_toys_and_boxes():
 		box.queue_free()
 
 #anomalies		
-func spawn_trash_box(data):
-	if t_box!=null:return#only 1 t_box possible
-	t_box = BOX_SCENE.instantiate()
-	t_box.toy_placed.connect(Global.anomaly_manager.clear_anomaly_effect)
-	add_child(t_box)
-	t_box.global_position = trash_box_pos
-	t_box.set_data(data)
-	t_box.is_trash_box=true
-	Global.audio_manager.teleport.play()
-
-func remove_trash_box():
-	t_box.queue_free()
-	t_box = null
-
-#func set_fog():
-	#var tween = get_tree().create_tween()
-	#tween.tween_property(environment.environment,"fog_density",0.6,1)\
-		 #.set_trans(Tween.TRANS_SINE)\
-		 #.set_ease(Tween.EASE_IN_OUT)
-	
-#func reset_fog():
-	#var tween = get_tree().create_tween()
-	#tween.tween_property(environment.environment,"fog_density",0.01,1)\
-		 #.set_trans(Tween.TRANS_SINE)\
-		 #.set_ease(Tween.EASE_IN_OUT)
-	#environment.environment.fog_light_color = Color("8e8e80")
 
 func lights_off():
 	lights.visible = false
@@ -245,12 +216,6 @@ func spawn_watcher():
 	Global.audio_manager.entity_appear.play()
 	Global.audio_manager.play_current_main_theme("watcher")
 	
-	#var tween = get_tree().create_tween()
-	#tween.tween_property(environment.environment,"fog_density",0.1,1)\
-		 #.set_trans(Tween.TRANS_SINE)\
-		 #.set_ease(Tween.EASE_IN_OUT)
-	#tween.parallel().tween_property(environment.environment,"fog_light_color",Color("580000ff"),1)
-	
 	watcher = WATCHER_SCENE.instantiate()
 	add_child(watcher)
 	watcher.global_position = watcher_pos
@@ -262,10 +227,8 @@ func spawn_watcher():
 	watcher_timer.timeout.connect(is_player_seeing_watcher)
 	
 	times_to_see_watcher = randi_range(10,15)
-	print(times_to_see_watcher)
 	
 func despawn_watcher():
-	#reset_fog()
 	Global.audio_manager.entity_appear.play()
 	Global.audio_manager.watcher.stop()
 	if not watcher:return
@@ -315,7 +278,7 @@ func hide_boss():
 	boss_anim_player.play_backwards("boss_appear")
 	await boss_anim_player.animation_finished
 	Global.audio_manager.green_light.stop()
-	Global.game_manager.start_game()
+	Global.game_manager.start_game()#as only one time we hide boss(at start)
 
 func play_last_transition():
 	Global.audio_manager.the_eye.play()
@@ -326,7 +289,6 @@ func play_last_transition():
 	 .set_ease(Tween.EASE_IN_OUT)
 	
 func player_go_to_tv():#Called from game_manager
-	print("go to tv")
 	var final_pos = Vector3(0.076,0.222,-5.515)
 	var tween = get_tree().create_tween()
 	tween.tween_property(Global.player,"global_position", final_pos,2)\

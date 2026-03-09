@@ -13,7 +13,7 @@ config_version=5
 config/name="PackingHours"
 run/main_scene="uid://bhfbw2dhyms4f"
 config/features=PackedStringArray("4.5", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="uid://cr1gh0snrbhc"
 
 [autoload]
 

@@ -12,13 +12,13 @@ const WAVES:Dictionary = {#[no_of_toys,duration,anomaly_types]
 	1:[4,35,[]],#no of toys MUST BE <= 8
 	2:[6,50,[Global.anomaly_types.MIMIC,Global.anomaly_types.LIGHTS_OFF,Global.anomaly_types.FAST_SPEED,Global.anomaly_types.FAST_SPEED]],
 	3:[7,70,[Global.anomaly_types.HYPEROPIA,Global.anomaly_types.HYPEROPIA,Global.anomaly_types.ADAMANT_BOX,Global.anomaly_types.CLUMSY_TOY]],
-	4:[7,70,[Global.anomaly_types.HYPEROPIA,Global.anomaly_types.INVERT_GRAVITY,Global.anomaly_types.CORRUPTED_TOY,Global.anomaly_types.CORRUPTED_TOY]],
+	4:[7,70,[Global.anomaly_types.HYPEROPIA,Global.anomaly_types.INVERT_GRAVITY,Global.anomaly_types.MIMIC,Global.anomaly_types.MIMIC]],
 	5:[7,80,[Global.anomaly_types.INVERT_GRAVITY,Global.anomaly_types.CLUMSY_TOY,Global.anomaly_types.HYPEROPIA,Global.anomaly_types.ADAMANT_BOX,Global.anomaly_types.RED_LIGHT]],
-	6:[7,105,[Global.anomaly_types.ADAMANT_BOX,Global.anomaly_types.CLUMSY_TOY,Global.anomaly_types.INVERT_GRAVITY,Global.anomaly_types.MIMIC,Global.anomaly_types.RED_LIGHT]],
-	7:[8,100,[Global.anomaly_types.MIMIC,Global.anomaly_types.ADAMANT_BOX,Global.anomaly_types.HEAVY_TOY,Global.anomaly_types.RED_LIGHT,Global.anomaly_types.RED_LIGHT]],
+	6:[7,95,[Global.anomaly_types.ADAMANT_BOX,Global.anomaly_types.CLUMSY_TOY,Global.anomaly_types.INVERT_GRAVITY,Global.anomaly_types.MIMIC,Global.anomaly_types.RED_LIGHT]],
+	7:[8,80,[Global.anomaly_types.MIMIC,Global.anomaly_types.ADAMANT_BOX,Global.anomaly_types.HEAVY_TOY,Global.anomaly_types.RED_LIGHT,Global.anomaly_types.RED_LIGHT,Global.anomaly_types.HYPEROPIA]],
 	8:[8,100,[Global.anomaly_types.MIMIC,Global.anomaly_types.HEAVY_TOY,Global.anomaly_types.INVERT_GRAVITY,Global.anomaly_types.RED_LIGHT,Global.anomaly_types.THE_EYE]],
 	9:[8,100,[Global.anomaly_types.THE_EYE,Global.anomaly_types.HEAVY_TOY,Global.anomaly_types.MIMIC,Global.anomaly_types.THE_EYE,Global.anomaly_types.INVERT_GRAVITY]],
-	10:[8,110,[Global.anomaly_types.WATCHER,Global.anomaly_types.WATCHER,Global.anomaly_types.THE_EYE,Global.anomaly_types.FAST_SPEED,Global.anomaly_types.MIMIC]],
+	10:[8,115,[Global.anomaly_types.WATCHER,Global.anomaly_types.WATCHER,Global.anomaly_types.THE_EYE,Global.anomaly_types.FAST_SPEED,Global.anomaly_types.MIMIC,Global.anomaly_types.HEAVY_TOY]],
 }
 var curr_wave_details:Array=[]
 
@@ -45,7 +45,7 @@ func _ready() -> void:
 func start_game():#called from world
 	Global.world.lights_on()
 	
-	await get_tree().create_timer(5).timeout
+	await get_tree().create_timer(4).timeout
 	start_the_waves()
 
 func start_the_waves():
@@ -132,7 +132,7 @@ func play_end_narration():
 	Global.world.lights_off()
 	await  get_tree().create_timer(2).timeout
 	
-	Global.player.set_process_unhandled_input(false)
+	Global.player.set_process_input(false)
 	Global.player.set_physics_process(false)
 	Global.world.player_go_to_tv()
 	Global.world.show_boss()

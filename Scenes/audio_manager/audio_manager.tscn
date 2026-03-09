@@ -98,7 +98,7 @@ bus = &"Menu"
 
 [node name="Ventillation" type="AudioStreamPlayer" parent="AmbientSounds"]
 stream = ExtResource("8_mtnen")
-volume_db = -8.0
+volume_db = -7.5
 autoplay = true
 bus = &"Ambience"
 

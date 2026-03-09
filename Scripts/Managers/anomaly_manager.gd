@@ -9,9 +9,6 @@ func try_anomaly_effect(anom:Global.anomaly_types):#used in world.gd
 			Global.player.set_fast_speed()
 		Global.anomaly_types.INVERT_GRAVITY:
 			Global.player.invert_gravity()
-		Global.anomaly_types.FOG:
-			pass
-			#Global.world.set_fog()
 		Global.anomaly_types.LIGHTS_OFF:
 			Global.world.lights_off()
 		Global.anomaly_types.HEAVY_TOY:
@@ -25,8 +22,6 @@ func try_anomaly_effect(anom:Global.anomaly_types):#used in world.gd
 			pass
 		Global.anomaly_types.RED_LIGHT:
 			Global.world.start_red_light()
-		Global.anomaly_types.CORRUPTED_TOY:#Logic at box.gd
-			pass
 		Global.anomaly_types.MIMIC:
 			Global.player.start_mimic_toy()
 		Global.anomaly_types.WATCHER:
@@ -43,9 +38,6 @@ func clear_anomaly_effect(anom:Global.anomaly_types):#used in world.gd
 			Global.player.reset_speed()
 		Global.anomaly_types.INVERT_GRAVITY:
 			Global.player.reset_gravity()
-		Global.anomaly_types.FOG:
-			pass
-			#Global.world.reset_fog()
 		Global.anomaly_types.LIGHTS_OFF:
 			Global.world.lights_on()
 		Global.anomaly_types.HEAVY_TOY:
@@ -60,8 +52,6 @@ func clear_anomaly_effect(anom:Global.anomaly_types):#used in world.gd
 			pass
 		Global.anomaly_types.RED_LIGHT:
 			Global.world.stop_red_light()
-		Global.anomaly_types.CORRUPTED_TOY:
-			Global.world.remove_trash_box()
 		Global.anomaly_types.MIMIC:
 			Global.player.stop_mimic_toy()
 		Global.anomaly_types.WATCHER:#despawn mechanic in world itself

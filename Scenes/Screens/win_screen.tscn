@@ -342,7 +342,6 @@ environment = ExtResource("7_eq8eq")
 
 [node name="boss" type="Node3D" parent="World"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9216162, -9.114734)
-visible = false
 
 [node name="Sprite3D" type="Sprite3D" parent="World/boss"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.135, -0.049)

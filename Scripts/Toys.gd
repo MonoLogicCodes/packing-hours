@@ -43,7 +43,6 @@ func set_data(toy_data:Array):#called by world
 	#ONLY FOR CLUMSY TOYS
 	if anomaly==Global.anomaly_types.CLUMSY_TOY:
 		times_to_fall_n_pick = randi_range(25,40)
-		print(times_to_fall_n_pick)
 #Anomaly
 func try_dropping():
 	if placed_in_box:return
