@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bjdh63hcwc37g"]
+[gd_scene load_steps=16 format=3 uid="uid://bjdh63hcwc37g"]
 
 [ext_resource type="PackedScene" uid="uid://crugke31s5nm1" path="res://Scenes/Player/player.tscn" id="1_t1gg8"]
 [ext_resource type="Script" uid="uid://3t5x5jovy7gs" path="res://Scripts/world.gd" id="1_vadfg"]
@@ -6,30 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://cbf7b48e7a8pf" path="res://Scenes/bulb/bulb.tscn" id="4_adcqc"]
 [ext_resource type="PackedScene" uid="uid://cc5ftemopyjxk" path="res://Scenes/conveyer_belt/conveyer_belt.tscn" id="4_vadfg"]
 [ext_resource type="Texture2D" uid="uid://gfhbxf0bunbr" path="res://Assets/boss/boss2.png" id="5_l1hd3"]
+[ext_resource type="Environment" uid="uid://b2ruv5cpm374y" path="res://Assets/env/newworld.tres" id="6_fcotr"]
 [ext_resource type="Texture2D" uid="uid://bkj8jfgi0ovdu" path="res://Assets/Watcher/stalker.png" id="7_7staa"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_t1gg8"]
-sky_top_color = Color(0, 0, 0, 1)
-sky_horizon_color = Color(0.24241182, 0.0043173283, 0.26080573, 1)
-ground_bottom_color = Color(0, 0, 0, 1)
-ground_horizon_color = Color(0.24313726, 0.003921569, 0.2627451, 1)
-
-[sub_resource type="Sky" id="Sky_yp2ti"]
-sky_material = SubResource("ProceduralSkyMaterial_t1gg8")
-
-[sub_resource type="Environment" id="Environment_3rhlx"]
-background_mode = 2
-sky = SubResource("Sky_yp2ti")
-ambient_light_source = 1
-ambient_light_color = Color(0.7643998, 0.00026115746, 0.71332157, 1)
-ambient_light_sky_contribution = 0.99
-tonemap_mode = 1
-tonemap_white = 0.8
-glow_enabled = true
-glow_bloom = 0.1
-fog_enabled = true
-fog_light_color = Color(0.55796057, 0.5580643, 0.50022036, 1)
-fog_light_energy = 0.46
 
 [sub_resource type="Animation" id="Animation_l1hd3"]
 length = 0.001
@@ -389,7 +367,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.6984763, 0, -8.343948)
 [node name="Environment" type="Node3D" parent="."]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
-environment = SubResource("Environment_3rhlx")
+environment = ExtResource("6_fcotr")
 
 [node name="Lights" type="Node3D" parent="Environment"]
 
@@ -469,15 +447,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8493401, 0)
 light_color = Color(0.972549, 0, 0, 1)
 light_indirect_energy = 2.377
 omni_range = 9.0
-
-[node name="final_fade" type="ColorRect" parent="."]
-visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 0)
 
 [connection signal="body_entered" from="pickup_zone" to="." method="_on_pickup_zone_body_entered"]
 [connection signal="body_exited" from="pickup_zone" to="." method="_on_pickup_zone_body_exited"]

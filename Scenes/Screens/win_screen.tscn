@@ -1,10 +1,11 @@
-[gd_scene load_steps=26 format=4 uid="uid://dy64kj2s15bsl"]
+[gd_scene load_steps=24 format=4 uid="uid://dy64kj2s15bsl"]
 
 [ext_resource type="FontFile" uid="uid://iy8yt2ouvhvt" path="res://Assets/fonts/BebasNeue-Regular.ttf" id="1_3gse0"]
 [ext_resource type="Script" uid="uid://dgb3vaoesjpgk" path="res://Scripts/Scenes/win_screen.gd" id="1_ag6kh"]
 [ext_resource type="PackedScene" uid="uid://rb0giid3ityu" path="res://Scenes/Box/GiftModels/redbox.tscn" id="4_tresw"]
 [ext_resource type="PackedScene" uid="uid://ctmnaykt3xmun" path="res://Scenes/Box/GiftModels/yellowbox.tscn" id="5_eq8eq"]
 [ext_resource type="PackedScene" uid="uid://mj2upkrg2x8o" path="res://Scenes/Box/GiftModels/bluebox.tscn" id="6_0ov1g"]
+[ext_resource type="Environment" uid="uid://b2ruv5cpm374y" path="res://Assets/env/newworld.tres" id="7_eq8eq"]
 [ext_resource type="PackedScene" uid="uid://dderq40n5jjel" path="res://Scenes/Room/room.tscn" id="7_wh4uj"]
 [ext_resource type="PackedScene" uid="uid://cc5ftemopyjxk" path="res://Scenes/conveyer_belt/conveyer_belt.tscn" id="8_r1ms1"]
 [ext_resource type="Texture2D" uid="uid://gfhbxf0bunbr" path="res://Assets/boss/boss2.png" id="9_7eyfl"]
@@ -13,29 +14,6 @@
 [ext_resource type="Texture2D" uid="uid://bkbsggxt8uhr2" path="res://Assets/TheEye/pupil.png" id="11_tresw"]
 [ext_resource type="AudioStream" uid="uid://r178fhevneqv" path="res://SFX/Ambience/the_eye.ogg" id="12_tresw"]
 [ext_resource type="Theme" uid="uid://bcjetvpdu5jtc" path="res://Assets/UI/uitheme.tres" id="12_yalwu"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_r8c50"]
-sky_top_color = Color(0, 0, 0, 1)
-sky_horizon_color = Color(0.24241182, 0.0043173283, 0.26080573, 1)
-ground_bottom_color = Color(0, 0, 0, 1)
-ground_horizon_color = Color(0.24313726, 0.003921569, 0.2627451, 1)
-
-[sub_resource type="Sky" id="Sky_yp2ti"]
-sky_material = SubResource("ProceduralSkyMaterial_r8c50")
-
-[sub_resource type="Environment" id="Environment_elnwt"]
-background_mode = 2
-sky = SubResource("Sky_yp2ti")
-ambient_light_source = 1
-ambient_light_color = Color(0.7643998, 0.00026115746, 0.71332157, 1)
-ambient_light_sky_contribution = 0.99
-tonemap_mode = 1
-tonemap_white = 0.8
-glow_enabled = true
-glow_bloom = 0.1
-fog_enabled = true
-fog_light_color = Color(0.55796057, 0.5580643, 0.50022036, 1)
-fog_light_energy = 0.46
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dni1u"]
 resource_name = "Material.002"
@@ -360,7 +338,7 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -2.6
 [node name="Environment" type="Node3D" parent="World"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="World/Environment"]
-environment = SubResource("Environment_elnwt")
+environment = ExtResource("7_eq8eq")
 
 [node name="boss" type="Node3D" parent="World"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9216162, -9.114734)
@@ -532,10 +510,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -623.0
-offset_top = 289.0
-offset_right = -456.0
-offset_bottom = 342.0
+offset_left = -563.0
+offset_top = 262.0
+offset_right = -396.0
+offset_bottom = 315.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 16

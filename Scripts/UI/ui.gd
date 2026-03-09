@@ -90,6 +90,7 @@ func _on_pstart_over_pressed() -> void:#seperate function cuz to add transition
 	
 func _on_main_menu_pressed() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	await get_tree().process_frame
 	get_tree().change_scene_to_packed(Global.main_screen)
 	
 #Lose Screen functions
@@ -113,6 +114,7 @@ func reload_scene(full_reload:bool):
 	
 func _on_go_to_menu_pressed() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	await get_tree().process_frame
 	get_tree().change_scene_to_packed(Global.main_screen)
 	
 func _on_start_over_pressed() -> void:

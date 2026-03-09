@@ -1036,6 +1036,7 @@ omni_range = 2.0991645
 
 [node name="Camera3D" type="Camera3D" parent="World"]
 transform = Transform3D(-0.8735005, 0, 0.48682323, 0, 1, 0, -0.48682323, 0, -0.8735005, 0, 2.7611082, -3.57854)
+current = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="World"]
 libraries = {
@@ -1066,10 +1067,10 @@ skeleton = NodePath("")
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 59.0
-offset_top = 113.0
-offset_right = 351.0
-offset_bottom = 313.0
+offset_left = 32.0
+offset_top = 97.0
+offset_right = 324.0
+offset_bottom = 297.0
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 8
@@ -1103,10 +1104,10 @@ metadata/_edit_lock_ = true
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -585.0
-offset_top = 43.0
-offset_right = -13.0
-offset_bottom = 183.0
+offset_left = -548.0
+offset_top = 23.0
+offset_right = 24.0
+offset_bottom = 163.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(1, 1, 0.24705882, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
@@ -1130,10 +1131,10 @@ grow_vertical = 2
 color = Color(1, 1, 1, 0.6313726)
 
 [node name="Label2" type="Label" parent="CanvasLayer"]
-offset_left = 59.0
-offset_top = 204.0
-offset_right = 644.0
-offset_bottom = 397.0
+offset_left = 32.0
+offset_top = 168.0
+offset_right = 617.0
+offset_bottom = 389.0
 theme = ExtResource("11_itotw")
 theme_override_colors/font_color = Color(1, 1, 1, 0.61960787)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8352941)

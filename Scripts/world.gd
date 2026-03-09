@@ -22,7 +22,6 @@ var bulb_mat:BaseMaterial3D = preload("res://Assets/3D_models/bulb/bulbmat.tres"
 @onready var boxes = $Boxes
 @onready var boss_anim_player = $boss/AnimationPlayer
 @onready var fwatcher: Node3D = $fwatcher
-@onready var final_fade: ColorRect = $final_fade
 
 #Anomaly
 var player_in_pickup_zone:bool = false
@@ -42,8 +41,11 @@ var the_eye:Node3D
 var next_toy_spawn_location
 
 func _ready() -> void:
+	print("world loaded")
+	#await get_tree().physics_frame
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	Global.world = self
-	reset_fog()
+	#reset_fog()
 	bulb_mat.emission_energy_multiplier=1#reset material
 	
 func try_spawn_toy(toy_data:Array):#called from gamemanager
@@ -145,18 +147,18 @@ func remove_trash_box():
 	t_box.queue_free()
 	t_box = null
 
-func set_fog():
-	var tween = get_tree().create_tween()
-	tween.tween_property(environment.environment,"fog_density",0.6,1)\
-		 .set_trans(Tween.TRANS_SINE)\
-		 .set_ease(Tween.EASE_IN_OUT)
+#func set_fog():
+	#var tween = get_tree().create_tween()
+	#tween.tween_property(environment.environment,"fog_density",0.6,1)\
+		 #.set_trans(Tween.TRANS_SINE)\
+		 #.set_ease(Tween.EASE_IN_OUT)
 	
-func reset_fog():
-	var tween = get_tree().create_tween()
-	tween.tween_property(environment.environment,"fog_density",0.01,1)\
-		 .set_trans(Tween.TRANS_SINE)\
-		 .set_ease(Tween.EASE_IN_OUT)
-	environment.environment.fog_light_color = Color("8e8e80")
+#func reset_fog():
+	#var tween = get_tree().create_tween()
+	#tween.tween_property(environment.environment,"fog_density",0.01,1)\
+		 #.set_trans(Tween.TRANS_SINE)\
+		 #.set_ease(Tween.EASE_IN_OUT)
+	#environment.environment.fog_light_color = Color("8e8e80")
 
 func lights_off():
 	lights.visible = false
@@ -243,12 +245,11 @@ func spawn_watcher():
 	Global.audio_manager.entity_appear.play()
 	Global.audio_manager.play_current_main_theme("watcher")
 	
-	var tween = get_tree().create_tween()
-	tween.tween_property(environment.environment,"fog_density",0.1,1)\
-		 .set_trans(Tween.TRANS_SINE)\
-		 .set_ease(Tween.EASE_IN_OUT)
-	tween.parallel().tween_property(environment.environment,"fog_light_color",Color("580000ff"),1)
-	
+	#var tween = get_tree().create_tween()
+	#tween.tween_property(environment.environment,"fog_density",0.1,1)\
+		 #.set_trans(Tween.TRANS_SINE)\
+		 #.set_ease(Tween.EASE_IN_OUT)
+	#tween.parallel().tween_property(environment.environment,"fog_light_color",Color("580000ff"),1)
 	
 	watcher = WATCHER_SCENE.instantiate()
 	add_child(watcher)
@@ -264,7 +265,7 @@ func spawn_watcher():
 	print(times_to_see_watcher)
 	
 func despawn_watcher():
-	reset_fog()
+	#reset_fog()
 	Global.audio_manager.entity_appear.play()
 	Global.audio_manager.watcher.stop()
 	if not watcher:return

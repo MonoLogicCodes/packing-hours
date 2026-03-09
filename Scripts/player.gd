@@ -39,8 +39,8 @@ func _ready() -> void:
 	speed=WALK_SPEED
 	Global.player = self
 
-func _unhandled_input(event: InputEvent) -> void:
-	if Input.is_action_just_pressed("escape") and can_pause:
+func _input(event: InputEvent) -> void:
+	if Input.is_action_just_pressed("pause") and can_pause:
 		emit_signal("pause",true)
 	if Input.is_action_just_pressed("right_click"):
 		check_raycast_collider("right_click")

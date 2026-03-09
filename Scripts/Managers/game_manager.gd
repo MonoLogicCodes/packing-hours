@@ -10,7 +10,7 @@ signal game_lose(reason:String)#used in UI as overlay lose screen
 
 const WAVES:Dictionary = {#[no_of_toys,duration,anomaly_types]
 	1:[4,35,[]],#no of toys MUST BE <= 8
-	2:[6,50,[Global.anomaly_types.FOG,Global.anomaly_types.LIGHTS_OFF,Global.anomaly_types.FAST_SPEED,Global.anomaly_types.FAST_SPEED]],
+	2:[6,50,[Global.anomaly_types.MIMIC,Global.anomaly_types.LIGHTS_OFF,Global.anomaly_types.FAST_SPEED,Global.anomaly_types.FAST_SPEED]],
 	3:[7,70,[Global.anomaly_types.HYPEROPIA,Global.anomaly_types.HYPEROPIA,Global.anomaly_types.ADAMANT_BOX,Global.anomaly_types.CLUMSY_TOY]],
 	4:[7,70,[Global.anomaly_types.HYPEROPIA,Global.anomaly_types.INVERT_GRAVITY,Global.anomaly_types.CORRUPTED_TOY,Global.anomaly_types.CORRUPTED_TOY]],
 	5:[7,80,[Global.anomaly_types.INVERT_GRAVITY,Global.anomaly_types.CLUMSY_TOY,Global.anomaly_types.HYPEROPIA,Global.anomaly_types.ADAMANT_BOX,Global.anomaly_types.RED_LIGHT]],
